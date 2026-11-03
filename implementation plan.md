@@ -61,6 +61,8 @@ We will first put **real, permitted accounts** into a private research workspace
 
 **Gate 4:** each answer passes a reviewer check: every factual clause has a source ID; count/denominator/unit/formula and exclusions agree with the ledger; direct versus adjacent versus unknown cohort fit is visible; a counterexample/rival and next test are present. Show “insufficient evidence” where necessary. A model may draft prose from approved evidence, but may not create counts, sources or unsupported causal statements.
 
+**Insight check:** before accepting a pattern, name the research objective, the working hypothesis and its strongest alternative; check whether the chosen source can observe the claim; then separate reported event, interpretation and PM implication. A survey or public post is a self-report. A source-linked count describes this collected corpus, not observed Groww behaviour or population incidence. If this check fails, narrow the wording or change the research method.
+
 **Opportunity view:** a researcher enters candidate problem statements, not reason codes. Compare evidence strength, corpus reach proxy, user consequence, plausible NSM link, constraints, rival and next test. No numerical winner or automatic segment selection. Survey responses may agree or challenge a candidate in a separate triangulation export; seven convenience responses do not establish prevalence. **Output:** evaluator-readable, grounded engine answers and comparison. If there are zero justified candidates, display that honestly.
 
 ## Phase 5 — Evidence Log, local evaluator test and public delivery
