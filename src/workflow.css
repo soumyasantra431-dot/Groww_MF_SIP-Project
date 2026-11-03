@@ -1,0 +1,9 @@
+.engine-status{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:22px 0}
+.engine-status>div{background:#fff;border:1px solid #dce3d6;border-radius:7px;padding:18px 20px;display:flex;flex-direction:column;gap:7px}
+.engine-status strong{font:600 28px Manrope,system-ui,sans-serif;color:#183a35}
+.engine-status span{font-size:12px;line-height:1.5;color:#5d7066}
+.workflow-guide .example{margin:22px 0;background:#f8faf6}
+.workflow-guide .tablewrap{margin:18px 0 10px}
+.workflow-guide .tablewrap td:last-child{min-width:280px}
+@media(max-width:800px){.engine-status{grid-template-columns:1fr}.workflow-guide .tablewrap td:last-child{min-width:240px}}
+.current-finding{display:inline-block;margin:0 0 4px;padding:7px 10px;background:#edf2e8;border-left:3px solid #5d8060;color:#385b49;font-size:11px}

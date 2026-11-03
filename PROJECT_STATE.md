@@ -1,5 +1,11 @@
 # Resume state — 2 November 2026
 
+## 3 November — purpose and corpus accounting corrected after user review
+
+The Fellow found the engine ambiguous: the first screen led with 22 stored rows and technical lane counts even though no nine-question answer existed. The live UI now leads with the research decision, actual 0/9 answered status, 0 reviewed first-year Groww accounts, and 2 locally permitted adjacent source units. The 22-row inventory has moved to Sources & runs with plain definitions. `COLLECTION_TO_ANSWERS.md` records all seven named source families, their actual collection state, the collection/cleaning/deduplication/Tier A/Tier B/review/answer contract, and the source-to-question fit. These changes clarify scope; they do not create new corpus evidence, validate the failed model, or complete the required engine. Next: obtain source-cleared first-hand accounts and produce a bounded source-reviewed answer before claiming any discovered problem.
+
+A read-only original-page screen inspected 10 visible App Store review cards and 20 Play Store cards under “Most relevant.” It found no confirmed first-year Groww MF-SIP account; 0 reviews were imported and 0 model calls were made. The ignored source note records selection and denominator limits. A free Play Developer or App Store Connect key does not grant the Fellow access to Groww's owner review API. The public-page collection route remains unresolved; no mock investor stories will fill the corpus.
+
 ## 3 November — private survey lane accounted for
 
 The seven written submissions now have a separate aggregate panel in the local Sources & runs view. Arithmetic: 3 limited descriptive + 2 non-starter + 1 consent/age exclusion + 1 genuine but uninterpretable = 7; 4 self-report attempted SIP; 1 self-reports first-year Groww fit; 0 has a measurable month-12 outcome. The private responses are not public-corpus records, interviews, transaction verification or independent model validation. The report is in ignored `research/private/SURVEY_SECONDARY_2026-11-03.md`; API sends only aggregate counts, no answer text or IDs. `pnpm.cmd test`: 90/90 pass; `pnpm.cmd build`: pass. AI batch/live paste and nine narrative answers remain held. No model call, GitHub push or deployment in this step.
