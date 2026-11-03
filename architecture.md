@@ -1,5 +1,13 @@
 # Architecture — Groww SIP AI discovery engine prototype
 
+## 3 November operating decision: build around the answers
+
+The product contract is **nine source-linked research answers plus a no-score comparison of potential opportunity areas relevant to the assigned month-12 active-SIP percentage**. All seven named source families are collection targets and must have their actual intake, exclusions and analysis status visible. They are not currently seven live integrations. A zero in a family means an access or collection gap, never evidence that investors have no relevant experiences there.
+
+There are three separate jobs. **Collection code and source review** obtain original, SIP-relevant public text or consented written accounts through a source-specific permitted route. **The LLM** proposes anchored labels for one item at a time and later drafts sentences only from reviewed claims. **Deterministic code** screens privacy/eligibility, normalises and groups duplicates, counts distinct source roots with denominators, and checks that every answer points to evidence. The LLM does not browse on its own, compute Groww retention or turn missing facts into human-like prose.
+
+Build order: freeze the nine-answer contract and source-family ledger (done) → collect a small real, source-cleared contrast set → validate lean extraction on it after synthetic structure checks → process a larger permitted corpus across the seven families → review selected episodes and labels → compose nine bounded answers → compare candidate problems → test the evaluator path locally → publish a reviewed derived snapshot. Every phase reports actual counts and gaps. The current local app remains at 0/9 answers and 0 reviewed first-year Groww accounts; the model path failed its development fidelity gate. Do not describe the current workspace as a functioning seven-source AI analysis.
+
 **Version:** first testable research-engine architecture, 2 November 2026.  
 **Derived from:** [problem statement](problem%20statement.md), [build context](context.md), [engine decision](research/FINAL_DISCOVERY_ENGINE_DECISION_2026-11-02.md) and [current code handoff](BUILD_HANDOFF_2026-11-02.md).  
 **Decision boundary:** this architecture designs the **research engine**, not the later customer MVP. It chooses no investor segment, cause, journey moment or feature.
