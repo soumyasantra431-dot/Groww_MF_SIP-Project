@@ -1,5 +1,7 @@
 # Phase-wise implementation plan — Groww SIP discovery engine
 
+**3 November survey-lane checkpoint:** The seven existing written submissions were reconciled without adding them to public source volume. One self-reports target cohort fit, but none yields a measurable month-12 outcome. The local workspace shows aggregate survey accounting only. Use this lane to refine neutral event questions; source-cleared public and first-hand evidence still needs review before nine answers or a problem choice.
+
 **Plan date:** 2 November 2026 IST. **Submission deadline:** 9 November 2026, 3:59 PM IST.  
 **Inputs:** [problem statement](problem%20statement.md) → [research/build context](context.md) → [architecture](architecture.md).  
 **Scope:** build and validate the **AI discovery engine prototype**. The later segment choice, customer problem, AI-native customer MVP and deck are separate work. This plan does not change the NSM or turn a mock story into evidence.

@@ -9,12 +9,14 @@ import { researchPlan } from '../engine/research-plan.mjs';
 import { filtered,rollup,selectTierB,deckExports } from '../engine/analysis.mjs';
 import { modelStatus } from '../engine/provider.mjs';
 import { privateSignals } from '../engine/contracts.mjs';
+import { summarizeSurvey } from '../engine/survey-secondary.mjs';
 import { snapshot } from './pipeline.mjs';
 const port=Number(process.env.PORT)||4317,origin=`http://127.0.0.1:${port}`,store=openStore();
 store.db.prepare("UPDATE runs SET state='error',error='Interrupted process; inspect spend reservations before resuming' WHERE state='running'").run();
 const vite=await createViteServer({server:{middlewareMode:true,fs:{deny:['**/.local/**','**/.dev.vars*','**/.env*','**/research/**','**/exports/**','**/.git/**','**/*.sqlite*']}},appType:'spa'});
 let active=false;
 function developmentStatus(){try{const r=JSON.parse(readFileSync('.local/lean-frozen-2026-11-03-v7-development-reuse/development-comparison.json','utf8'));const x=r.exact_label_comparison.source_text;return {kind:r.kind,inputs:r.input_count,requests:r.model_requests,structural_proposals:r.structure_pass,whole_item_failures:r.processing_failures,rejected_fields:r.field_rejections.length,ambiguous_anchors:r.ambiguous_anchor_fields.length,provider_tokens:r.measured_tokens,latency_sum_ms:r.latency_ms.sum,supported:{exact:x.C,different_supported:x.W,abstained:x.A,denominator:x.K},unknown:{preserved:x.unknown_retention.numerator,denominator:x.unknown_retention.denominator},decision:'failed development gate; extraction, batch and live paste held',independent_accuracy:false};}catch{return null;}}
+function surveySecondary(){try{return summarizeSurvey(JSON.parse(readFileSync('research/private/survey_coded_2026-10-29.json','utf8')));}catch{return {evidence_lane:'private_written_survey_secondary',available:false,corpus_included:false};}}
 function send(res,value,status=200){res.writeHead(status,{'Content-Type':'application/json','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'});res.end(JSON.stringify(value));}
 async function body(req){let size=0,chunks=[];for await(const chunk of req){size+=chunk.length;if(size>6e6)throw Error('Request too large');chunks.push(chunk);}try{return JSON.parse(Buffer.concat(chunks).toString());}catch{throw Error('Invalid JSON request');}}
 createServer(async(req,res)=>{
@@ -26,7 +28,7 @@ createServer(async(req,res)=>{
   if(!url.pathname.startsWith('/api/'))return vite.middlewares(req,res,()=>send(res,{error:'Not found'},404));
   if(req.method==='POST'&&(req.headers.origin&&![origin,`http://localhost:${port}`].includes(req.headers.origin)||!req.headers['content-type']?.startsWith('application/json')))return send(res,{error:'Same-origin JSON required'},403);
   if(req.method==='GET'&&url.pathname==='/api/workspace'){
-   const all=store.items(),items=filtered(all,Object.fromEntries(url.searchParams));return send(res,{mode:'local',items,research_plan:researchPlan(items),rollup:rollup(items),readiness:corpusReadiness(all),drivers:driverEvidence(items),model:modelStatus(),pipeline:{lean_batch_ready:false,live_paste_ready:false,reason:'Lean extraction failed its development quality gate; source-reviewed manual evidence is the current fallback. Batch and live paste remain held.'},spend:store.spend(),selection:selectTierB(all),active,quality:store.meta('evaluation'),development:developmentStatus(),collection_runs:store.db.prepare('SELECT * FROM collection_runs ORDER BY created_at DESC LIMIT 30').all(),runs:store.db.prepare('SELECT id,item_id,tier,state,attempts,error,created_at,model FROM runs ORDER BY created_at DESC LIMIT 30').all()});
+   const all=store.items(),items=filtered(all,Object.fromEntries(url.searchParams));return send(res,{mode:'local',items,research_plan:researchPlan(items),rollup:rollup(items),readiness:corpusReadiness(all),drivers:driverEvidence(items),survey_secondary:surveySecondary(),model:modelStatus(),pipeline:{lean_batch_ready:false,live_paste_ready:false,reason:'Lean extraction failed its development quality gate; source-reviewed manual evidence is the current fallback. Batch and live paste remain held.'},spend:store.spend(),selection:selectTierB(all),active,quality:store.meta('evaluation'),development:developmentStatus(),collection_runs:store.db.prepare('SELECT * FROM collection_runs ORDER BY created_at DESC LIMIT 30').all(),runs:store.db.prepare('SELECT id,item_id,tier,state,attempts,error,created_at,model FROM runs ORDER BY created_at DESC LIMIT 30').all()});
   }
   if(req.method==='GET'&&url.pathname==='/api/terms'){return send(res,JSON.parse(readFileSync('research/ENGINE_V1_TERMS_REGISTER.json','utf8')));}
   if(req.method!=='POST')return send(res,{error:'Not found'},404);

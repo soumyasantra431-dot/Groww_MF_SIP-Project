@@ -1,5 +1,7 @@
 # Evidence context for the Groww SIP discovery engine
 
+**3 November secondary-lane update:** A private audit of the seven written survey submissions reconciles 3 limited descriptive accounts + 2 non-starters + 1 consent/age exclusion + 1 genuine but uninterpretable response = 7 submissions. Four self-report attempting a SIP; one self-reports first-year Groww cohort fit; zero provide a measurable month-12 outcome. These are respondent accounts, not verified transactions or a representative sample. The local workspace now displays only these aggregate counts in a separate survey panel; no row enters public-corpus counts or the public snapshot. This supports better event follow-up questions, not a retention rate or a chosen problem. The dated private audit is `research/private/SURVEY_SECONDARY_2026-11-03.md`.
+
 **As of:** 2 November 2026. **Purpose:** record only what changes the engine's source selection, coding, answers, evaluation or delivery. This is a build input, not a claim that the project has found the winning user problem. Read with [the problem statement](problem%20statement.md), [PM charter](PROJECT_CHARTER.md) and [build handoff](BUILD_HANDOFF_2026-11-02.md).
 
 Links into `research/` refer to the **local private research folder**, which is Git ignored. If these documents are later shared through GitHub, publish a separately reviewed, privacy-safe source index or retain the limits and counts written here; do not expose raw research files merely to make links work.
