@@ -1,6 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { manualClassification } from '../engine/manual-review.mjs';
+import { mkdtempSync,rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { openStore } from '../engine/store.mjs';
+import { manualClassification,importManualReview } from '../engine/manual-review.mjs';
 
 const source={source_family:'Investing forums',url:'https://example.org/t/42/1',date:'2026-10-01',source_locator:'post-1',evidence_lane:'user_voice'};
 const text='I am new to AnotherApp. I asked support how to start a SIP. No instalment was reported.';
@@ -17,4 +21,14 @@ test('manual source review rejects a value without a matching original quote',()
 });
 test('target lane needs explicit cohort support',()=>{
  assert.throws(()=>manualClassification({source,text,judgment:{...judgment,scope_lane:'target'}}),/Target lane/);
+});
+test('bounded TradingQ&A import clears local use but keeps public redistribution flagged',()=>{
+ const dir=mkdtempSync(join(tmpdir(),'sip-manual-rights-')),store=openStore(dir);
+ try{
+  const imported=importManualReview(store,{source:{...source,url:'https://tradingqna.com/t/example/42/1'},text,judgment});
+  const row=store.item(imported.id);
+  assert.equal(row.local_use_status,'cleared');
+  assert.equal(row.terms_status,'flagged');
+  assert.equal(row.review_state,'proposal');
+ }finally{store.close();rmSync(dir,{recursive:true,force:true});}
 });

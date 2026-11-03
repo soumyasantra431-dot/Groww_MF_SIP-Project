@@ -15,6 +15,7 @@ export function openStore(dir=process.env.SIP_DATA_DIR||resolve('.local')){
  if(!db.prepare('PRAGMA table_info(items)').all().some(c=>c.name==='source_locator'))db.exec("ALTER TABLE items ADD COLUMN source_locator TEXT NOT NULL DEFAULT ''");
  for(const [name,defaultValue] of [['evidence_lane','unknown'],['independence_group',''],['copy_key','']])if(!db.prepare('PRAGMA table_info(items)').all().some(c=>c.name===name))db.exec(`ALTER TABLE items ADD COLUMN ${name} TEXT NOT NULL DEFAULT '${defaultValue}'`);
  if(!db.prepare('PRAGMA table_info(items)').all().some(c=>c.name==='coding_origin'))db.exec("ALTER TABLE items ADD COLUMN coding_origin TEXT NOT NULL DEFAULT 'unknown'");
+ if(!db.prepare('PRAGMA table_info(items)').all().some(c=>c.name==='local_use_status'))db.exec("ALTER TABLE items ADD COLUMN local_use_status TEXT NOT NULL DEFAULT 'pending'");
  for(const [name,type,defaultValue] of [['billing_mode','TEXT',"'paid'"],['reserved_tokens','INTEGER','0']])if(!db.prepare('PRAGMA table_info(spend)').all().some(c=>c.name===name))db.exec(`ALTER TABLE spend ADD COLUMN ${name} ${type} NOT NULL DEFAULT ${defaultValue}`);
  db.exec('CREATE TABLE IF NOT EXISTS collection_runs(id TEXT PRIMARY KEY,created_at TEXT,source_family TEXT,query TEXT,route TEXT,state TEXT,counts TEXT,permission_basis TEXT)');
  return {

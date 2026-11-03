@@ -11,7 +11,7 @@ import {researchPlan} from '../engine/research-plan.mjs';
 import {openStore} from '../engine/store.mjs';
 import {classify,modelStatus} from '../engine/provider.mjs';
 const c=(x={})=>({evidence_class:'public_user_account',relevant:'yes',metric_node:'unknown',exit_form:'unknown',reason_families:['execution'],journey_bucket:'unknown',initiating_event:'fixture',final_state:'unknown',paraphrase:'Engineering fixture.',question_ids:['Q3'],scope_lane:'eligibility_unknown',plan_route:'unknown',eligibility:{first_time_mf:unknownDatum(),first_sip_on_groww:unknownDatum(),within_first_12_months:unknownDatum()},narrative:{trigger:unknownDatum(),action:unknownDatum()},material:Object.fromEntries(MATERIAL_FIELDS.map(f=>[f,unknownDatum()])),...x});
-const r=(id,code,extra={})=>({id,source_family:'Other',url:'https://example.org/'+id,origin:'corpus',evidence_lane:'user_voice',tier_a:code,...extra});
+const r=(id,code,extra={})=>({id,source_family:'Other',url:'https://example.org/'+id,origin:'corpus',evidence_lane:'user_voice',terms_status:'cleared',tier_a:code,...extra});
 const withStore=async fn=>{const prefix=join(tmpdir(),'sip-audit-'),dir=mkdtempSync(prefix),store=openStore(dir);try{await fn(store);}finally{store.close();assert.ok(dir.startsWith(prefix));rmSync(dir,{recursive:true,force:true});}};
 test('Scope exclusions agree across question counts, driver support, exports and readiness',()=>{
  const out=r('out',c({scope_lane:'out_of_scope'})),stock=r('stock',c());stock.tier_a.material.instrument={state:'supported',value:'stock'};

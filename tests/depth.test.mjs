@@ -16,7 +16,7 @@ import {snapshot} from '../scripts/pipeline.mjs';
 const d=(value='a reported event')=>({state:'supported',value,missing_reason:null,start:0,end:12});
 const fact=(state='unknown',value=null)=>({state,value,start:null,end:null});
 const code=(extra={})=>({evidence_class:'public_user_account',relevant:'yes',metric_node:'unknown',exit_form:'unknown',reason_families:['unknown'],journey_bucket:'unknown',initiating_event:'Unknown',final_state:'Unknown',paraphrase:'A test fixture.',scope_lane:'eligibility_unknown',plan_route:'unknown',question_ids:['Q4'],eligibility:{first_time_mf:unknownDatum(),first_sip_on_groww:unknownDatum(),within_first_12_months:unknownDatum()},narrative:{trigger:d(),action:d()},material:Object.fromEntries(MATERIAL_FIELDS.map(k=>[k,unknownDatum()])),...extra});
-const record=(i,extra={})=>({id:'fixture-'+i,origin:'corpus',source_family:'Reddit',url:`https://www.reddit.com/r/test/comments/t${i}/example/`,evidence_lane:'user_voice',tier_a:code(),...extra});
+const record=(i,extra={})=>({id:'fixture-'+i,origin:'corpus',source_family:'Reddit',url:`https://www.reddit.com/r/test/comments/t${i}/example/`,evidence_lane:'user_voice',terms_status:'cleared',tier_a:code(),...extra});
 const episode=()=>({classification:code(),bundles:Object.fromEntries(BUNDLES.map(b=>[b,[]])),factors:Object.fromEntries(FACTORS.map(f=>[f,fact()])),protective_factors:Object.fromEntries(PROTECTIVE_FACTORS.map(f=>[f,fact()])),situation:unknownDatum(),driver_hypotheses:[]});
 const permission={decision:'approved',basis:'Engineering fixture permission only; not permission for a real source',terms_url:'https://example.org/terms',checked_on:'2026-10-31',collection_allowed:true,model_processing_allowed:true};
 
@@ -42,6 +42,9 @@ test('Gate 1 needs all three floors and counts narrative roots, never multiple e
  assert.equal(corpusReadiness(rs.slice(0,99)).floor_met,false);
  assert.equal(corpusReadiness(rs.map(r=>({...r,url:'https://www.reddit.com/r/test/comments/same/example/',source_locator:''}))).floor_met,false);
  assert.equal(corpusReadiness(rs.map(r=>({...r,tier_a:code({narrative:{trigger:unknownDatum(),action:d()}})}))).floor_met,false);
+ const unresolved=rs.map(r=>({...r,terms_status:'pending',local_use_status:'pending'}));
+ assert.equal(corpusReadiness(unresolved).distinct_user_voice_source_units,0);
+ assert.equal(corpusReadiness(unresolved).local_use_unresolved_records,100);
 });
 test('Tier B selects one independent root and does not turn thin reviews or context into narratives',()=>{
  const a=record(1),b=record(2,{url:a.url}),c=record(3,{tier_a:code({narrative:{trigger:unknownDatum(),action:unknownDatum()}})}),ctx=record(4,{evidence_lane:'context'});
