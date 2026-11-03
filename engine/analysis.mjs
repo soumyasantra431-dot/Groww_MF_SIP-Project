@@ -1,0 +1,69 @@
+import { NODES,EXITS,QUESTIONS,MATERIAL_FIELDS } from './contracts.mjs';
+import { evidenceLane,hasNarrative,driverEvidence,rootGroups,isStudyEvidence,analysisDisposition } from './scope.mjs';
+export const getCode=r=>r.tier_b?.classification||r.tier_a;
+export function filtered(items,filters={}){
+ return items.filter(r=>{
+  const c=getCode(r);
+  return (!filters.lane||c?.scope_lane===filters.lane)&&(!filters.evidence_lane||evidenceLane(r)===filters.evidence_lane)&&(!filters.source||r.source_family===filters.source)&&(!filters.stage||c?.metric_node===filters.stage)&&(!filters.exit||c?.exit_form===filters.exit)&&(!filters.hypothesis||r.hypothesis===filters.hypothesis||c?.reason_families?.includes(filters.hypothesis))&&(!filters.question||c?.question_ids?.includes(filters.question));
+ });
+}
+export function rollup(items){
+ const inventoryCoded=items.filter(r=>getCode(r));const coded=inventoryCoded.filter(r=>isStudyEvidence(r));const relevant=coded.filter(r=>getCode(r).relevant==='yes');
+ const roots=rootGroups(coded),dispositions=Object.fromEntries(['eligible_user_voice','control','context','unresolved_provenance','rejected','out_of_scope','scope_inconsistent','synthetic_fixture'].map(d=>[d,inventoryCoded.filter(r=>analysisDisposition(r)===d).length]));
+ const cells=NODES.flatMap(node=>EXITS.map(exit=>{const rs=coded.filter(r=>getCode(r).metric_node===node&&getCode(r).exit_form===exit);return {metric_node:node,exit_form:exit,count:rs.length,item_ids:rs.map(r=>r.id)};}));
+ const byLane=Object.fromEntries(['target','adjacent','eligibility_unknown','context','out_of_scope'].map(lane=>[lane,inventoryCoded.filter(r=>getCode(r).scope_lane===lane).length]));
+ const sourceLanes=Object.fromEntries(['user_voice','context','control','unknown'].map(lane=>[lane,items.filter(r=>evidenceLane(r)===lane).length]));
+ return {unit:'selected user-voice input items; not investors',total:items.length,coded:inventoryCoded.length,uncoded:items.length-inventoryCoded.length,user_voice_coded: coded.length,analysis_dispositions:dispositions,source_lanes:sourceLanes,scope_lanes:byLane,relevance:{yes:relevant.length,no:inventoryCoded.filter(r=>getCode(r).relevant==='no').length,uncertain:coded.filter(r=>getCode(r).relevant==='uncertain').length},cells,
+  equations:{base:`${items.length} inventory = ${inventoryCoded.length} coded + ${items.length-inventoryCoded.length} uncoded`,matrix:`${coded.length} relevant/uncertain, non-rejected user-voice items = ${cells.reduce((s,c)=>s+c.count,0)} node × exit assignments`,source_lanes:`${items.length} = ${sourceLanes.user_voice} user voice + ${sourceLanes.context} context + ${sourceLanes.control} controls + ${sourceLanes.unknown} unresolved provenance`},
+  questions:QUESTIONS.map(([id,title,bundles])=>{const matches=coded.filter(r=>getCode(r).question_ids.includes(id));const b=coded.filter(r=>r.tier_b&&getCode(r).question_ids.includes(id));const detailed=b.filter(r=>bundles.some(k=>r.tier_b.bundles[k]?.some(d=>d.state==='supported')));return {id,title,count:matches.length,denominator:coded.length,unit:'selected relevant/uncertain user-voice items',distinct_source_roots:new Set(matches.map(r=>roots.get(r.id))).size,target_count:matches.filter(r=>getCode(r).scope_lane==='target').length,target_denominator:coded.filter(r=>getCode(r).scope_lane==='target').length,adjacent_count:matches.filter(r=>getCode(r).scope_lane==='adjacent').length,eligibility_unknown_count:matches.filter(r=>getCode(r).scope_lane==='eligibility_unknown').length,item_ids:matches.map(r=>r.id),tier_b_supported:detailed.length,tier_b_denominator:b.length,status:!inventoryCoded.length?'analysis unrun — evidence not assessed':matches.length?'partial evidence — inspect sources':'insufficient evidence',limitation:id==='Q4'?'Checking frequency is an expected evidence gap; actual coverage is not established. Inspect stated cues; never infer frequency from silence.':null,metric_tags:matches.map(r=>({id:r.id,node:getCode(r).metric_node,exit:getCode(r).exit_form,lane:getCode(r).scope_lane}))};})};
+}
+export function selectTierB(items,limit=5){
+ if(!Number.isInteger(limit)||limit<1||limit>5)throw Error('Tier B stretch selection limit is 1–5');
+ const pool=items.filter(r=>r.origin==='corpus'&&r.tier_a&&isStudyEvidence(r)&&!r.tier_b).sort((a,b)=>a.id.localeCompare(b.id));
+ const candidates=pool.filter(hasNarrative),audit=pool.filter(r=>!hasNarrative(r)&&r.tier_a.relevant==='uncertain');
+ const roots=rootGroups(items),usedRoots=new Set(items.filter(r=>r.tier_b).map(r=>roots.get(r.id)));
+ const capacity=Math.max(0,limit-items.filter(r=>r.tier_b).length);
+ const chosen=[],why={};const add=(r,reason)=>{if(!r||chosen.length>=capacity||chosen.includes(r)||usedRoots.has(roots.get(r.id)))return;chosen.push(r);usedRoots.add(roots.get(r.id));why[r.id]=reason;};
+ // Up to one quarter uncertainty cases, when available, keeps triage mistakes inspectable.
+ candidates.filter(r=>r.tier_a.relevant==='uncertain').slice(0,Math.ceil(limit/4)).forEach(r=>add(r,'uncertain-relevance narrative audit'));
+ // Greedy coverage of source × initiating stage × exit, then reason families; no priority score.
+ const seen=new Set();for(const r of candidates){const c=r.tier_a,k=[r.source_family,c.metric_node,c.exit_form].join('|');if(!seen.has(k)){add(r,'source × initiating node × exit coverage');seen.add(k);}}
+ const reasons=new Set();for(const r of candidates){if(r.tier_a.reason_families.some(x=>!reasons.has(x))){add(r,'reason-family contrast');r.tier_a.reason_families.forEach(x=>reasons.add(x));}}
+ for(const r of candidates)add(r,'remaining trigger-and-action narratives, stable ID order');
+ const remaining=Math.min(Math.ceil(limit/4),limit-chosen.length);let audits=0;for(const r of audit){if(audits>=remaining)break;const n=chosen.length;add(r,'thin uncertain input: extraction audit only, not a qualifying narrative');if(chosen.length>n)audits++;}
+ return {ids:chosen.map(r=>r.id),selection_reasons:why,eligible:candidates.length,uncertainty_audit_pool:audit.length,selected:chosen.length,cap:limit,remaining_capacity:capacity,rule:'v1 addendum: triage every family in A; prefer explicit trigger+action narratives; source × node × exit and reason contrasts, stable IDs. At most one selected item per dependent root; up to one quarter thin uncertain audit inputs only if capacity remains. No quota filling with context. Not representative.',excluded_no:items.filter(r=>r.tier_a?.relevant==='no').length};
+}
+export function evaluate(gold,predictions){
+ if(new Set(gold.map(x=>x.id)).size!==gold.length||new Set(predictions.map(x=>x.id)).size!==predictions.length)throw Error('Duplicate evaluation IDs');
+ if(predictions.some(p=>!gold.some(g=>g.id===p.id)))throw Error('Prediction outside the frozen reference set');
+ for(const p of predictions){const g=gold.find(g=>g.id===p.id);if(g.input_sha256&&p.input_sha256!==g.input_sha256)throw Error('Prediction input does not match the frozen reference input');}
+ const fields={};let invented=0,C=0,W=0,A=0,comparable=0,correct=0,missingFields=0;
+ for(const field of MATERIAL_FIELDS){let k=0,c=0,w=0,a=0,inv=0,n=0,ok=0;
+  let unrun=0;
+  for(const item of gold){const expected=item.material?.[field],prediction=predictions.find(p=>p.id===item.id)?.material?.[field];if(!expected)continue;if(!prediction){unrun++;continue;}n++;
+   if(expected.state==='supported'){k++;if(!prediction||prediction.state==='unknown')a++;else if(prediction.state==='supported'&&String(prediction.value).toLowerCase()===String(expected.value).toLowerCase())c++;else w++;}
+   if(prediction?.state==='supported'&&expected.state!=='supported')inv++;
+   if(prediction&&prediction.state===expected.state&&(expected.state!=='supported'||String(prediction.value).toLowerCase()===String(expected.value).toLowerCase()))ok++;
+  }
+  fields[field]={reference_mix:Object.fromEntries(['supported','unknown','not_applicable'].map(state=>[state,gold.filter(g=>g.material?.[field]?.state===state).length])),K:k,C:c,W:w,A:a,invented_values:inv,comparable:n,correct:ok,unrun_fields:unrun,explicit_field_recall:k?c/k:null};C+=c;W+=w;A+=a;invented+=inv;comparable+=n;correct+=ok;missingFields+=unrun;
+ }
+ const textFields=MATERIAL_FIELDS.filter(f=>f!=='source_family'),sum=k=>textFields.reduce((n,f)=>n+fields[f][k],0),textK=sum('K');
+ return {status:!predictions.length?'unrun':predictions.length<gold.length?'partial_missing_predictions':missingFields?'partial_missing_fields':'scored_pending_adjudication',label_basis:gold[0]?.label_basis||'not declared',items:gold.length,predicted_items:predictions.length,unrun_items:gold.length-predictions.length,unrun_fields:missingFields,K:C+W+A,C,W,A,invented_values:invented,explicit_field_recall:C+W+A?C/(C+W+A):null,comparable,correct,agreement:comparable?correct/comparable:null,
+  source_text:{fields:textFields,K:textK,C:sum('C'),W:sum('W'),A:sum('A'),explicit_field_recall:textK?sum('C')/textK:null,unsupported_value_flags:sum('invented_values'),unrun_fields:sum('unrun_fields')},provided_metadata:{field:'source_family',...fields.source_family},semantic_invention_count:null,fields,
+  note:'All ten fields retained. Report source-text recall separately from echoed source-family metadata. Missing predictions/fields are unrun, not abstentions. Exact free-text mismatches and unsupported-value flags require source adjudication; semantic invention count is unknown until reviewed. Assistant reference labels are not independent human verification.'};
+}
+export const csvCell=x=>{let s=String(x??'');if(/^[=+@\-\t\r]/.test(s))s="'"+s;return '"'+s.replaceAll('"','""')+'"';};
+export function csv(columns,rows){return [columns.map(csvCell).join(','),...rows.map(r=>columns.map(c=>csvCell(r[c])).join(','))].join('\r\n');}
+export function deckExports(items){
+ const coded=items.filter(r=>isStudyEvidence(r)&&r.review_state==='accepted'&&r.terms_status==='cleared');
+ const hypotheses=[...new Set(coded.map(r=>r.hypothesis?.trim()).filter(Boolean))];
+ const drivers=driverEvidence(coded);
+ const roots=rootGroups(coded),countRoots=rs=>new Set(rs.map(r=>roots.get(r.id))).size;
+ const rootBase=countRoots(coded),target=coded.filter(r=>getCode(r).scope_lane==='target');
+ return {
+  triangulation:csv(['hypothesis','engine_count','denominator','unit','record_count','record_denominator','target_root_count','target_root_denominator','adjacent_record_count','eligibility_unknown_record_count','metric_tags','source_ids','source_urls','survey_evidence','agree_or_challenge','what_changed'],hypotheses.map(h=>{const rs=coded.filter(r=>r.hypothesis?.trim()===h);return {hypothesis:h,engine_count:countRoots(rs),denominator:rootBase,unit:'dependency-grouped source roots; threads for Reddit/forums, locators for reviews/comments; not people',record_count:rs.length,record_denominator:coded.length,target_root_count:countRoots(rs.filter(r=>getCode(r).scope_lane==='target')),target_root_denominator:countRoots(target),adjacent_record_count:rs.filter(r=>getCode(r).scope_lane==='adjacent').length,eligibility_unknown_record_count:rs.filter(r=>getCode(r).scope_lane==='eligibility_unknown').length,metric_tags:rs.map(r=>getCode(r).metric_node+'/'+getCode(r).exit_form+'/'+getCode(r).scope_lane).join('; '),source_ids:rs.map(r=>r.id).join('; '),source_urls:[...new Set(rs.map(r=>r.url))].join('; '),survey_evidence:'not linked; seven survey responses unused in this pass',agree_or_challenge:'unknown — researcher review needed',what_changed:'not decided'};})),
+  opportunities:csv(['hypothesis','evidence_strength','reach_proxy','constraint_fit','testability','rival','next_test','metric_tags','source_ids'],hypotheses.map(h=>({hypothesis:h,evidence_strength:'researcher-named, source-reviewed candidate; assess independence, counterexamples and cohort fit',reach_proxy:`${countRoots(coded.filter(r=>r.hypothesis?.trim()===h))} / ${rootBase} selected dependency-grouped source roots; excludes context/controls/irrelevant/rejected; not population reach`,constraint_fit:'requires researcher assessment',testability:'requires researcher assessment',rival:'unresolved',next_test:'reconstruct intended action, actual event and ending',metric_tags:[...new Set(coded.filter(r=>r.hypothesis?.trim()===h).map(r=>getCode(r).metric_node+'/'+getCode(r).exit_form+'/'+getCode(r).scope_lane))].join('; '),source_ids:coded.filter(r=>r.hypothesis?.trim()===h).map(r=>r.id).join('; ')}))),
+  drivers:csv(['hypothesis','evidence_class','evidence_strength_tag','distinct_sources','minimum_independent_families','item_ids','tag_means'],drivers.map(h=>({...h,item_ids:h.item_ids.join('; ')}))),
+  flow:'flowchart LR\n A[Permitted public text: local CSV or optional collector] --> B[Permitted real accounts: lean review]\n B --> C[Reviewed first-person sequences]\n C --> D[Optional 3-5 deep episodes]\n D --> E[Source-linked chronology and stated factors]\n E --> F[Reported reason / situation / inference proposal]\n F --> G[Code counts / source breadth / researcher review]\n G --> H[Nine bounded answers: gated on reviewed source evidence]\n H --> I[Final evaluation and decision exports]\n J[Freeze reference labels and rubric before predictions] --> I\n G --> K[Accepted rights-cleared read-only snapshot]\n L[Transient public paste] --> M[Proposal classification with uncertainty]\n'
+ };
+}

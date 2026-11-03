@@ -1,0 +1,14 @@
+# Research originals, survey material, downloaded sources and workbook images
+# require item-specific review before any external GitHub push.
+research/
+outputs/
+public/snapshot.json
+node_modules/
+dist/
+.local/
+.dev.vars*
+.env*
+!.env.example
+*.sqlite*
+.wrangler/
+exports/

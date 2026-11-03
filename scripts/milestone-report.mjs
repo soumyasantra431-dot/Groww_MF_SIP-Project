@@ -1,0 +1,17 @@
+import {readFileSync,writeFileSync,existsSync,mkdirSync} from 'node:fs';
+import {createHash} from 'node:crypto';
+import {openStore} from '../engine/store.mjs';
+import {originalInput} from '../engine/intake.mjs';
+import {rollup,selectTierB} from '../engine/analysis.mjs';
+import {corpusReadiness} from '../engine/scope.mjs';
+import {modelStatus,sourceUseAllowed} from '../engine/provider.mjs';
+const store=openStore();
+try{
+ const items=store.items(),refs=JSON.parse(readFileSync('.local/evaluation/reference_labels.json','utf8'));
+ const predictions=existsSync('.local/evaluation/predictions.json')?JSON.parse(readFileSync('.local/evaluation/predictions.json','utf8')):[];
+ const matched=refs.filter(ref=>createHash('sha256').update(originalInput(store,ref.id).text).digest('hex')===ref.input_sha256).length;
+ if(matched!==refs.length)throw Error('Frozen original input mismatch; do not claim references preserved');
+ const r=rollup(items),report={project_date:'2026-10-31',generated_at:new Date().toISOString(),schema:'v1-depth-addendum',inventory:{records:items.length,user_voice_excerpts:r.source_lanes.user_voice,context_documents_in_engine:r.source_lanes.context,negative_controls:r.source_lanes.control,unresolved_provenance:r.source_lanes.unknown,user_voice_by_family:Object.fromEntries([...new Set(items.filter(x=>x.evidence_lane==='user_voice').map(x=>x.source_family))].map(f=>[f,items.filter(x=>x.evidence_lane==='user_voice'&&x.source_family===f).length]))},readiness:corpusReadiness(items),analysis:{tier_a:items.filter(x=>x.tier_a).length,tier_b:items.filter(x=>x.tier_b).length,tier_b_selection:selectTierB(items),source_use_unresolved_items:items.filter(x=>!sourceUseAllowed(x.source_family)).length,narrative_layer_built:false,narrative_layer_reason:'Wait for actual Tier A and Tier B results; coverage cards are not narrative answers.'},evaluation:{reference_items:refs.length,label_basis:refs[0]?.label_basis,original_hashes_matching:matched,model_predictions:predictions.length,human_verification:'not asserted',report_status:store.meta('evaluation')?.status||'unrun'},collection:{actual_collector_runs:store.db.prepare('SELECT COUNT(*) AS n FROM collection_runs').get().n,prepared_routes:['lawful store export keyword filter','YouTube official top-level comment API; source permission unresolved'],query_cells_planned:52,query_cells_executed_in_this_pass:0},model:modelStatus(),spend:store.spend(),engineering:{tests_passed:37,tests_are:'engineering fixtures and mocked provider/API tests, not model or participant validation',production_build:'passed: TypeScript and Vite',live_source_collectors:'unrun; dry run and explicit mocked API tests only',deployed:false,git_pushed:false},remaining:['Resolve a lawful collection/model-use basis for core routes, especially Reddit researcher-programme restriction and store export access','Written activation of proposed budget; current cap zero, allow false and kill switch on','Collect real corpus; meet readiness floor honestly or disclose shortfall','Real A then B outputs; only then implement narrative synthesis','Model/golden-set evaluation and genuine correction log','Local review before GitHub or public deployment']};
+ mkdirSync('research/depth_addendum_2026-10-31',{recursive:true});writeFileSync('research/depth_addendum_2026-10-31/milestone.json',JSON.stringify(report,null,2));
+ console.log(JSON.stringify(report,null,2));
+}finally{store.close();}

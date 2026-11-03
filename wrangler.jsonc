@@ -1,0 +1,27 @@
+{
+  "name": "sip-research-viewer",
+  "main": "worker/index.mjs",
+  "compatibility_date": "2026-10-31",
+  "assets": {
+    "directory": "dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": [
+      "/api/*"
+    ]
+  },
+  "vars": {
+    "MODEL_PROVIDER": "groq",
+    "MODEL_ID": "openai/gpt-oss-120b",
+    "ALLOW_MODEL_CALLS": "false",
+    "MODEL_KILL_SWITCH": "true",
+    "MODEL_SPEND_CAP_USD": "0",
+    "PUBLIC_REQUESTS_PER_HOUR": "10",
+    "REDDIT_RESEARCH_USE_APPROVED": "false",
+    "YOUTUBE_DERIVED_USE_APPROVED": "false",
+    "MODEL_BILLING_MODE": "free",
+    "GROQ_FREE_PLAN_CONFIRMED": "false",
+    "MODEL_FREE_DAILY_TOKEN_CAP": "180000",
+    "MODEL_FREE_MAX_CALLS": "10"
+  }
+}
