@@ -1,5 +1,9 @@
 # Resume state — 2 November 2026
 
+## 3 November — answer coverage gap found and scoped
+
+An architecture audit found the lean twelve-field pilot and optional 3–5 full Tier B episodes could not by themselves support all nine brief questions. `architecture.md` now defines the required observation, source and unknown rule for each Q1–Q9, plus bounded question-specific enrichment after lean triage; `implementation plan.md` records this as a required pre-answer phase. The output is nine visible cards, each supported, partial or insufficient, with reviewed source anchors and denominators. The seven families are research targets with unequal evidence roles; source-use routes and actual corpus volume remain unresolved. This finalises the **logical output contract**, not live collection or model fidelity. No new corpus, provider call, answer, GitHub push or deployment occurred in this audit.
+
 ## 3 November — seven-source, nine-answer build order clarified
 
 The Fellow clarified that the desired AI discovery engine must examine relevant mutual-fund/SIP conversations across all seven brief families and produce nine understandable, source-linked answers plus an opportunity comparison tied to the assigned month-12 active-SIP percentage. The current app is preparation, not that finished system. `architecture.md`, `context.md` and `implementation plan.md` now lead with this output contract and the sequence: source-specific collection → admission/privacy/normalisation/deduplication → anchored model proposals → deterministic arithmetic and human review → nine bounded answers → opportunity comparison. The LLM does not gather web data by itself. A platform without a permitted route is shown as a coverage gap, not filled by mock investor stories. Current status remains 0/9 answers, 0 reviewed direct Groww accounts, and failed model fidelity gate. No new corpus item, model call, GitHub push or deployment in this clarification.
