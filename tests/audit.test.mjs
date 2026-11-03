@@ -26,6 +26,13 @@ test('Conflicting scope labels are rejected rather than quietly becoming finding
 test('Synthetic cases remain outside research counts even if given public-looking labels',()=>{
  const fake=r('synthetic',c(),{data_kind:'synthetic_fixture'});assert.equal(rollup([fake]).user_voice_coded,0);assert.equal(corpusReadiness([fake]).user_voice_records,0);assert.equal(rollup([fake]).analysis_dispositions.synthetic_fixture,1);
 });
+test('Question coverage keeps proposals distinct from rights-cleared reviewed evidence',()=>{
+ const proposal=r('proposal',c()),accepted=r('accepted',c(),{review_state:'accepted',terms_status:'cleared'});
+ const onlyProposal=rollup([proposal]).questions[2];
+ assert.equal(onlyProposal.count,1);assert.equal(onlyProposal.reviewed_count,0);assert.match(onlyProposal.status,/proposals only/);
+ const combined=rollup([proposal,accepted]).questions[2];
+ assert.equal(combined.count,2);assert.equal(combined.reviewed_count,1);assert.match(combined.status,/non-target or unknown-eligibility evidence only/);
+});
 test('The nine-question plan discloses unrun analysis and all seven source families',()=>{
  const p=researchPlan([]);assert.equal(p.questions.length,9);assert.equal(p.sources.length,7);assert.ok(p.questions.every(q=>q.status==='analysis_unrun'));assert.match(p.decision_boundary,/none is selected/);
  assert.ok(p.questions.every(q=>q.answer_requirement));assert.ok(p.sources.every(s=>s.seek&&s.route&&s.tier&&s.limit));assert.match(p.workflow.dataset_rule,/Invented investor stories are test fixtures/);
