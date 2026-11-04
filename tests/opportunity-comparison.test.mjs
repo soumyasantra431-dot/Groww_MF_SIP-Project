@@ -18,3 +18,9 @@ test('Triangulation leaves unlinked survey evidence separate without a stale res
  assert.ok(exported.includes('survey remains a separate secondary lane'));
  assert.equal(exported.includes('seven survey responses'),false);
 });
+test('Locally cleared forum evidence can enter local comparison but not public comparison',()=>{
+ const local=row('local',{local_use_status:'cleared',terms_status:'flagged'});
+ assert.equal(opportunityComparisons([local]).candidates.length,1);
+ assert.equal(opportunityComparisons([local],{publicOnly:true}).candidates.length,0);
+ assert.ok(deckExports([local]).opportunities.includes('Mandate status hard to interpret'));
+});

@@ -7,6 +7,8 @@ import { scopeConsistencyIssues } from './admission.mjs';
 // remain in older audits; they are not current research-quality gates.
 export const SOURCE_PLAN={named_families:FAMILIES,collection_rule:'Report actual permission-cleared yield by family; no fixed item minimum establishes insight quality.',tier_b_limit:5};
 export const coding=r=>r.tier_b?.classification||r.tier_a;
+// Local research permission and public redistribution are separate decisions.
+export const sourceUsable=(r,{publicOnly=false}={})=>publicOnly?r.terms_status==='cleared':r.local_use_status==='cleared'||r.terms_status==='cleared';
 export function evidenceLane(r){
  if(['control','context'].includes(r.evidence_lane))return r.evidence_lane;
  const c=coding(r);

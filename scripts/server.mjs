@@ -62,7 +62,7 @@ createServer(async(req,res)=>{
   if(url.pathname==='/api/approve-answer')return send(res,saveReviewedAnswer(store,b));
   if(url.pathname==='/api/name-opportunity'){
    const r=store.item(b.id),name=String(b.name||'').trim(),why=String(b.reason||'').trim();
-   if(!r?.tier_a||r.review_state!=='accepted'||r.terms_status!=='cleared')throw Error('Accept source evidence and clear its terms before naming a candidate');
+   if(!r?.tier_a||r.review_state!=='accepted'||r.local_use_status!=='cleared')throw Error('Accept source evidence and clear it for local use before naming a candidate');
    if(!name||name.length>140||!why||why.length>400||privateSignals(name+' '+why).length)throw Error('Use a short non-identifying problem name and source-based reason');
    store.db.prepare('INSERT INTO corrections(id,item_id,old_value,new_value,reason,actor,created_at) VALUES(?,?,?,?,?,?,?)').run(randomUUID(),b.id,r.hypothesis||'',name,why,'local_reviewer',new Date().toISOString());
    store.db.prepare('UPDATE items SET hypothesis=?,revision=revision+1 WHERE id=?').run(name,b.id);store.meta('snapshot_stale',true);

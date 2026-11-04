@@ -33,6 +33,13 @@ test('Stock SIP and mixed-instrument screens do not become MF-SIP or direct-targ
  assert.equal(result.counts.accepted_findings,0);
 });
 
+test('A locally accepted source is counted locally while its public use remains flagged',()=>{
+ const screens=parseSourceScreen(corpusCsv(columns,[screen('post-1')]));
+ const result=sourceLedger([item('a','post-1',{review_state:'accepted'})],screens);
+ assert.equal(result.counts.accepted_findings,1);
+ assert.equal(result.entries[0].terms_status,'flagged');
+});
+
 test('Possible cross-site copy is flagged while both source items and links remain visible',()=>{
  const items=[item('a','post-1',{copy_key:'same-long-copy'}),{...item('b','reply-2',{source_family:'Other',url:'https://example.org/other',copy_key:'same-long-copy'})}];
  const result=sourceLedger(items,[]);
