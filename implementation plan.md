@@ -1,5 +1,7 @@
 # Phase-wise implementation plan — Groww SIP discovery engine
 
+**Parked on 4 November:** this November execution plan is retained but inactive while the Fellow returns to the [31 October PM baseline](ACTIVE_PM_BASELINE_2026-10-31.md). No phase below resumes merely because it appears in this file.
+
 ## 3 November priority and finish line
 
 The next phase is **real source intake and a validated end-to-end slice**, not more generic dashboard scaffolding. For every one of the seven named source families, record `route status → original items screened → SIP-relevant → admitted → deduplicated roots → model proposals → reviewer-accepted roots → questions supported`; show zero and the reason where a route is unavailable. Use App/Play originals only through a cleared collection path; their developer APIs do not give access to Groww's owner reviews. Reddit research access is unresolved. YouTube's official comments API is a candidate after a source-use decision; a key is not needed for the current planning and local code. Forums and other publishers need individual use checks. Do not replace any missing family with simulated investor stories.

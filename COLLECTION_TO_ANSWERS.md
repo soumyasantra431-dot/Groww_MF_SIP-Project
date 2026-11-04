@@ -1,5 +1,7 @@
 # Discovery engine: collection to nine answers
 
+**Parked on 4 November:** this later engine contract remains available for reference. The active PM starting point is the [31 October baseline](ACTIVE_PM_BASELINE_2026-10-31.md).
+
 **Status on 3 November 2026:** this is the working contract and a truthful progress ledger, not a claim that collection or the AI analysis is complete. The assignment metric is the share of first-time mutual-fund investors with at least one successful SIP instalment in the 30 days before month 12. Public text cannot supply Groww's investor-level numerator or denominator.
 
 ## What the engine is for

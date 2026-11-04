@@ -1,5 +1,7 @@
 # SIP Research Workspace
 
+**Active PM position from 4 November:** [return to the 31 October understanding](ACTIVE_PM_BASELINE_2026-10-31.md). The later prototype and its instructions below are preserved as parked working material. They are not the active research decision or validated investor findings.
+
 **Latest checkpoint:** [Architecture decision](research/ENGINE_ARCHITECTURE_LOCK_2026-11-02.md) sets the discovery engine's output and processing contract. [Resume state](PROJECT_STATE.md) records the current build. The local workspace has 20 historical inputs, zero coded results and no completed nine-question answers. Six provider attempts are recorded, with zero USD spend; none produced a validated research extraction. The separate lean pilot remains gated. The old full-packet batch, CLI prediction and live-paste routes are held, including in the production Worker, until the lean path is validated and integrated.
 
 Independent academic research instrument for Groww's first-year MF/SIP continuation brief. No investment advice or fund/stock recommendations. No automatic opportunity selection or public-post prevalence estimates.

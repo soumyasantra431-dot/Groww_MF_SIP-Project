@@ -1,5 +1,7 @@
 # Architecture — Groww SIP AI discovery engine prototype
 
+**Parked on 4 November:** this November architecture is retained for reference after the Fellow requested a return to the [31 October PM baseline](ACTIVE_PM_BASELINE_2026-10-31.md). It is not the active starting decision. Revisit only after the problem/evidence direction is clear again.
+
 ## 3 November operating decision: build around the answers
 
 The product contract is **nine source-linked research answers plus a no-score comparison of potential opportunity areas relevant to the assigned month-12 active-SIP percentage**. All seven named source families are collection targets and must have their actual intake, exclusions and analysis status visible. They are not currently seven live integrations. A zero in a family means an access or collection gap, never evidence that investors have no relevant experiences there.

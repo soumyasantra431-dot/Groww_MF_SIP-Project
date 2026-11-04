@@ -1,5 +1,9 @@
 # Resume state — 2 November 2026
 
+## Active reset — 4 November 2026
+
+The Fellow asked to return to the **31 October PM understanding** before further engine research or building. Read `ACTIVE_PM_BASELINE_2026-10-31.md` first. The Git branch `archive/nov03-engine-work-before-oct31-baseline` preserves the pre-reset tracked checkout. The ignored `research/` and `.local/` folders were copied to `D:\Groww_ Graduation projec t\archive-2026-11-04-before-pm-baseline`; original folders remain untouched. API key files were not copied as part of this archive and remain in their existing local locations. The current prototype code, later documents, pilot attempts and local data are parked, not erased. Everything below is dated history, not a request to resume the November plan automatically.
+
 ## 3 November — answer coverage gap found and scoped
 
 An architecture audit found the lean twelve-field pilot and optional 3–5 full Tier B episodes could not by themselves support all nine brief questions. `architecture.md` now defines the required observation, source and unknown rule for each Q1–Q9, plus bounded question-specific enrichment after lean triage; `implementation plan.md` records this as a required pre-answer phase. The output is nine visible cards, each supported, partial or insufficient, with reviewed source anchors and denominators. The seven families are research targets with unequal evidence roles; source-use routes and actual corpus volume remain unresolved. This finalises the **logical output contract**, not live collection or model fidelity. No new corpus, provider call, answer, GitHub push or deployment occurred in this audit.
