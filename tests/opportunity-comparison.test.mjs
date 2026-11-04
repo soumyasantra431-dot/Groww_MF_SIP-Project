@@ -13,3 +13,8 @@ test('Comparison counts reviewed dependent roots, never reason-only or rejected 
 test('No accepted named source means no candidate problem',()=>{
  const data=opportunityComparisons([row('1',{hypothesis:''})]);assert.equal(data.candidates.length,0);assert.equal(data.status,'no_reviewed_candidate_problems');
 });
+test('Triangulation leaves unlinked survey evidence separate without a stale respondent count',()=>{
+ const exported=deckExports([row('1')]).triangulation;
+ assert.ok(exported.includes('survey remains a separate secondary lane'));
+ assert.equal(exported.includes('seven survey responses'),false);
+});
