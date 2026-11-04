@@ -1,6 +1,6 @@
 import {FAMILIES,QUESTIONS} from './contracts.mjs';
 import {coding,evidenceLane,isStudyEvidence,rootGroups} from './scope.mjs';
-import {WORKFLOW,SOURCE_ROUTES,ANSWER_REQUIREMENTS} from './workflow.mjs';
+import {WORKFLOW,SOURCE_ROUTES,ANSWER_REQUIREMENTS,DISCOVERY_CONTRACT_VERSION} from './workflow.mjs';
 import {opportunityComparisons} from './opportunity-comparison.mjs';
 
 const plans={
@@ -16,7 +16,7 @@ const plans={
 };
 export function researchPlan(items){
  const admitted=items.filter(r=>isStudyEvidence(r)),roots=rootGroups(admitted),coded=items.filter(r=>coding(r));
- return {workflow:WORKFLOW,opportunities:opportunityComparisons(items),purpose:'Turn selected public SIP accounts into traceable evidence and questions for the next PM decision.',decision_boundary:'The engine proposes patterns and candidate contexts. The researcher validates and selects a segment, moment and problem; none is selected now.',
+ return {contract_version:DISCOVERY_CONTRACT_VERSION,workflow:WORKFLOW,opportunities:opportunityComparisons(items),purpose:'Turn selected public SIP accounts into traceable evidence and questions for the next PM decision.',decision_boundary:'The engine proposes patterns and candidate contexts. The researcher validates and selects a segment, moment and problem; none is selected now.',
   narrative_status:items.some(r=>r.tier_a)&&items.some(r=>r.tier_b)?'some extraction exists; source-grounded narrative implementation and review still required':'not built: reviewed real episodes and question-specific evidence are required first',
   questions:QUESTIONS.map(([id,title])=>({id,title,purpose:plans[id][0],needed_evidence:plans[id][1],next_method:plans[id][2],answer_requirement:ANSWER_REQUIREMENTS[id],status:!coded.length?'analysis_unrun':'proposals_require_source_review',proposed_items:admitted.filter(r=>coding(r).question_ids.includes(id)).length,denominator:admitted.length})),
   sources:FAMILIES.map(f=>{const family=items.filter(r=>r.source_family===f),voice=family.filter(r=>evidenceLane(r)==='user_voice'),rs=admitted.filter(r=>r.source_family===f);return {source_family:f,user_voice_inputs:voice.length,coded_user_voice:rs.length,tier_b:rs.filter(r=>r.tier_b).length,dependency_grouped_roots:new Set(rs.map(r=>roots.get(r.id))).size,context_or_controls:family.filter(r=>['context','control'].includes(evidenceLane(r))).length,...SOURCE_ROUTES[f],connection_status:'input supported; automated source connection not established'};})};

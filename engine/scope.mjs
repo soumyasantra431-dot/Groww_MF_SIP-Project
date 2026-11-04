@@ -1,8 +1,11 @@
 import { sourceRootKey,sourceUnitKey,normalizeForFingerprint } from './normalization.mjs';
+import { FAMILIES } from './contracts.mjs';
 export {sourceRootKey} from './normalization.mjs';
 import { scopeConsistencyIssues } from './admission.mjs';
 
-export const SOURCE_PLAN={core:['Play Store','Reddit','Investing forums'],support:['App Store','YouTube'],optional:['Social','Other'],tier_a_target:[280,350],narrative_pool:[45,50],tier_b_target:5};
+// Phase 0: source yield and permission decide volume. Historical numeric floors
+// remain in older audits; they are not current research-quality gates.
+export const SOURCE_PLAN={named_families:FAMILIES,collection_rule:'Report actual permission-cleared yield by family; no fixed item minimum establishes insight quality.',tier_b_limit:5};
 export const coding=r=>r.tier_b?.classification||r.tier_a;
 export function evidenceLane(r){
  if(['control','context'].includes(r.evidence_lane))return r.evidence_lane;
@@ -43,12 +46,11 @@ export function corpusReadiness(items){
  const voice=screenedVoice.filter(r=>r.local_use_status==='cleared'||r.terms_status==='cleared');
  const units=new Set(voice.map(sourceUnitKey)),families=[...new Set(voice.map(r=>r.source_family))];
  const narrative=voice.filter(hasNarrative),roots=rootGroups(voice),narrativeRoots=new Set(narrative.map(r=>roots.get(r.id)));
- const floor=units.size>=100&&families.length>=3&&narrativeRoots.size>=20;
- return {status:floor?'floor_met_proposals_need_review':'floor_not_met',floor_met:floor,targets:SOURCE_PLAN,
+ return {status:units.size?'source_inputs_present_review_required':'no_permitted_source_inputs',plan:SOURCE_PLAN,
   user_voice_records:voice.length,screened_user_voice_records:screenedVoice.length,local_use_unresolved_records:screenedVoice.length-voice.length,distinct_user_voice_source_units:units.size,source_families:families,narratives_with_stated_trigger_and_action:narrative.length,distinct_narrative_roots:narrativeRoots.size,
-  floor:{source_units:100,families:3,narrative_roots:20},exclusions:{context:raw.filter(r=>evidenceLane(r)==='context').length,controls:raw.filter(r=>evidenceLane(r)==='control').length,unresolved_lane:raw.filter(r=>evidenceLane(r)==='unknown').length,known_irrelevant_or_rejected:raw.filter(r=>coding(r)?.relevant==='no'||r.review_state==='rejected').length},
-  formulas:[`${units.size} distinct source units / 100 minimum`,`${families.length} families / 3 minimum`,`${narrativeRoots.size} distinct narrative roots / 20 minimum`],
-  note:'Gate 1 counts only locally permitted, research-eligible source inputs. Pending or restricted source seeds remain visible inventory but cannot fill the floor. Local analysis permission does not clear public redistribution. Readiness is not representative sampling or proof of answer quality; coded narrative cues remain proposals until reviewed.'};
+  exclusions:{context:raw.filter(r=>evidenceLane(r)==='context').length,controls:raw.filter(r=>evidenceLane(r)==='control').length,unresolved_lane:raw.filter(r=>evidenceLane(r)==='unknown').length,known_irrelevant_or_rejected:raw.filter(r=>coding(r)?.relevant==='no'||r.review_state==='rejected').length},
+  formulas:[`${units.size} distinct locally permitted source units`,`${families.length} source families represented`,`${narrativeRoots.size} distinct proposed narrative roots`],
+  note:'Counts describe actual locally permitted, research-eligible source inputs; no hard corpus size proves answer quality. Pending/restricted seeds remain inventory only. Local analysis permission does not clear public redistribution. Coded narrative cues remain proposals until reviewed.'};
 }
 export function driverEvidence(items){
  const voice=items.filter(r=>isStudyEvidence(r)),roots=rootGroups(voice),groups=new Map();

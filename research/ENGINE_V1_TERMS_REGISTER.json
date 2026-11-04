@@ -1,0 +1,83 @@
+[
+  {
+    "source_family": "Reddit",
+    "status": "restricted — research programme permission unresolved",
+    "checked_on": "2026-10-31",
+    "url": "https://support.reddithelp.com/hc/en-us/articles/42728983564564-Responsible-Builder-Policy",
+    "issue": "Responsible Builder Policy, Researchers section, says research using data collected outside the Reddit for Researchers programme violates this policy; API access also requires explicit approval. Re-inspected 31 October 2026. No new collection or model processing of Reddit text is run. Existing seed excerpts remain local unprocessed records. Manual copying is not presented as a workaround. A valid programme or other explicit permission basis is required before use."
+  },
+  {
+    "source_family": "Investing forums",
+    "status": "TradingQ&A bounded local use recorded; public redistribution held",
+    "checked_on": "2026-11-01",
+    "url": "https://tradingqna.com/tos",
+    "issue": "Supersedes the 31 October all-use hold using the existing 1 November SOURCE_USE_DECISION.md: bounded noncommercial local academic copying and model processing of selected de-identified TradingQ&A excerpts admitted by researcher interpretation of CC BY-NC-SA 3.0. No crawler, training, commercial use, blanket forum clearance or public redistribution of raw text/expressive paraphrases. Attribution for public distribution remains unresolved. This register synchronisation is not a new legal or original-source review."
+  },
+  {
+    "source_family": "YouTube",
+    "status": "flagged — collection and model-use basis unresolved",
+    "checked_on": "2026-10-31",
+    "url": "https://developers.google.com/youtube/terms/developer-policies",
+    "issue": "Official commentThreads.list supports bounded top-level text retrieval, but policies III.E.2 and III.E.4.h restrict aggregation/derived data and III.E.4.d requires non-authorised data deletion or refresh within 30 days. Optional local collector is prepared, dry-run only; no API requests made. A working API key is not permission for this analysis. A valid source-specific basis is still needed; manual collection cannot bypass the same restrictions."
+  },
+  {
+    "source_family": "Play Store",
+    "status": "flagged — collection route unapproved",
+    "checked_on": "2026-10-31",
+    "url": "https://developers.google.com/android-publisher/reply-to-reviews",
+    "issue": "The documented developer review-management API is for the account's own production apps. Our credentials do not authorise Groww review access. This is an access finding, not a complete public-web terms review."
+  },
+  {
+    "source_family": "App Store",
+    "status": "restricted — no App Store review corpus under the checked India terms",
+    "checked_on": "2026-11-04",
+    "url": "https://www.apple.com/in/legal/internet-services/itunes/in/terms-en.html",
+    "issue": "Apple Media Services Terms for India, section F, prohibit automated or equivalent manual scraping, copying, measurement or analysis of service content. The App Store Connect review API also concerns an app owner's own reviews. No review collection, model processing or public review-derived dataset is admitted through the current route; a new explicit permission basis would require fresh review."
+  },
+  {
+    "source_family": "Social",
+    "status": "pending — platform not selected",
+    "checked_on": null,
+    "url": "",
+    "issue": "No social platform or collector selected. Terms are unreviewed until an actual platform/source is named. No private groups or profile harvesting."
+  },
+  {
+    "source_family": "Other",
+    "status": "pending — original-specific",
+    "checked_on": null,
+    "url": "",
+    "issue": "No generic clearance. Actual original domains are listed separately where used. Documentation is capability/context, never investor behaviour."
+  },
+  {
+    "source_family": "Other",
+    "source_key": "Groq documentation controls",
+    "status": "flagged — reuse not cleared",
+    "checked_on": "2026-10-31",
+    "url": "https://console.groq.com/docs/structured-outputs",
+    "issue": "Official documentation inspected as a deliberately irrelevant evaluation control. Content/API capability is not a reuse licence. No raw-text publication or model-use clearance claimed."
+  },
+  {
+    "source_family": "Other",
+    "source_key": "Cloudflare documentation controls",
+    "status": "flagged — website terms reviewed, use not cleared",
+    "checked_on": "2026-10-31",
+    "url": "https://www.cloudflare.com/website-terms/",
+    "issue": "Website terms inspected. Selected documentation excerpt is an irrelevant control, not a SIP investor. No raw public republication; model-use/reuse decision remains pending."
+  },
+  {
+    "source_family": "Other",
+    "source_key": "Google documentation controls",
+    "status": "flagged — API terms reviewed, use not cleared",
+    "checked_on": "2026-10-31",
+    "url": "https://developers.google.com/terms",
+    "issue": "API terms and the review-management documentation inspected. Not a licence for Groww customer data or blanket document reuse; irrelevant control only."
+  },
+  {
+    "source_family": "Other",
+    "source_key": "First-person Groww SIP retrospective blog",
+    "status": "read-only source assessment; text reuse and model processing held",
+    "checked_on": "2026-11-03",
+    "url": "https://blog.tuhinkarmakar.me/2021/12/my-financial-journey.html",
+    "issue": "The original page is a public first-person account and carries an author copyright notice. No explicit reuse permission was found in the page or a focused terms search. Retain only a bounded source-linked PM assessment; do not import original text, run a model on it or publish expressive paraphrases until a permission basis is established."
+  }
+]

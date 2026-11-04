@@ -126,7 +126,7 @@ The database should enforce stable IDs and valid review/source states. A rejecte
   "relevance": "yes|no|uncertain",
   "cohort_fit": "direct|adjacent|unknown",
   "metric_node": "setup_mandate|first_instalment|second_instalment|months_3_6|months_7_12|recovery|unknown",
-  "exit_form": "involuntary|voluntary|passive|not_real|continuer|mixed|unknown",
+  "exit_form": "involuntary|voluntary|passive|not_real|continuer|unknown",
   "reported_reason": {"state": "supported|unknown|not_applicable", "value": null, "anchor": null},
   "action_status": "intended|attempted|completed|reversed|hypothetical|unknown",
   "final_outcome": {"state": "supported|unknown|not_applicable", "value": null, "anchor": null},
@@ -134,7 +134,7 @@ The database should enforce stable IDs and valid review/source states. A rejecte
 }
 ```
 
-This is a **logical** contract, not a claim that the existing JSON schema already accepts every listed value. Before implementation, align the enums and migrations with current `engine/contracts.mjs`, `engine/lean.mjs`, tests and stored revisions. `metric_node` and `exit_form` describe the *initiating focal event*; `final_outcome` describes what happened afterward. Several reason families may be supported at once, so do not force a single mutually exclusive root cause.
+This is a **logical** contract, not a claim that the existing JSON schema already accepts every listed value. Before implementation, align the enums and migrations with current `engine/contracts.mjs`, `engine/lean.mjs`, tests and stored revisions. `metric_node` and `exit_form` describe the *initiating focal event*; `final_outcome` describes what happened afterward. A mixed sequence needs separate event records or an unknown focal tag when the source cannot support one. Several reason families may be supported at once, so do not force a single mutually exclusive root cause.
 
 ## 7. Arithmetic and answer generation
 

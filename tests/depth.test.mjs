@@ -36,12 +36,15 @@ test('Context, controls, irrelevant and rejected inputs cannot pad question or m
  const rs=[record(1),record(2,{evidence_lane:'control'}),record(3,{tier_a:code({evidence_class:'company_reported',scope_lane:'context'})}),record(4,{tier_a:code({relevant:'no',scope_lane:'out_of_scope'})}),record(5,{review_state:'rejected'})];
  const r=rollup(rs);assert.equal(r.total,5);assert.equal(r.coded,5);assert.equal(r.user_voice_coded,1);assert.equal(r.questions[3].denominator,1);assert.equal(r.questions[3].target_count,0);assert.equal(r.cells.reduce((s,c)=>s+c.count,0),1);
 });
-test('Gate 1 needs all three floors and counts narrative roots, never multiple excerpts as threads',()=>{
+test('Coverage reports actual source units and narrative roots without a hard research-quality floor',()=>{
  const rs=Array.from({length:100},(_,i)=>record(i,{source_family:i<80?'Reddit':i<90?'Play Store':'Investing forums',source_locator:i>=80?'review-'+i:'',url:i<80?`https://www.reddit.com/r/test/comments/t${i}/example/`:`https://example.org/topic/${i}`}));
- assert.equal(corpusReadiness(rs).floor_met,true);
- assert.equal(corpusReadiness(rs.slice(0,99)).floor_met,false);
- assert.equal(corpusReadiness(rs.map(r=>({...r,url:'https://www.reddit.com/r/test/comments/same/example/',source_locator:''}))).floor_met,false);
- assert.equal(corpusReadiness(rs.map(r=>({...r,tier_a:code({narrative:{trigger:unknownDatum(),action:d()}})}))).floor_met,false);
+ assert.equal(corpusReadiness(rs).distinct_user_voice_source_units,100);
+ assert.equal(corpusReadiness(rs).source_families.length,3);
+ assert.equal(corpusReadiness(rs).distinct_narrative_roots,100);
+ assert.equal(corpusReadiness(rs.slice(0,99)).distinct_user_voice_source_units,99);
+ assert.ok(corpusReadiness(rs.map(r=>({...r,url:'https://www.reddit.com/r/test/comments/same/example/',source_locator:''}))).distinct_narrative_roots<100);
+ assert.equal(corpusReadiness(rs.map(r=>({...r,tier_a:code({narrative:{trigger:unknownDatum(),action:d()}})}))).distinct_narrative_roots,0);
+ assert.ok(!('floor_met' in corpusReadiness(rs)));
  const unresolved=rs.map(r=>({...r,terms_status:'pending',local_use_status:'pending'}));
  assert.equal(corpusReadiness(unresolved).distinct_user_voice_source_units,0);
  assert.equal(corpusReadiness(unresolved).local_use_unresolved_records,100);
