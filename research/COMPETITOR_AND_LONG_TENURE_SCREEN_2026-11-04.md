@@ -6,6 +6,8 @@
 
 This is a **bounded, purposive screen**, not a systematic corpus or market-share study. It does not establish frequency, effect on continuation, or a winning segment. Public user accounts, company capability pages, editorial explanations, and industry counts are separate lanes. No survey responses were used in this pass.
 
+After the initial comparison, four additional targeted web queries sought a first-year Groww account and longer-tenure accounts. Results were leads, not admitted records: the visible first-year hits were mainly Reddit, generic advice or simulated examples; the inspected non-Reddit account below was older and on Coin. This is **four queries, zero newly admitted direct-target episodes**, not a population finding or a claim that none exist. Reddit hits were not added to the corpus under the [current Responsible Builder Policy](https://support.reddithelp.com/hc/en-us/articles/42728983564564-Responsible-Builder-Policy) noted in the prior web-first decision.
+
 ## Counting and cohort discipline
 
 - [AMFI's September 2026 SIP table](https://www.amfiindia.com/mutual-fund) reports **1,088.9 lakh outstanding SIP accounts**, **1,006.47 lakh contributing SIP accounts**, **63.26 lakh newly registered SIPs** and **49.68 lakh discontinued/tenure-completed SIPs** for that month. The unit is SIP **accounts/plans**, not distinct people. Conversion of the first number is `1,088.9 lakh / 100 lakh per crore = 10.889 crore SIP accounts`; this does not yield a first-time Groww investor count. The ending category mixes discontinuation with completed tenure, and AMFI notes the failed-instalment cessation rule. **Class:** industry/third-party administrative report; high confidence for the stated units, none for Groww cohort inference.
