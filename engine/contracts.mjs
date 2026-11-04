@@ -71,8 +71,8 @@ export function safeUrl(value) {
  try {const u=new URL(value);if(u.protocol!=='https:'||u.username||u.password||u.port||u.hostname==='localhost'||u.hostname.endsWith('.local')||/^(127\.|10\.|192\.168\.|169\.254\.|172\.(1[6-9]|2\d|3[01])\.)/.test(u.hostname)||u.hostname.includes(':')||!u.hostname.includes('.')||privateSignals(u.href).length||/\/(user|users|u|profile)\//i.test(u.pathname))return null;return u.href;}catch{return null;}
 }
 export function unknownDatum(){return {state:'unknown',value:null,missing_reason:'not_stated',start:null,end:null};}
-export function persistable(result) {
- return JSON.parse(JSON.stringify(result,(key,value)=>key==='start'||key==='end'?undefined:value));
+export function persistable(result,{retainOffsets=false}={}) {
+ return JSON.parse(JSON.stringify(result,(key,value)=>!retainOffsets&&(key==='start'||key==='end')?undefined:value));
 }
 export function validateEvidence(result,text,sourceFamily) {
  const all=[...Object.entries(result.material),...Object.entries(result.eligibility||{}),...Object.entries(result.narrative||{}),...(result.situation?[['situation',result.situation]]:[]),...Object.entries(result.bundles||{}).flatMap(([k,v])=>v.map(x=>[k,x]))];

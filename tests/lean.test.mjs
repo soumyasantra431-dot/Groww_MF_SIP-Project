@@ -1,7 +1,7 @@
 import test from 'node:test';import assert from 'node:assert/strict';
 import {buildRequest,requestSize} from '../engine/request.mjs';
 import {leanSchema,leanWireSchema,validateLean,expandLeanWire,expandLeanWireTolerant,ambiguousLeanAnchors,LEAN_TEXT_FIELDS} from '../engine/lean.mjs';
-import {MATERIAL_FIELDS} from '../engine/contracts.mjs';
+import {MATERIAL_FIELDS,persistable} from '../engine/contracts.mjs';
 const empty={state:'unknown',value:null,start:null,end:null};
 test('Lean strict packet proposes supported quotes and fits frozen-style long synthetic text',()=>{
  const p=buildRequest({source_family:'Other',text:'Synthetic SIP fixture. '.repeat(150)},'lean');
@@ -55,4 +55,30 @@ test('One bad quote or value is logged without discarding supported fields',()=>
  assert.equal(r.value.material.outcome.state,'unknown');
  assert.equal(r.value.metric_node.state,'unknown');
  assert.deepEqual(r.rejected_fields,[{field:'outcome',code:'quote_absent'},{field:'metric_node',code:'invalid_value'}]);
+});
+test('Conflicting focal timing tags are held for review instead of counted',()=>{
+ const text='I began a SIP four months ago and paused it today.';
+ const wire={findings:[
+  {field:'metric_node',value:'months_3_6',quote:'four months ago and paused it today'},
+  {field:'journey_stage',value:'setup',quote:'I began a SIP'}
+ ]};
+ assert.throws(()=>expandLeanWire(wire,text,'Other'),/local validation/);
+ const result=expandLeanWireTolerant(wire,text,'Other');
+ assert.equal(result.value.metric_node.state,'unknown');
+ assert.equal(result.value.material.journey_stage.state,'unknown');
+ assert.deepEqual(result.rejected_fields.map(x=>x.code),['tag_pair_conflict','tag_pair_conflict']);
+});
+test('Lean proposal retains only offsets and derived labels for local source review',()=>{
+ const text='The second instalment failed.';
+ const result=expandLeanWire({findings:[{field:'metric_node',value:'second_instalment',quote:'second instalment'}]},text,'Other');
+ const kept=persistable(result,{retainOffsets:true});
+ assert.equal(kept.metric_node.start,4);
+ assert.equal(kept.metric_node.end,21);
+ assert.equal(JSON.stringify(kept).includes(text),false);
+});
+test('First SIP wording cannot anchor a first-instalment tag',()=>{
+ const text='My first SIP on Groww had an auto-debit failure last month.';
+ const r=expandLeanWireTolerant({findings:[{field:'metric_node',value:'first_instalment',quote:'first SIP on Groww had an auto-debit failure'}]},text,'Other');
+ assert.equal(r.value.metric_node.state,'unknown');
+ assert.deepEqual(r.rejected_fields,[{field:'metric_node',code:'invalid_value'}]);
 });

@@ -55,6 +55,6 @@ export async function classify(store,input,tier='a',options={}){
  if(tier!=='lean')validateEvidence(tier==='a'?value:{...value,...value.classification},input.text,input.source_family);
  // Only derived labels/paraphrases and evidence offsets (not spans) can leave transient memory.
  telemetry.processing_status=telemetry.field_rejections?.length?'partial_proposal':'completed';telemetry.latency_ms=Math.round(performance.now()-started);
- return {result:persistable(value),run:{model:state.model,extraction_version:EXTRACTION_VERSION,request_profile:preflight.request_profile,proposal:true,reservation:id,billing_mode:state.billing_mode,telemetry}};
+ return {result:persistable(value,{retainOffsets:tier==='lean'}),run:{model:state.model,extraction_version:EXTRACTION_VERSION,request_profile:preflight.request_profile,proposal:true,reservation:id,billing_mode:state.billing_mode,telemetry}};
  }catch(error){telemetry.processing_status='failed';telemetry.latency_ms=Math.round(performance.now()-started);error.telemetry=telemetry;throw error;}
 }
