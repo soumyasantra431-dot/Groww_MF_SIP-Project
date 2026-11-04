@@ -3,7 +3,7 @@ import { mkdirSync,writeFileSync,readFileSync } from 'node:fs';
 import { join,basename } from 'node:path';
 import { createHash,randomUUID } from 'node:crypto';
 import { FAMILIES,privateSignals,safeUrl } from './contracts.mjs';
-import { normalizeSourceFamily,fingerprint,copyCandidateKey } from './normalization.mjs';
+import { normalizeSourceFamily,fingerprint,copyCandidateKey,sourceUnitKey } from './normalization.mjs';
 // Local raw corpus is a machine input, not a spreadsheet export: never prefix a
 // leading -, +, = or @ in the author's original text. Deck CSVs use a different writer.
 export function corpusCsv(columns,rows){const cell=v=>'"'+String(v??'').replaceAll('"','""')+'"';return [columns.map(cell).join(','),...rows.map(r=>columns.map(c=>cell(r[c])).join(','))].join('\r\n');}
@@ -23,16 +23,17 @@ export function parseCorpus(csv){
 }
 export function importCorpus(store,csv){
  const rows=parseCorpus(csv);
- const existing=new Map(),cache=new Map();
+ const existing=new Map(),units=new Map(),cache=new Map();
  for(const r of store.db.prepare('SELECT id,raw_file,row_index FROM items WHERE raw_file IS NOT NULL ORDER BY id').all()){
   if(!cache.has(r.raw_file))cache.set(r.raw_file,parseCorpus(readFileSync(join(store.dir,'raw',basename(r.raw_file)),'utf8')));
-  const input=cache.get(r.raw_file)[r.row_index];if(input&&!existing.has(fingerprint(input)))existing.set(fingerprint(input),r.id);
+  const input=cache.get(r.raw_file)[r.row_index];if(input){const key=fingerprint(input);if(!existing.has(key))existing.set(key,r.id);const unit=sourceUnitKey(input);if(!units.has(unit))units.set(unit,key);}
  }
  const pending=[],aliases=[];
- rows.forEach((r,i)=>{const key=fingerprint(r);if(existing.has(key)){aliases.push({input_row:i+1,canonical_item_id:existing.get(key),basis:'same source unit and normalised input text'});return;}
+ rows.forEach((r,i)=>{const key=fingerprint(r),unit=sourceUnitKey(r);if(existing.has(key)){aliases.push({input_row:i+1,canonical_item_id:existing.get(key),basis:'same source unit and normalised input text'});return;}
+  if(units.has(unit)&&units.get(unit)!==key)throw Error('This source locator has different text in the corpus. Review the source version before importing; no new raw file was saved.');
   // Keep established IDs stable so frozen reference input hashes/links remain valid.
   const id='I-'+createHash('sha256').update(r.url.trim()+'\n'+r.text+(r.source_locator?'\nlocator:'+r.source_locator:'')).digest('hex').slice(0,20);
-  existing.set(key,id);pending.push({r,i,id});
+  existing.set(key,id);units.set(unit,key);pending.push({r,i,id});
  });
  if(!pending.length)return {inserted:0,duplicates:rows.length,rows:rows.length,aliases,note:'All inputs already present after source/text normalisation; no additional raw file saved'};
  const dir=join(store.dir,'raw');mkdirSync(dir,{recursive:true});

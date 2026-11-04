@@ -4,6 +4,7 @@ import { createServer as createViteServer } from 'vite';
 import { readFileSync,writeFileSync,mkdirSync } from 'node:fs';
 import { openStore } from '../engine/store.mjs';
 import { importCorpus } from '../engine/intake.mjs';
+import { parseSourceScreen,sourceLedger } from '../engine/source-ledger.mjs';
 import { corpusReadiness,driverEvidence } from '../engine/scope.mjs';
 import { researchPlan } from '../engine/research-plan.mjs';
 import { filtered,rollup,selectTierB,deckExports } from '../engine/analysis.mjs';
@@ -28,7 +29,9 @@ createServer(async(req,res)=>{
   if(!url.pathname.startsWith('/api/'))return vite.middlewares(req,res,()=>send(res,{error:'Not found'},404));
   if(req.method==='POST'&&(req.headers.origin&&![origin,`http://localhost:${port}`].includes(req.headers.origin)||!req.headers['content-type']?.startsWith('application/json')))return send(res,{error:'Same-origin JSON required'},403);
   if(req.method==='GET'&&url.pathname==='/api/workspace'){
-   const all=store.items(),items=filtered(all,Object.fromEntries(url.searchParams));return send(res,{mode:'local',items,research_plan:researchPlan(items),rollup:rollup(items),readiness:corpusReadiness(all),drivers:driverEvidence(items),survey_secondary:surveySecondary(),model:modelStatus(),pipeline:{lean_batch_ready:false,live_paste_ready:false,reason:'Lean extraction failed its development quality gate; source-reviewed manual evidence is the current fallback. Batch and live paste remain held.'},spend:store.spend(),selection:selectTierB(all),active,quality:store.meta('evaluation'),development:developmentStatus(),collection_runs:store.db.prepare('SELECT * FROM collection_runs ORDER BY created_at DESC LIMIT 30').all(),runs:store.db.prepare('SELECT id,item_id,tier,state,attempts,error,created_at,model FROM runs ORDER BY created_at DESC LIMIT 30').all()});
+   const all=store.items(),items=filtered(all,Object.fromEntries(url.searchParams)),collectionRuns=store.db.prepare('SELECT * FROM collection_runs ORDER BY created_at DESC LIMIT 30').all();
+   const screen=parseSourceScreen(readFileSync('research/phase_one_2026-11-04/source_screen.csv','utf8'));
+   return send(res,{mode:'local',items,research_plan:researchPlan(items),rollup:rollup(items),source_ledger:sourceLedger(all,screen,collectionRuns),readiness:corpusReadiness(all),drivers:driverEvidence(items),survey_secondary:surveySecondary(),model:modelStatus(),pipeline:{lean_batch_ready:false,live_paste_ready:false,reason:'Lean extraction failed its development quality gate; source-reviewed manual evidence is the current fallback. Batch and live paste remain held.'},spend:store.spend(),selection:selectTierB(all),active,quality:store.meta('evaluation'),development:developmentStatus(),collection_runs:collectionRuns,runs:store.db.prepare('SELECT id,item_id,tier,state,attempts,error,created_at,model FROM runs ORDER BY created_at DESC LIMIT 30').all()});
   }
   if(req.method==='GET'&&url.pathname==='/api/terms'){return send(res,JSON.parse(readFileSync('research/ENGINE_V1_TERMS_REGISTER.json','utf8')));}
   if(req.method!=='POST')return send(res,{error:'Not found'},404);

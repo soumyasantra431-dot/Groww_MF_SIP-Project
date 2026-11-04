@@ -39,3 +39,12 @@ test('Forum title changes do not create new inputs; replies share a root but not
  assert.equal(sourceRootKey(a),sourceRootKey(reply));
  const audit=duplicateAudit([a,variant,reply]);assert.equal(audit.input_rows,3);assert.equal(audit.canonical_input_groups,2);assert.equal(audit.distinct_source_roots,1);
 });
+
+test('Forum page and post URL variants identify the same post when the locator agrees',()=>{
+ const page={source_family:'Investing forums',url:'https://tradingqna.com/t/sample/123?page=2',source_locator:'post-27',text:'Synthetic SIP fixture.'};
+ const permalink={...page,url:'https://tradingqna.com/t/renamed/123/27',source_locator:''};
+ assert.equal(sourceUnitKey(page),sourceUnitKey(permalink));
+ assert.equal(fingerprint(page),fingerprint(permalink));
+ assert.equal(sourceRootKey(page),sourceRootKey(permalink));
+ assert.throws(()=>sourceUnitKey({...permalink,source_locator:'post-28'}),/disagree/);
+});

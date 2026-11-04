@@ -22,7 +22,13 @@ export function sourceUnitKey(row){
  // This is source identity, never speaker or investor identity.
  if(row.source_family==='Investing forums'){
   const t=segments.indexOf('t'),topicIndex=t>=0?segments.findIndex((p,i)=>i>t&&/^\d+$/.test(p)):-1;
-  if(topicIndex>=0){const post=/^\d+$/.test(segments[topicIndex+1]||'')?segments[topicIndex+1]:'1';return `${u.hostname}:topic:${segments[topicIndex]}:post:${post}`+(row.source_locator?'|locator:'+String(row.source_locator).trim():'');}
+  if(topicIndex>=0){
+   const urlPost=/^\d+$/.test(segments[topicIndex+1]||'')?segments[topicIndex+1]:null;
+   const locator=String(row.source_locator||'').trim(),locatorPost=/^post-(\d+)$/.exec(locator)?.[1]||null;
+   if(urlPost&&locatorPost&&urlPost!==locatorPost)throw Error('Forum URL post ID and source locator disagree');
+   const post=urlPost||locatorPost||'1';
+   return `${u.hostname}:topic:${segments[topicIndex]}:post:${post}`+(locator&&!locatorPost?'|locator:'+locator:'');
+  }
  }
  if(['Play Store','App Store'].includes(row.source_family)){
   const review=u.searchParams.get('reviewId')||u.searchParams.get('reviewid')||row.source_locator;
@@ -66,5 +72,5 @@ export function duplicateAudit(rows){
   cross_source_copy_candidates:[...copies.values()].filter(rs=>new Set(rs.map(r=>r.unit)).size>1).map(rs=>({ids:rs.map(r=>r.id),decision:'review only; copied advice, quotations and independent reports must be distinguished'})),
   distinct_source_roots:new Set(rows.map(sourceRootKey)).size,
   distinct_reddit_threads:new Set(rows.map(r=>sourceUnitKey(r)).filter(key=>key.startsWith('reddit:thread:')).map(key=>key.split(':').slice(0,3).join(':'))).size,
-  limit:'Different excerpts on one URL remain different input records. Root grouping does not establish a shared speaker, a new episode, or independent corroboration.'};
+  limit:'Different located posts in one thread remain separate input records. Revised text at one source-unit locator requires a version review before import. Root grouping does not establish a shared speaker, a new episode, or independent corroboration.'};
 }
