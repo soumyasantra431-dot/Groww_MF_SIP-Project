@@ -6,7 +6,7 @@ export function WorkflowGuide({data,onNavigate}:{data:any,onNavigate:(tab:string
  const plan=data.research_plan,flow=plan?.workflow;
  if(!flow)return <p>The research workflow is unavailable in this snapshot.</p>;
  const reviewedTarget=data.items.filter((r:any)=>r.review_state==='accepted'&&r.terms_status==='cleared'&&(r.tier_b?.classification||r.tier_a)?.scope_lane==='target').length;
- const answered=plan.questions.filter((q:any)=>q.status==='answered').length;
+ const answered=data.question_cards.filter((q:any)=>q.status==='researcher_approved').length;
  const example=data.items.find((r:any)=>r.source_family==='Investing forums'&&r.tier_a?.metric_node==='setup_mandate');
  return <section className="workflow-guide" aria-label="Discovery engine purpose and current result">
   <div className="engine-status" aria-label="Current research result">

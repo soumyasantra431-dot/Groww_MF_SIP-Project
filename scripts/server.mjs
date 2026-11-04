@@ -3,10 +3,13 @@ import { randomUUID } from 'node:crypto';
 import { createServer as createViteServer } from 'vite';
 import { readFileSync,writeFileSync,mkdirSync } from 'node:fs';
 import { openStore } from '../engine/store.mjs';
-import { importCorpus } from '../engine/intake.mjs';
+import { importCorpus,originalInput } from '../engine/intake.mjs';
+import { reviewedFieldDatum } from '../engine/manual-review.mjs';
 import { parseSourceScreen,sourceLedger } from '../engine/source-ledger.mjs';
 import { corpusReadiness,driverEvidence } from '../engine/scope.mjs';
 import { researchPlan } from '../engine/research-plan.mjs';
+import { questionCards } from '../engine/question-cards.mjs';
+import { reviewedAnswers,saveReviewedAnswer } from '../engine/answer-review.mjs';
 import { filtered,rollup,selectTierB,deckExports } from '../engine/analysis.mjs';
 import { modelStatus } from '../engine/provider.mjs';
 import { privateSignals } from '../engine/contracts.mjs';
@@ -31,9 +34,16 @@ createServer(async(req,res)=>{
   if(req.method==='GET'&&url.pathname==='/api/workspace'){
    const all=store.items(),items=filtered(all,Object.fromEntries(url.searchParams)),collectionRuns=store.db.prepare('SELECT * FROM collection_runs ORDER BY created_at DESC LIMIT 30').all();
    const screen=parseSourceScreen(readFileSync('research/phase_one_2026-11-04/source_screen.csv','utf8'));
-   return send(res,{mode:'local',items,research_plan:researchPlan(items),rollup:rollup(items),source_ledger:sourceLedger(all,screen,collectionRuns),readiness:corpusReadiness(all),drivers:driverEvidence(items),survey_secondary:surveySecondary(),model:modelStatus(),pipeline:{lean_batch_ready:false,live_paste_ready:false,reason:'Lean extraction failed its development quality gate; source-reviewed manual evidence is the current fallback. Batch and live paste remain held.'},spend:store.spend(),selection:selectTierB(all),active,quality:store.meta('evaluation'),development:developmentStatus(),collection_runs:collectionRuns,runs:store.db.prepare('SELECT id,item_id,tier,state,attempts,error,created_at,model FROM runs ORDER BY created_at DESC LIMIT 30').all()});
+   return send(res,{mode:'local',items,research_plan:researchPlan(items),question_cards:questionCards(all,{approvedAnswers:reviewedAnswers(store,all)}),rollup:rollup(items),source_ledger:sourceLedger(all,screen,collectionRuns),readiness:corpusReadiness(all),drivers:driverEvidence(items),survey_secondary:surveySecondary(),model:modelStatus(),pipeline:{lean_batch_ready:false,live_paste_ready:false,reason:'Lean extraction failed its development quality gate; source-reviewed manual evidence is the current fallback. Batch and live paste remain held.'},spend:store.spend(),selection:selectTierB(all),active,quality:store.meta('evaluation'),development:developmentStatus(),collection_runs:collectionRuns,runs:store.db.prepare('SELECT id,item_id,tier,state,attempts,error,created_at,model FROM runs ORDER BY created_at DESC LIMIT 30').all()});
   }
   if(req.method==='GET'&&url.pathname==='/api/terms'){return send(res,JSON.parse(readFileSync('research/ENGINE_V1_TERMS_REGISTER.json','utf8')));}
+  if(req.method==='GET'&&url.pathname==='/api/review-source'){
+   const r=store.item(url.searchParams.get('id'));
+   if(!r||r.origin!=='corpus'||r.local_use_status!=='cleared')return send(res,{error:'Original unavailable for local review under the current source-use decision'},403);
+   const source=originalInput(store,r.id);
+   if(privateSignals(source.text).length)throw Error('Original contains private data; remove it before review');
+   return send(res,{id:r.id,text:source.text,url:r.url,source_locator:r.source_locator,local_only:true,warning:'Original text is displayed only in this local review session. Open the source link to check context and speaker.'});
+  }
   if(req.method!=='POST')return send(res,{error:'Not found'},404);
   const b=await body(req);
   if(url.pathname==='/api/kill'){process.env.MODEL_KILL_SWITCH='true';return send(res,{note:'Model kill switch on. New provider calls are disabled; an in-flight call may still complete.'});}
@@ -45,9 +55,11 @@ createServer(async(req,res)=>{
    const r=store.item(b.id);if(!r)throw Error('Unknown item');
    if(!['proposal','accepted','rejected','needs_review'].includes(b.state))throw Error('Invalid review state');
    if(!b.reason?.trim()||privateSignals(b.reason).length)throw Error('A non-identifying review reason is required');
+   if(b.state==='accepted'&&(!r.tier_a||r.origin!=='corpus'||r.local_use_status!=='cleared'||b.checked_original!==true))throw Error('Accept only a locally permitted, coded real source after checking its original');
    store.db.prepare('INSERT INTO corrections(id,item_id,old_value,new_value,reason,actor,created_at) VALUES(?,?,?,?,?,?,?)').run(randomUUID(),b.id,r.review_state,b.state,b.reason.slice(0,400),'local_reviewer',new Date().toISOString());
    store.db.prepare('UPDATE items SET review_state=?,revision=revision+1 WHERE id=?').run(b.state,b.id);store.meta('snapshot_stale',true);return send(res,{updated:true});
   }
+  if(url.pathname==='/api/approve-answer')return send(res,saveReviewedAnswer(store,b));
   if(url.pathname==='/api/name-opportunity'){
    const r=store.item(b.id),name=String(b.name||'').trim(),why=String(b.reason||'').trim();
    if(!r?.tier_a||r.review_state!=='accepted'||r.terms_status!=='cleared')throw Error('Accept source evidence and clear its terms before naming a candidate');
@@ -67,12 +79,12 @@ createServer(async(req,res)=>{
   }
   if(url.pathname==='/api/correct-field'){
    const {MATERIAL_FIELDS,privateSignals}=await import('../engine/contracts.mjs');const r=store.item(b.id);if(!r?.tier_a)throw Error('Actual classification required');
-   if(!MATERIAL_FIELDS.includes(b.field)||!['supported','unknown','not_applicable'].includes(b.state)||!b.reason?.trim()||privateSignals(b.reason).length)throw Error('Valid field, state and source-based reason required');
+   if(b.field==='source_family'||!MATERIAL_FIELDS.includes(b.field)||!['supported','unknown','not_applicable'].includes(b.state)||!b.reason?.trim()||privateSignals(b.reason).length)throw Error('Valid editable field, state and source-based reason required');
    if(b.state==='supported'&&(!b.value?.trim()||b.value.length>220||privateSignals(b.value).length))throw Error('A short non-identifying value is required');
    const old=r.tier_b?JSON.parse(r.tier_b):JSON.parse(r.tier_a),c=r.tier_b?old.classification:old;
-   const value={state:b.state,value:b.state==='supported'?b.value.trim():null,missing_reason:b.state==='supported'?null:b.state==='not_applicable'?'not_applicable':'ambiguous'},previous=c.material[b.field];
+   if(r.local_use_status!=='cleared')throw Error('Source is not cleared for local review');
+   const value=reviewedFieldDatum(originalInput(store,b.id).text,{state:b.state,value:b.value,quote:b.quote}),previous=c.material[b.field];
    if(JSON.stringify(previous)===JSON.stringify(value))throw Error('No changed value to log');
-   if(b.field==='source_family'&&value.value!==r.source_family)throw Error('Source-family correction requires separate provenance review');
    c.material[b.field]=value;
    store.db.prepare('INSERT INTO corrections(id,item_id,old_value,new_value,reason,actor,created_at) VALUES(?,?,?,?,?,?,?)').run(randomUUID(),b.id,JSON.stringify({[b.field]:previous}),JSON.stringify({[b.field]:value}),b.reason.slice(0,400),'local_reviewer',new Date().toISOString());
    store.setResult(b.id,r.tier_b?'b':'a',old);store.meta('snapshot_stale',true);return send(res,{note:'Actual field correction logged; review status returned to proposal.'});

@@ -4,7 +4,7 @@ import { mkdtempSync,rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { openStore } from '../engine/store.mjs';
-import { manualClassification,importManualReview } from '../engine/manual-review.mjs';
+import { manualClassification,importManualReview,reviewedFieldDatum } from '../engine/manual-review.mjs';
 
 const source={source_family:'Investing forums',url:'https://example.org/t/42/1',date:'2026-10-01',source_locator:'post-1',evidence_lane:'user_voice'};
 const text='I am new to AnotherApp. I asked support how to start a SIP. No instalment was reported.';
@@ -18,6 +18,13 @@ test('manual source review keeps uncertainty and source anchors',()=>{
 });
 test('manual source review rejects a value without a matching original quote',()=>{
  assert.throws(()=>manualClassification({source,text,judgment:{...judgment,material:{platform:{value:'AnotherApp',quote:'not in original'}}}}),/Review quote/);
+});
+test('material corrections need one exact source anchor and preserve missingness',()=>{
+ const supported=reviewedFieldDatum(text,{state:'supported',value:'Asked support',quote:'I asked support how to start a SIP.'});
+ assert.equal(supported.start,text.indexOf('I asked support'));
+ assert.throws(()=>reviewedFieldDatum(text,{state:'supported',value:'bank failure',quote:'bank failed'}),/Review quote/);
+ assert.equal(reviewedFieldDatum(text,{state:'unknown'}).state,'unknown');
+ assert.deepEqual(reviewedFieldDatum(text,{state:'not_applicable'}),{state:'not_applicable',value:null,missing_reason:'not_applicable',start:null,end:null});
 });
 test('target lane needs explicit cohort support',()=>{
  assert.throws(()=>manualClassification({source,text,judgment:{...judgment,scope_lane:'target'}}),/Target lane/);

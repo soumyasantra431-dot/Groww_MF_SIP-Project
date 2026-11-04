@@ -11,6 +11,12 @@ function anchored(text, entry) {
   if(start<0||text.indexOf(quote,start+1)>=0) throw Error('Review quote must occur exactly once in the local original');
   return {state:'supported',value,missing_reason:null,start,end:start+quote.length};
 }
+export function reviewedFieldDatum(text,{state,value,quote}){
+ if(state==='supported')return anchored(text,{value,quote});
+ if(state==='unknown')return unknownDatum();
+ if(state==='not_applicable')return {state,value:null,missing_reason:'not_applicable',start:null,end:null};
+ throw Error('Invalid review field state');
+}
 export function manualClassification(spec) {
   const {source,text,judgment:j}=spec;
   if(!source||!text||!j)throw Error('Source, original text and review judgment required');
