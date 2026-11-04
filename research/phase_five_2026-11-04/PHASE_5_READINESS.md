@@ -1,5 +1,7 @@
 # Phase 5 readiness decision — 4 November 2026
 
+**Same-day progress:** A later [source recheck and provisional comparison](PROVISIONAL_SOURCE_COMPARISON.md) coded three existing local items as assistant proposals. The current inventory is `37 rows = 5 coded proposals + 32 uncoded`; accepted sources and approved answers remain `0`. The earlier Phase 4 numbers below are the state at that milestone, not the latest coding count.
+
 ## Decision and arithmetic
 
 **Decision:** Prepare the Phase 5 comparison and evaluation, but do not claim to have completed either. Phase 5 asks which candidate problems merit the next test and whether model proposals can be trusted. Both require real reviewed inputs.
