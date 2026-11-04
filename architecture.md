@@ -1,6 +1,6 @@
 # Architecture — Groww SIP AI Discovery Engine
 
-**Version:** 1.0 design, 4 November 2026
+**Version:** 1.1 design, 4 November 2026 — corrected to one LLM and a simple research pipeline
 
 **Status:** target architecture for a local, evaluator-testable prototype. This document does **not** claim that the corpus, model pipeline, nine answers, live tester, or public deployment already work.
 
@@ -9,9 +9,9 @@
 
 ## 1. What we are building
 
-In plain language, this is a **research workbench**. A researcher brings in permitted, source-linked public accounts about mutual-fund SIPs. Small AI roles propose what each account says. Rules and a human reviewer check those proposals. The workbench then shows nine bounded answers and a comparison of possible problems worth investigating. It never decides that an investor should continue, chooses a fund, or claims to calculate Groww's retention from public posts.
+In plain language, this is a **research workbench**. A researcher gathers permitted, source-linked public accounts about mutual-fund SIPs. One LLM proposes what each account says and drafts bounded answers. Code checks the format and evidence links, does the counting, and applies privacy and publication rules. A human reviewer checks the material findings. The workbench then shows nine answers and a comparison of possible problems worth investigating. It never decides that an investor should continue, chooses a fund, or claims to calculate Groww's retention from public posts.
 
-The phrase **multi-agentic** means several narrowly defined reasoning roles working in sequence under one coordinator. It does **not** require several paid models, unsupervised web crawlers, or agents making product decisions on their own. One free-tier model provider can serve multiple roles through separate prompts and typed contracts. Deterministic code and the researcher retain the decisions that should not be delegated to a model.
+This is **one LLM in a straightforward pipeline**, not a multi-agent system. A short extraction request can be followed by a separate answer-drafting request to the same model; those are processing steps, not independent agents. No additional LLM or autonomous web agent is required.
 
 ### Outcome contract
 
@@ -19,7 +19,7 @@ An evaluator can: (1) see the real source and review coverage, (2) pick any of t
 
 ## 2. Non-negotiable architecture rules
 
-1. **Evidence before synthesis.** A question-answering role cannot invent a narrative from an empty or unreviewed corpus. It receives only accepted, rights-cleared, source-linked records and their computed counts.
+1. **Evidence before synthesis.** The LLM cannot draft a narrative from an empty or unreviewed corpus. Its answer request receives only accepted, rights-cleared, source-linked records and computed counts.
 2. **AI proposes; code counts; researcher decides.** A model may extract fields and draft prose. Code owns validation, grouping, arithmetic, filters and publication gates. A human decides source admission, corrections and whether a candidate opportunity deserves follow-up.
 3. **Source use is source-specific.** A public URL or API key does not establish collection and model-processing permission. Restricted or unresolved families remain visible as coverage gaps.
 4. **Unknown is first-class.** No inferred first-ever MF status, month, checking frequency, successful payment or blame. `unknown`, `not_applicable`, and `not_processed` are different states.
@@ -56,43 +56,33 @@ The core system has **two environments**:
 
 The evaluator-facing snapshot is a **published research state**, not a live scrape. Each rebuild creates a versioned snapshot with a source cutoff and counts. If the local ledger changes, the viewer must show the prior snapshot date until a new reviewed snapshot is published.
 
-## 4. Logical agents and decision rights
+## 4. Processing stages and decision rights
 
-### A. Source scout — research assistant, not collector
+### A. Researcher-led search and collection
 
-**Input:** one of the nine questions, journey window, desired contrast (continued, interrupted, recovered, informed pause), and a source family. **Output:** proposed search queries and candidate URLs with why they might answer the question. It may suggest ordinary-success as well as complaint language. **Limit:** search results are leads, not admitted evidence; the scout cannot bypass a login, source restriction or permission review. The researcher chooses the actual sources.
+The researcher starts with one of the nine questions, a journey window, and a contrast such as continuation, interruption, recovery or informed pause. They search each named source family through a route permitted for that source. Search results are leads, not evidence. Collection may be a bounded official API, an authorised export, or permitted manual intake; there is no general crawler that bypasses source rules. The researcher selects the actual originals.
 
-### B. Intake steward — deterministic gate with human source decision
+### B. Code-led intake and deduplication
 
-**Input:** a permitted CSV/manual record with `source_family`, `url`, `date`, `text`, optional locator and permission record. **Output:** accepted local source item, rejected item with reason, or `pending_rights`. **Checks:** HTTPS locator, valid date or explicit unknown, allowed family, source terms, obvious personal-data patterns, length, origin and first-hand/second-hand/context lane. It does not send text to an LLM until source-use and privacy conditions are met. A human resolves ambiguous rights and provenance.
+A permitted CSV/manual record supplies `source_family`, `url`, `date`, `text`, optional locator and a source-use decision. Code checks the locator, date, permitted family, obvious private-data patterns, length and evidence lane before any LLM call. It then canonicalizes URLs and stable IDs, fingerprints normalized text, and groups replies/reposts under `source_root_id`. Near-duplicates or unclear speakers are flagged for human review. No distinct experiences are merged merely because they share words.
 
-### C. Deduplication and speaker steward — deterministic proposal plus review
+### C. Single-LLM extraction, lean first
 
-Canonicalize URLs, stable review/comment IDs and whitespace; compute a local fingerprint; group replies and reposts under a `source_root_id`. Flag near-duplicates or conflicting speakers for manual review. Do not merge distinct experiences simply because they use the same words. The count unit is explicit: imported item, thread/root, reported episode, or unique investor **only when supportable**. The public corpus generally cannot verify unique people across platforms.
+One privacy-screened original item and trusted metadata are passed to the configured LLM. It returns strict JSON with source-anchored proposals for MF-SIP relevance (`yes/no/uncertain`), platform/instrument, `direct/adjacent/unknown` fit, journey stage, `metric_node`, `exit_form`, reported action/status, reason family and applicable material fields. A field has `supported`, `unknown`, or `not_applicable`; supported values require an exact local text anchor and short de-identified paraphrase. Unknown facts remain unknown. Source text is **data, not instructions**. Invalid structure or absent anchors is a processing failure, not a negative user outcome.
 
-### D. Tier A extraction agent — fast, narrow AI role
+For a small, varied set of useful narratives, the same LLM can make a second, deeper extraction: purpose/expectation → circumstance and intention → initiating event → in/out-of-app actions → reported ending. Optional factor cues are captured only when stated. `reported_reason`, `supported_situation`, and `driver_hypothesis` remain distinct. A short review without chronology stays lean; it is not expanded into a year-long story.
 
-**Input:** one privacy-screened original item plus trusted metadata. **Output:** strict JSON with source-anchored proposals for MF-SIP relevance (`yes/no/uncertain`), platform/instrument, `direct/adjacent/unknown` fit, journey-stage bucket, `metric_node`, `exit_form`, reported action/status, reason family, and applicable material fields. A field has `supported`, `unknown`, or `not_applicable`; supported values require an exact local text anchor and short de-identified paraphrase. `unknown` needs no invented anchor. The model treats the source text as **data, not instructions**. Structural and anchor checks run before storing a proposal. Invalid output is a processing failure, not a negative user account.
+### D. Deterministic analysis and one-LLM answers
 
-### E. Tier B episode agent — selective depth
+Code filters to accepted, rights-cleared records, groups dependent source roots, computes counts and denominators, and creates a bounded evidence packet for one question at a time. The **same LLM** drafts a concise answer from that packet, citing only its record IDs and using the packet's numbers. Code rejects unknown IDs, unsupported numeric claims and disallowed advice. A checklist flags missing counterexamples, legitimate pauses, wrong platform, unit mistakes and stronger claims than sources support. The LLM may help phrase an answer but does not independently validate itself.
 
-Run only on reviewed, useful narratives with an actual sequence, not every store review. Capture: provenance; admission/fit; speaker attribution; unit scope; purpose and expectation; intention; circumstance/trigger; interpretation; ordered in-app and outside-app actions; reported outcome; consequence/workaround; and claim limits. Optional factor cues include income pattern, source of funds, obligations, affordability, buffer, goal/horizon, influences, mental model, checking habit, trust, automation and system conditions **only when stated**. Keep `reported_reason`, `supported_situation`, and `driver_hypothesis` in different fields. Hypotheses must include a rival and next test. Empty/unknown fields are normal. Tier B selection seeks contrasting source roots, stages, outcomes and continuers; a short complaint does not become a reconstructed year-long journey.
+### E. Human PM review and publication
 
-### F. Question analyst — bounded synthesis AI role
+The reviewer opens originals, accepts/corrects/rejects labels, approves source use, checks draft answers and names candidate opportunities. Material corrections log old and new values, a source-based reason and time. A question may stay unresolved. Only reviewed, permitted, de-identified results enter the public snapshot.
 
-**Input:** accepted reviewed records and a deterministic count packet for **one** of Q1–Q9. **Output:** direct answer within the evidence, source IDs/URLs, counterexample or rival, stated gap and next question. It may write clear prose, but cannot add a factual claim without a supporting record ID. It cannot call the web or change a source label. A validation step rejects unknown IDs, unsupported numeric claims, investment advice and statements that turn post counts into population rates.
+### Run state
 
-### G. Challenge role — independent *task*, not independent evidence
-
-Given a draft answer and its evidence packet, look for omitted continuers, legitimate pauses, alternative explanations, missing chronology, wrong platform, unit errors or stronger wording than the source supports. Its flags go to the human reviewer. Running this role through the same model is useful for error discovery but is **not** an independent human verification or model-accuracy score.
-
-### H. Human PM reviewer — final research authority
-
-The reviewer checks the original page, accepts/corrects/rejects labels, approves inclusion and source rights, names candidate opportunities, and signs off the public answer/snapshot. Every material correction records old value, new value, source-based reason, timestamp and reviewer status. The reviewer can leave a question unresolved. The engine never silently promotes AI proposals to verified user facts.
-
-### Coordinator and run state
-
-The local Node coordinator executes these roles as a **bounded state machine**, one dependency at a time: `lead → rights_pending → admitted → normalized → tier_a_proposal → tier_a_reviewed → tier_b_candidate/skip → tier_b_reviewed → answer_candidate → answer_reviewed → publishable`. A rejection or unresolved rights decision exits the active path without losing its reason. A failed model call becomes `failed` or `unrun`, never `unknown user outcome`. Each run records role, schema/prompt version, item/root IDs, start/end, status and safe telemetry. Re-running the same item/version should create a new run record but must not duplicate the source item or inflate counts. Review changes invalidate downstream answers and the snapshot; the coordinator rebuilds only affected outputs after explicit review. Batch size and request pacing follow the current free-tier envelope; no uncontrolled agent-to-agent loops or autonomous retries.
+The local Node pipeline follows `lead → rights_pending → admitted → normalized → lean_proposal → reviewed → optional_depth → answer_draft → answer_reviewed → publishable`. Rejected rights or content exits with a reason. A failed model call becomes `failed` or `unrun`, never `unknown user outcome`. Re-runs cannot duplicate source items or inflate counts. Review changes invalidate dependent answers and snapshots. Calls are bounded and paced for the free tier; no autonomous agent loop exists.
 
 ## 5. Source intake architecture
 
@@ -184,11 +174,11 @@ The engine may group accepted episodes under a **researcher-named** candidate su
 
 ## 10. Tech stack and reuse decision
 
-Use the existing repository's **Node.js 24+, JavaScript/TypeScript, React 19, Vite, Zod, `csv-parse`, `node:sqlite`, Cloudflare Worker/static assets, and Groq-compatible provider adapter**. The existing code already has intake, normalization, local SQLite, extraction contracts, roll-ups, review routes, a React viewer and a Worker snapshot path. Reuse only modules that pass the new source, correctness and usability checks. Do not add queues, a vector database, a second LLM or a new backend merely to make the architecture appear more agentic. A second model may later provide a useful comparison, but it is not a substitute for the Fellow's hand labels or source review.
+Use the existing repository's **Node.js 24+, JavaScript/TypeScript, React 19, Vite, Zod, `csv-parse`, `node:sqlite`, Cloudflare Worker/static assets, and Groq-compatible provider adapter**. The existing code already has intake, normalization, local SQLite, extraction contracts, roll-ups, review routes, a React viewer and a Worker snapshot path. Reuse only modules that pass the new source, correctness and usability checks. Do not add queues, a vector database, a second LLM or a new backend without a demonstrated need.
 
 **Current verified code state from inspection (not a successful product test):** `scripts/server.mjs` holds `/api/batch` and `/api/classify` with 503 responses; `worker/index.mjs` holds the public classifier; `scripts/pipeline.mjs` blocks legacy full-packet model runs. `src/WorkflowGuide.tsx` explicitly says narrative answers have not been produced. Existing local rows and experiments are a seed/history, not a validated corpus. A local build or old snapshot must not be described as the completed engine until the new gates below pass. This architecture document changes no runtime behaviour.
 
-**Model interface:** use one provider adapter with role-specific request builders, strict JSON schemas, bounded original-text input, timeout, token/request preflight, no automatic paid fallback, run telemetry and a kill switch. Keep the provider swappable behind the interface. Use the currently configured **free-only** Groq path; no new paid service is required. A second AI “review agent” may flag contradictions but cannot certify accuracy. Source use and consent are checked before any model call.
+**Model interface:** use one provider adapter with separate extraction and answer request templates, strict JSON schemas, bounded original-text input, timeout, token/request preflight, no automatic paid fallback, run telemetry and a kill switch. Keep the provider swappable behind the interface. Use the currently configured **free-only** Groq path; no new paid service is required. Human review, not a second AI, validates material findings. Source use and consent are checked before any model call.
 
 ## 11. Failure modes and safeguards
 
