@@ -9,16 +9,24 @@
   {
     "source_family": "Investing forums",
     "status": "TradingQ&A bounded local use recorded; public redistribution held",
-    "checked_on": "2026-11-04",
+    "checked_on": "2026-11-05",
     "url": "https://tradingqna.com/tos",
-    "issue": "Original TradingQ&A terms section 3 re-inspected 4 November 2026 and still states CC BY-NC-SA 3.0 for user contributions. Under the 1 November researcher decision, bounded noncommercial local academic copying and model processing of selected de-identified posts are admitted. No crawler, training, commercial use, blanket forum clearance or public redistribution of raw text/expressive paraphrases. Public attribution remains unresolved."
+    "issue": "Original TradingQ&A terms section 3 re-inspected 5 November 2026 and still states CC BY-NC-SA 3.0 for user contributions. Under the 1 November researcher decision, bounded noncommercial local academic copying of selected de-identified posts is admitted. External model processing remains separately conditional on provider, privacy and attribution review. No crawler, training, commercial use, blanket forum clearance or public redistribution of raw text/expressive paraphrases."
+  },
+  {
+    "source_family": "Investing forums",
+    "source_key": "Personal Finance & Money Stack Exchange",
+    "status": "bounded source-linked local use; public raw-text redistribution held",
+    "checked_on": "2026-11-05",
+    "url": "https://money.stackexchange.com/help/licensing",
+    "issue": "Public user contributions are CC BY-SA, with version determined by contribution date (3.0 for 2011-04-08 to 2018-05-01; 4.0 since 2018-05-02). Checked the site's API terms and public terms on 5 November 2026. Bounded noncommercial local academic excerpts from original question pages are attributed by post link and licence; author names and account details are omitted. No API collection was run in this intake. External model processing and public redistribution require separate review. Historical and non-Groww cases stay adjacent, never target-cohort counts."
   },
   {
     "source_family": "YouTube",
-    "status": "flagged — collection and model-use basis unresolved",
-    "checked_on": "2026-10-31",
-    "url": "https://developers.google.com/youtube/terms/developer-policies",
-    "issue": "Official commentThreads.list supports bounded top-level text retrieval, but policies III.E.2 and III.E.4.h restrict aggregation/derived data and III.E.4.d requires non-authorised data deletion or refresh within 30 days. Optional local collector is prepared, dry-run only; no API requests made. A working API key is not permission for this analysis. A valid source-specific basis is still needed; manual collection cannot bypass the same restrictions."
+    "status": "flagged — analytics amendment application/acceptance unverified; collector held",
+    "checked_on": "2026-11-05",
+    "url": "https://developers.google.com/youtube/terms/derived-metrics-policy",
+    "issue": "Standard Developer Policies III.E.4 restrict derived data and metrics. Official additional derived-metrics policy, updated 2026-09-14, describes permitted content tagging and NLP analysis of API comments after acceptance of an analytics amendment. The linked YouTube API audit form says Google determines whether the submitted use case qualifies; this project's application and acceptance are unverified. Comment text still has a 30-day refresh/delete obligation, and derived metrics must be distinguished from YouTube API metrics. No request or model processing until the qualifying use decision is recorded. The supplied key is not copied into Git or a command."
   },
   {
     "source_family": "Play Store",
