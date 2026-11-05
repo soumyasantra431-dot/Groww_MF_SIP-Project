@@ -46,3 +46,11 @@ test('Working readings require their named usable proposal and never become appr
  assert.equal(questionCards([{...first,local_use_status:'pending'}]).find(x=>x.id==='Q1').working_reading,null);
  assert.equal(questionCards([first],{publicOnly:true}).find(x=>x.id==='Q1').working_reading,null);
 });
+test('A single adjacent checking account cannot become a Q4 frequency answer',()=>{
+ const paytm=row('I-0e88524ab2d6876e29b7',{review_state:'proposal',tier_a:{...code,scope_lane:'adjacent',question_ids:['Q4'],paraphrase:'Checked transaction status after rejected SIPs.'}});
+ const q4=questionCards([paytm]).find(x=>x.id==='Q4');
+ assert.match(q4.working_reading.text,/not a frequency estimate/);
+ assert.equal(q4.direct_answer,null);
+ assert.equal(q4.source_root_count,0);
+ assert.equal(q4.fit_records.target,0);
+});
