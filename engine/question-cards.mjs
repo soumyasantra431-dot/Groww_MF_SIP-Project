@@ -34,7 +34,8 @@ const WORKING_READINGS={
  Q5:{id:'I-58c3ce0df1ef992c0688',text:'A writer reports pausing then accidentally deleting one SIP and asks what happens to the holding. This shows a stated control question, while its later payment consequence remains unknown.'},
  Q6:{id:'I-50a772eddc9a02120c1e',text:'In a follow-up to a Coin payment problem, the same poster reports using another UPI app and says current payments work. The later scheduled SIP outcome is not verified.'},
  Q7:{id:'I-14cd3dbb137c38498cf3',text:'One writer reports roughly a year of SIP investing and considers increasing the amount. Their platform, first-ever MF status and a comparable difficult-month outcome are unknown.'},
- Q8:{id:'I-4ee83186cfa8a499dfbe',text:'One pre-start writer explicitly mentions a new job, a planned emergency buffer and a support system. This describes one person’s circumstances; there is no observed SIP outcome or basis for a segment comparison.'}
+ Q8:{id:'I-4ee83186cfa8a499dfbe',text:'One pre-start writer explicitly mentions a new job, a planned emergency buffer and a support system. This describes one person’s circumstances; there is no observed SIP outcome or basis for a segment comparison.'},
+ Q9:{id:'I-b07a7a3c97ad3462ebf3',text:'A Coin writer reports a missing due-date payment link, an inconsistent next-instalment display and no visible modify/cancel tab, then asks for help. A need for clearer status or control discovery is a hypothesis; the source does not establish the current option, payment outcome or Groww fit.'}
 };
 const rootsOf=(rows,root)=>new Set(rows.map(r=>root.get(r.id)));
 const fitCounts=rows=>Object.fromEntries(['target','adjacent','eligibility_unknown'].map(fit=>[fit,rows.filter(r=>coding(r).scope_lane===fit).length]));
