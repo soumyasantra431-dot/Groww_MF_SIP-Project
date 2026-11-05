@@ -24,6 +24,20 @@ test('Source ledger reconciles selected, excluded and historical inventory witho
  assert.equal(result.entries.filter(e=>e.status==='rejected'&&e.item_id===null).length,1);
 });
 
+test('Later manual intake and source screens extend the ledger without replacing frozen Phase 1 counts',()=>{
+ const screens=parseSourceScreen(corpusCsv(columns,[screen('post-1'),screen('new-1',{url:'https://forum.example.org/t/new/654'})]));
+ const items=[item('a','post-1'),{...item('new','new-1',{url:'https://forum.example.org/t/new/654'})}];
+ const runs=[
+  {route:'bounded_manual_original_page_intake_no_crawler',counts:JSON.stringify({screened:1,selected:1,imported:1,duplicates:0})},
+  {route:'bounded_manual_original_page_intake_no_crawler',counts:JSON.stringify({seen:1,selected:1,excluded:0,imported:1,duplicates:0})},
+ ];
+ const result=sourceLedger(items,screens,runs);
+ assert.equal(result.counts.stored_items,2);
+ assert.equal(result.counts.selected_run_screened,2);
+ assert.equal(result.counts.selected_run_duplicates,0);
+ assert.equal(result.entries.find(e=>e.item_id==='new').screen_decision,'admitted_local_unreviewed');
+});
+
 test('Stock SIP and mixed-instrument screens do not become MF-SIP or direct-target counts',()=>{
  const screens=parseSourceScreen(corpusCsv(columns,[screen('post-1',{relevance_screen:'not_mf_sip',target_fit:'not_assessed'}),screen('post-2',{relevance_screen:'mixed_instrument_review',target_fit:'unknown'})]));
  const result=sourceLedger([item('stock','post-1'),item('mixed','post-2')],screens);

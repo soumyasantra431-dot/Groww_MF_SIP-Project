@@ -33,7 +33,10 @@ createServer(async(req,res)=>{
   if(req.method==='POST'&&(req.headers.origin&&![origin,`http://localhost:${port}`].includes(req.headers.origin)||!req.headers['content-type']?.startsWith('application/json')))return send(res,{error:'Same-origin JSON required'},403);
   if(req.method==='GET'&&url.pathname==='/api/workspace'){
    const all=store.items(),items=filtered(all,Object.fromEntries(url.searchParams)),collectionRuns=store.db.prepare('SELECT * FROM collection_runs ORDER BY created_at DESC LIMIT 30').all();
-   const screen=parseSourceScreen(readFileSync('research/phase_one_2026-11-04/source_screen.csv','utf8'));
+   const screen=[
+    ...parseSourceScreen(readFileSync('research/phase_one_2026-11-04/source_screen.csv','utf8')),
+    ...parseSourceScreen(readFileSync('research/phase_one_2026-11-05/source_screen_additions.csv','utf8')),
+   ];
    return send(res,{mode:'local',items,research_plan:researchPlan(items),question_cards:questionCards(all,{approvedAnswers:reviewedAnswers(store,all)}),rollup:rollup(items),source_ledger:sourceLedger(all,screen,collectionRuns),readiness:corpusReadiness(all),drivers:driverEvidence(items),survey_secondary:surveySecondary(),model:modelStatus(),pipeline:{lean_batch_ready:false,live_paste_ready:false,reason:'Lean extraction failed its development quality gate; source-reviewed manual evidence is the current fallback. Batch and live paste remain held.'},spend:store.spend(),selection:selectTierB(all),active,quality:store.meta('evaluation'),development:developmentStatus(),collection_runs:collectionRuns,runs:store.db.prepare('SELECT id,item_id,tier,state,attempts,error,created_at,model FROM runs ORDER BY created_at DESC LIMIT 30').all()});
   }
   if(req.method==='GET'&&url.pathname==='/api/terms'){return send(res,JSON.parse(readFileSync('research/ENGINE_V1_TERMS_REGISTER.json','utf8')));}

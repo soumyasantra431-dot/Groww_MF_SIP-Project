@@ -12,9 +12,9 @@ export function SourceFunnel({ledger}:{ledger:any}){
   <div className="source-funnel-stats">
    {(['all','admitted','pending','rejected'] as const).map(s=><button key={s} className={status===s?'selected':''} onClick={()=>setStatus(s)} aria-pressed={status===s}><strong>{s==='all'?c.tracked_decisions:c[s]}</strong><span>{s==='all'?'tracked source decisions':s==='admitted'?'local use admitted':s==='pending'?'source/use screen pending':'excluded from corpus'}</span></button>)}
   </div>
-  <p className="source-equation">{ledger.formulas[0]}. The 37 stored items and five excluded post locators are shown separately; no excluded body is stored.</p>
+  <p className="source-equation">{ledger.formulas[0]}. {c.stored_items} stored inputs and {c.rejected} excluded source locators are shown separately; no excluded body is stored.</p>
   <div className="source-split">
-   <div><strong>{c.selected_run_screened} screened</strong><span>Phase 1 forum run: {c.screened_local_admitted} admitted + {c.selected_run_pending} pending + {c.selected_run_rejected} excluded. Duplicate attempts: {c.selected_run_duplicates??'unknown'}.</span></div>
+   <div><strong>{c.selected_run_screened} source decisions screened</strong><span>{c.screened_local_admitted} admitted for local assessment + {c.selected_run_pending} pending + {c.selected_run_rejected} excluded. Duplicate attempts in the original Phase 1 run: {c.selected_run_duplicates??'unknown'}.</span></div>
    <div><strong>{c.screened_relevance_candidates} MF-SIP candidates</strong><span>Provisional source screen: {c.screened_fit.direct} direct Groww target + {c.screened_fit.adjacent} adjacent + {c.screened_fit.unknown} unknown fit. This is not an AI result.</span></div>
    <div><strong>{c.accepted_findings} accepted local findings</strong><span>Admitted inputs still need source-based coding and review. Public use requires a separate decision. One thread can contain several posts.</span></div>
   </div>
