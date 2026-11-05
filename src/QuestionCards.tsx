@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import {ConfirmedCaseReadings} from './ConfirmedCaseReadings';
 
 function QuestionCard({card,proposed,onInspect,onApprove,publicMode}:{card:any,proposed:any,onInspect:(id:string)=>void,onApprove:(body:any)=>Promise<any>,publicMode:boolean}){
  const [ids,setIds]=useState<string[]>([]),[direct,setDirect]=useState(''),[rival,setRival]=useState(''),[unknown,setUnknown]=useState(''),[next,setNext]=useState(''),[checked,setChecked]=useState(false),[approved,setApproved]=useState(false);
@@ -30,10 +31,11 @@ function QuestionCard({card,proposed,onInspect,onApprove,publicMode}:{card:any,p
  </article>;
 }
 
-export function QuestionCards({cards,proposalCounts,onInspect,onApprove,publicMode}:{cards:any[],proposalCounts:any[],onInspect:(id:string)=>void,onApprove:(body:any)=>Promise<any>,publicMode:boolean}){
+export function QuestionCards({cards,proposalCounts,caseReadings,onInspect,onApprove,publicMode}:{cards:any[],proposalCounts:any[],caseReadings?:any,onInspect:(id:string)=>void,onApprove:(body:any)=>Promise<any>,publicMode:boolean}){
  return <section aria-label="Nine research questions">
   <div className="sectiontitle"><div><p className="eyebrow">02 / BRIEF COVERAGE</p><h2>Nine questions. What the reviewed sources can support.</h2></div></div>
   <p className="small">Each fraction counts distinct source roots in the full locally reviewed corpus. It is not a count of investors or Groww retention. AI and assistant proposals are shown separately and never become answers by themselves.</p>
+  {!publicMode&&<ConfirmedCaseReadings packet={caseReadings}/>}
   <div className="questiongrid">{cards.map((card:any)=><QuestionCard key={card.id} card={card} proposed={proposalCounts.find((q:any)=>q.id===card.id)} onInspect={onInspect} onApprove={onApprove} publicMode={publicMode}/>)}</div>
  </section>;
 }
