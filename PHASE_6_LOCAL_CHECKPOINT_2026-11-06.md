@@ -10,6 +10,7 @@ Make the evaluator understand what this research engine can do **today** while k
 - Added eight narrow working readings to Q1, Q2, Q3 and Q5–Q9. Each appears only when its named, locally usable source proposal exists. Q4 checking frequency stays explicitly unanswered. None of the eight is a researcher-approved answer.
 - Added an unscored comparison of four **research situations**: first-payment schedule meaning, intended payment interruption/recovery, pause/delete/cancel consequences, and trust/support. Each has original source links, a possible metric path, a credible rival, and a test that could change the decision. The comparison is local and provisional; the formal reviewed comparison remains empty.
 - Added a measurement warning from the parallel PM audit: a regularly paying monthly SIP can fall outside the brief's literal preceding-30-day checkpoint due to date spacing. The assigned North Star is unchanged. Due date, last qualifying success and actual missed payment must be inspected separately.
+- Drafted `AI_EVIDENCE_LOG_DRAFT_2026-11-06.md` from the actual source and model records, including the failed ten-item development arithmetic and three real field rejections. It does not claim an independent golden set.
 
 ## Actual arithmetic and evidence status
 
