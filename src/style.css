@@ -32,3 +32,4 @@
 .sample-walkthrough li{font-size:12px;line-height:1.65;padding:10px 0;border-bottom:1px solid #edf0e9}
 .sample-walkthrough li:last-child{border:0}
 @media(max-width:1000px){.case-reading-grid{grid-template-columns:1fr}}
+@media(max-width:650px){.rail nav{flex-wrap:wrap;overflow-x:visible}.rail nav button{font-size:11px;padding:8px 10px}.sample-walkthrough{padding:18px}.sample-walkthrough ol{padding:12px 18px 12px 34px}}
