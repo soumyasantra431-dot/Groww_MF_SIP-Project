@@ -16,4 +16,6 @@
 .case-reading-grid p{font-size:11px}
 .case-links{margin-bottom:0}
 .case-links a{font-size:11px}
+.case-draft{padding:17px 19px;background:#f8faf6;border-left:3px solid #63846f;border-radius:3px}
+.case-draft h4{font:600 14px/1.45 Manrope,system-ui,sans-serif;margin:7px 0}
 @media(max-width:1000px){.case-reading-grid{grid-template-columns:1fr}}
