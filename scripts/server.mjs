@@ -13,6 +13,7 @@ import { reviewedAnswers,saveReviewedAnswer } from '../engine/answer-review.mjs'
 import { filtered,rollup,selectTierB,deckExports } from '../engine/analysis.mjs';
 import { modelStatus } from '../engine/provider.mjs';
 import { privateSignals } from '../engine/contracts.mjs';
+import { sourceReviewUrl } from '../engine/normalization.mjs';
 import { summarizeSurvey } from '../engine/survey-secondary.mjs';
 import { snapshot } from './pipeline.mjs';
 const port=Number(process.env.PORT)||4317,origin=`http://127.0.0.1:${port}`,store=openStore();
@@ -37,7 +38,7 @@ createServer(async(req,res)=>{
     ...parseSourceScreen(readFileSync('research/phase_one_2026-11-04/source_screen.csv','utf8')),
     ...parseSourceScreen(readFileSync('research/phase_one_2026-11-05/source_screen_additions.csv','utf8')),
    ];
-   return send(res,{mode:'local',items,research_plan:researchPlan(items),question_cards:questionCards(all,{approvedAnswers:reviewedAnswers(store,all)}),confirmed_case_readings:store.meta('fellow_confirmed_case_readings_2026_11_05'),rollup:rollup(items),source_ledger:sourceLedger(all,screen,collectionRuns),readiness:corpusReadiness(all),drivers:driverEvidence(items),survey_secondary:surveySecondary(),model:modelStatus(),pipeline:{lean_batch_ready:false,live_paste_ready:false,reason:'Lean extraction failed its development quality gate; source-reviewed manual evidence is the current fallback. Batch and live paste remain held.'},spend:store.spend(),selection:selectTierB(all),active,quality:store.meta('evaluation'),development:developmentStatus(),collection_runs:collectionRuns,runs:store.db.prepare('SELECT id,item_id,tier,state,attempts,error,created_at,model FROM runs ORDER BY created_at DESC LIMIT 30').all()});
+   return send(res,{mode:'local',items:items.map(r=>({...r,source_review_url:sourceReviewUrl(r)})),research_plan:researchPlan(items),question_cards:questionCards(all,{approvedAnswers:reviewedAnswers(store,all)}),confirmed_case_readings:store.meta('fellow_confirmed_case_readings_2026_11_05'),rollup:rollup(items),source_ledger:sourceLedger(all,screen,collectionRuns),readiness:corpusReadiness(all),drivers:driverEvidence(items),survey_secondary:surveySecondary(),model:modelStatus(),pipeline:{lean_batch_ready:false,live_paste_ready:false,reason:'Lean extraction failed its development quality gate; source-reviewed manual evidence is the current fallback. Batch and live paste remain held.'},spend:store.spend(),selection:selectTierB(all),active,quality:store.meta('evaluation'),development:developmentStatus(),collection_runs:collectionRuns,runs:store.db.prepare('SELECT id,item_id,tier,state,attempts,error,created_at,model FROM runs ORDER BY created_at DESC LIMIT 30').all()});
   }
   if(req.method==='GET'&&url.pathname==='/api/terms'){return send(res,JSON.parse(readFileSync('research/ENGINE_V1_TERMS_REGISTER.json','utf8')));}
   if(req.method==='GET'&&url.pathname==='/api/review-source'){
@@ -45,7 +46,7 @@ createServer(async(req,res)=>{
    if(!r||r.origin!=='corpus'||r.local_use_status!=='cleared')return send(res,{error:'Original unavailable for local review under the current source-use decision'},403);
    const source=originalInput(store,r.id);
    if(privateSignals(source.text).length)throw Error('Original contains private data; remove it before review');
-   return send(res,{id:r.id,text:source.text,url:r.url,source_locator:r.source_locator,local_only:true,warning:'Original text is displayed only in this local review session. Open the source link to check context and speaker.'});
+   return send(res,{id:r.id,text:source.text,url:sourceReviewUrl(r),source_locator:r.source_locator,local_only:true,warning:'Original text is displayed only in this local review session. Open the source link to check context and speaker.'});
   }
   if(req.method!=='POST')return send(res,{error:'Not found'},404);
   const b=await body(req);

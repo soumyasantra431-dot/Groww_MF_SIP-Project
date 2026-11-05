@@ -16,6 +16,21 @@ export function canonicalUrl(value){
  if(u.hostname==='reddit.com'||u.hostname.endsWith('.reddit.com'))u.hostname='www.reddit.com';
  return u.href;
 }
+// An item's forum URL may be a topic URL while its locator identifies a later
+// post. Return an inspectable link without changing the stored source identity.
+export function sourceReviewUrl(row){
+ const u=new URL(canonicalUrl(row.url));
+ const locatorPost=/^post-(\d+)$/.exec(String(row.source_locator||'').trim())?.[1];
+ if(row.source_family!=='Investing forums'||!locatorPost)return u.href;
+ const parts=u.pathname.split('/').filter(Boolean),t=parts.indexOf('t');
+ const topicIndex=t>=0?parts.findIndex((part,i)=>i>t&&/^\d+$/.test(part)):-1;
+ if(topicIndex<0)return u.href;
+ const urlPost=/^\d+$/.test(parts[topicIndex+1]||'')?parts[topicIndex+1]:null;
+ if(urlPost&&urlPost!==locatorPost)throw Error('Forum URL post ID and source locator disagree');
+ u.pathname='/'+[...parts.slice(0,topicIndex+1),locatorPost].join('/');
+ u.search='';u.hash='';
+ return u.href;
+}
 export function sourceUnitKey(row){
  const u=new URL(canonicalUrl(row.url));const segments=u.pathname.split('/').filter(Boolean);
  // A Discourse title can change; topic and post IDs identify the source unit.

@@ -1,5 +1,6 @@
 import {QUESTIONS} from './contracts.mjs';
 import {coding,isStudyEvidence,rootGroups,sourceUsable} from './scope.mjs';
+import {sourceReviewUrl} from './normalization.mjs';
 import {ANSWER_REQUIREMENTS} from './workflow.mjs';
 
 const UNKNOWN_BY_QUESTION={
@@ -49,12 +50,12 @@ export function questionCards(items,{publicOnly=false,approvedAnswers={}}={}){
    if(!existing||priority<existing.priority)leadByRoot.set(key,{row:r,priority});
   }
   const leads=[...leadByRoot.values()].sort((a,b)=>a.priority-b.priority).slice(0,2).map(({row:r})=>({
-   id:r.id,url:r.url,source_locator:r.source_locator||'',source_family:r.source_family,
+   id:r.id,url:sourceReviewUrl(r),source_locator:r.source_locator||'',source_family:r.source_family,
    scope_lane:coding(r).scope_lane,paraphrase:coding(r).paraphrase,
    metric_node:coding(r).metric_node,exit_form:coding(r).exit_form,
    review_state:r.review_state
   }));
-  const sources=rows.map(r=>({id:r.id,url:r.url,source_family:r.source_family,source_locator:r.source_locator||'',scope_lane:coding(r).scope_lane,metric_node:coding(r).metric_node,exit_form:coding(r).exit_form,reported_reason:coding(r).material?.reported_reason?.state==='supported'?coding(r).material.reported_reason.value:null,final_state:coding(r).final_state||null,root_id:roots.get(r.id)}));
+  const sources=rows.map(r=>({id:r.id,url:sourceReviewUrl(r),source_family:r.source_family,source_locator:r.source_locator||'',scope_lane:coding(r).scope_lane,metric_node:coding(r).metric_node,exit_form:coding(r).exit_form,reported_reason:coding(r).material?.reported_reason?.state==='supported'?coding(r).material.reported_reason.value:null,final_state:coding(r).final_state||null,root_id:roots.get(r.id)}));
   const approved=approvedAnswers[id]?.status==='researcher_approved'?approvedAnswers[id]:null;
   return {id,title,status:approved?'researcher_approved':'answer_not_approved',direct_answer:approved?.direct_answer||null,counterexample_or_rival:approved?.counterexample_or_rival||null,source_root_count:linkedRoots.size,reviewed_root_denominator:baseRoots.size,record_count:rows.length,reviewed_record_denominator:reviewed.length,source_mix:Object.fromEntries([...new Set(rows.map(r=>r.source_family))].map(f=>[f,rows.filter(r=>r.source_family===f).length])),fit_records:fitCounts(rows),source_ids:rows.map(r=>r.id),approved_source_ids:approved?.source_ids||[],sources,unreviewed_lead_roots:leadByRoot.size,unreviewed_leads:leads,answer_requirement:ANSWER_REQUIREMENTS[id],rival_to_check:RIVAL_BY_QUESTION[id],unknown:approved?.unknown||UNKNOWN_BY_QUESTION[id],next_decision:approved?.next_question|| (rows.length?'Review the cited sequence and counterexample, then approve bounded wording.':'Find one permitted, first-hand account that directly addresses this question, including a contrasting case.'),unit:'dependent source roots in this locally reviewed corpus; not people or prevalence',limits:'Source links and labels are research evidence only. The card does not calculate Groww retention, infer a cause, or select a segment.'};
  });

@@ -1,4 +1,5 @@
 import {coding,isStudyEvidence,rootGroups,sourceUsable} from './scope.mjs';
+import {sourceReviewUrl} from './normalization.mjs';
 
 export const COMPARISON_CONTRACT={
  purpose:'Compare researcher-named candidate problems that may influence first-year SIP continuation; preserve rivals and unknown reach.',
@@ -17,5 +18,5 @@ export function opportunityComparisons(items,{publicOnly=false}={}){
  const roots=rootGroups(reviewed),rootCount=rs=>new Set(rs.map(r=>roots.get(r.id))).size;
  const names=[...new Set(reviewed.map(r=>r.hypothesis?.trim()).filter(Boolean))];
  return {status:names.length?'reviewed_candidates_require_pm_judgement':'no_reviewed_candidate_problems',reviewed_user_voice_records:reviewed.length,reviewed_source_roots:rootCount(reviewed),unit:COMPARISON_CONTRACT.unit,contract:COMPARISON_CONTRACT,
-  candidates:names.map(name=>{const rs=reviewed.filter(r=>r.hypothesis.trim()===name);return {name,source_root_count:rootCount(rs),denominator_roots:rootCount(reviewed),record_count:rs.length,source_families:[...new Set(rs.map(r=>r.source_family))],target_records:rs.filter(r=>coding(r).scope_lane==='target').length,adjacent_records:rs.filter(r=>coding(r).scope_lane==='adjacent').length,eligibility_unknown_records:rs.filter(r=>coding(r).scope_lane==='eligibility_unknown').length,metric_tags:[...new Set(rs.map(r=>coding(r).metric_node+'/'+coding(r).exit_form))],sources:rs.map(r=>({id:r.id,url:r.url})),user_consequence:'requires source review',rival:'requires researcher comparison',next_test:'requires researcher choice',population_reach:'unknown',causal_metric_effect:'unknown'};})};
+  candidates:names.map(name=>{const rs=reviewed.filter(r=>r.hypothesis.trim()===name);return {name,source_root_count:rootCount(rs),denominator_roots:rootCount(reviewed),record_count:rs.length,source_families:[...new Set(rs.map(r=>r.source_family))],target_records:rs.filter(r=>coding(r).scope_lane==='target').length,adjacent_records:rs.filter(r=>coding(r).scope_lane==='adjacent').length,eligibility_unknown_records:rs.filter(r=>coding(r).scope_lane==='eligibility_unknown').length,metric_tags:[...new Set(rs.map(r=>coding(r).metric_node+'/'+coding(r).exit_form))],sources:rs.map(r=>({id:r.id,url:sourceReviewUrl(r)})),user_consequence:'requires source review',rival:'requires researcher comparison',next_test:'requires researcher choice',population_reach:'unknown',causal_metric_effect:'unknown'};})};
 }

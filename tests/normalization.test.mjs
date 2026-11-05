@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { canonicalUrl,sourceUnitKey,sourceRootKey,fingerprint,normalizeForFingerprint,normalizeSourceFamily,duplicateAudit } from '../engine/normalization.mjs';
+import { canonicalUrl,sourceUnitKey,sourceRootKey,sourceReviewUrl,fingerprint,normalizeForFingerprint,normalizeSourceFamily,duplicateAudit } from '../engine/normalization.mjs';
 import { parseCorpus } from '../engine/intake.mjs';
 import { csv } from '../engine/analysis.mjs';
 const row={url:'https://www.reddit.com/r/mutualfunds/comments/abc123/title/',text:'I did not cancel my SIP.'};
@@ -46,5 +46,8 @@ test('Forum page and post URL variants identify the same post when the locator a
  assert.equal(sourceUnitKey(page),sourceUnitKey(permalink));
  assert.equal(fingerprint(page),fingerprint(permalink));
  assert.equal(sourceRootKey(page),sourceRootKey(permalink));
+ assert.equal(sourceReviewUrl(page),'https://tradingqna.com/t/sample/123/27');
+ assert.equal(sourceReviewUrl({...page,url:'https://tradingqna.com/t/renamed/123/27'}),'https://tradingqna.com/t/renamed/123/27');
  assert.throws(()=>sourceUnitKey({...permalink,source_locator:'post-28'}),/disagree/);
+ assert.throws(()=>sourceReviewUrl({...page,url:'https://tradingqna.com/t/sample/123/28'}),/disagree/);
 });
