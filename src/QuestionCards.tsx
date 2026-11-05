@@ -1,14 +1,16 @@
 import {useState} from 'react';
 import {ConfirmedCaseReadings} from './ConfirmedCaseReadings';
+import {labelFor} from './evidence-language';
 
 function QuestionCard({card,proposed,onInspect,onApprove,publicMode}:{card:any,proposed:any,onInspect:(id:string)=>void,onApprove:(body:any)=>Promise<any>,publicMode:boolean}){
  const [ids,setIds]=useState<string[]>([]),[direct,setDirect]=useState(''),[rival,setRival]=useState(''),[unknown,setUnknown]=useState(''),[next,setNext]=useState(''),[checked,setChecked]=useState(false),[approved,setApproved]=useState(false);
  const canSave=ids.length>0&&direct.trim()&&rival.trim()&&unknown.trim()&&next.trim()&&checked&&approved;
  return <article><span className="eyebrow">{card.id} · {card.status==='researcher_approved'?'Researcher approved':'Answer open'}</span><h3>{card.title}</h3>
-  <strong className="fraction">{card.source_root_count} <small>/ {card.reviewed_root_denominator} reviewed source roots</small></strong>
-  <p className="small">{proposed?.count??0} coded proposals in this view · {card.record_count} accepted local records linked to this question. Target fit: {card.fit_records.target}; adjacent: {card.fit_records.adjacent}; eligibility unknown: {card.fit_records.eligibility_unknown}.</p>
+  <strong className="fraction">{card.source_root_count} <small>of {card.reviewed_root_denominator} reviewed source roots linked to this question</small></strong>
+  <p className="small">{card.reviewed_root_denominator===0?'No source account has passed full label review yet. ':'This is a count within the collected and reviewed corpus, not investors. '}{card.record_count} accepted local records linked here. Target fit: {card.fit_records.target}; adjacent: {card.fit_records.adjacent}; eligibility unknown: {card.fit_records.eligibility_unknown}.</p>
   <p className="small">Source mix: {Object.entries(card.source_mix).map(([family,n])=>`${family}: ${n} records`).join('; ')||'none reviewed'}.</p>
   <p><strong>Answer:</strong> {card.direct_answer||'Insufficient reviewed evidence or approved wording. No conclusion is claimed.'}</p>
+  {!publicMode&&card.unreviewed_leads?.length>0&&<div className="question-leads"><strong>Closest source leads · not findings</strong><p className="small">{card.unreviewed_lead_roots} distinct discussion roots have proposed links to this question. The examples below need original-source review; they do not enter the fraction above.</p><ul>{card.unreviewed_leads.map((lead:any)=><li key={lead.id}><a href={lead.url} target="_blank" rel="noreferrer">{lead.source_family} · {lead.source_locator||lead.id} ↗</a><span>{lead.paraphrase||'Proposed SIP account'} · {labelFor(lead.scope_lane)} · {labelFor(lead.metric_node)} / {labelFor(lead.exit_form)}</span></li>)}</ul></div>}
   {card.status==='researcher_approved'&&<p className="small">Approved citations: {card.sources.filter((source:any)=>card.approved_source_ids.includes(source.id)).map((source:any)=><a key={source.id} href={source.url} target="_blank" rel="noreferrer">{source.source_locator||source.id} ↗ </a>)}</p>}
   {card.counterexample_or_rival&&<p><strong>Counterexample or rival:</strong> {card.counterexample_or_rival}</p>}
   <details><summary>Inspect evidence and limits</summary>

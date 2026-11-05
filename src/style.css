@@ -18,4 +18,10 @@
 .case-links a{font-size:11px}
 .case-draft{padding:17px 19px;background:#f8faf6;border-left:3px solid #63846f;border-radius:3px}
 .case-draft h4{font:600 14px/1.45 Manrope,system-ui,sans-serif;margin:7px 0}
+.question-leads{margin:16px 0;padding:14px;background:#f6f8f2;border-left:3px solid #a2b48d}
+.question-leads>strong{font-size:11px;color:#385b49}
+.question-leads p{margin:6px 0}
+.question-leads ul{margin:8px 0 0;padding-left:18px}
+.question-leads li{font-size:11px;line-height:1.5;margin:9px 0;overflow-wrap:anywhere}
+.question-leads li span{display:block;color:#647568;margin-top:3px}
 @media(max-width:1000px){.case-reading-grid{grid-template-columns:1fr}}

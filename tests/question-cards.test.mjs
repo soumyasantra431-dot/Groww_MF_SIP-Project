@@ -24,3 +24,13 @@ test('Public answer packets exclude locally usable sources without publication c
  assert.equal(questionCards(items).find(x=>x.id==='Q3').record_count,2);
  assert.equal(questionCards(items,{publicOnly:true}).find(x=>x.id==='Q3').record_count,1);
 });
+test('Unreviewed leads are dependency grouped, local only and excluded from reviewed counts',()=>{
+ const pending={...code,paraphrase:'Mandate did not debit; later payment unknown.'};
+ const items=[row('one',{review_state:'proposal',tier_a:pending}),row('two',{review_state:'proposal',tier_a:pending}),row('blocked',{review_state:'proposal',local_use_status:'pending',tier_a:pending})];
+ const local=questionCards(items).find(x=>x.id==='Q3');
+ assert.equal(local.source_root_count,0);
+ assert.equal(local.unreviewed_lead_roots,1);
+ assert.equal(local.unreviewed_leads.length,1);
+ assert.equal(local.unreviewed_leads[0].paraphrase,pending.paraphrase);
+ assert.equal(questionCards(items,{publicOnly:true}).find(x=>x.id==='Q3').unreviewed_leads.length,0);
+});
