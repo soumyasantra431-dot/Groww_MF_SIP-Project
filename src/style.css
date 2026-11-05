@@ -24,4 +24,11 @@
 .question-leads ul{margin:8px 0 0;padding-left:18px}
 .question-leads li{font-size:11px;line-height:1.5;margin:9px 0;overflow-wrap:anywhere}
 .question-leads li span{display:block;color:#647568;margin-top:3px}
+.sample-walkthrough{max-width:940px;margin:32px 0 18px;padding:26px;background:#eaf0e7;border:1px solid #cfdcc9;border-radius:7px}
+.sample-walkthrough h3{margin:8px 0}
+.sample-walkthrough label{max-width:420px;margin:18px 0}
+.sample-walkthrough select{width:100%}
+.sample-walkthrough ol{background:#fff;border:1px solid #dce3d6;border-radius:6px;padding:14px 25px 14px 42px}
+.sample-walkthrough li{font-size:12px;line-height:1.65;padding:10px 0;border-bottom:1px solid #edf0e9}
+.sample-walkthrough li:last-child{border:0}
 @media(max-width:1000px){.case-reading-grid{grid-template-columns:1fr}}

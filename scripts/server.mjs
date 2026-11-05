@@ -9,6 +9,7 @@ import { parseSourceScreen,sourceLedger } from '../engine/source-ledger.mjs';
 import { corpusReadiness,driverEvidence } from '../engine/scope.mjs';
 import { researchPlan } from '../engine/research-plan.mjs';
 import { questionCards } from '../engine/question-cards.mjs';
+import { preliminaryComparison } from '../engine/preliminary-comparison.mjs';
 import { reviewedAnswers,saveReviewedAnswer } from '../engine/answer-review.mjs';
 import { filtered,rollup,selectTierB,deckExports } from '../engine/analysis.mjs';
 import { modelStatus } from '../engine/provider.mjs';
@@ -38,7 +39,7 @@ createServer(async(req,res)=>{
     ...parseSourceScreen(readFileSync('research/phase_one_2026-11-04/source_screen.csv','utf8')),
     ...parseSourceScreen(readFileSync('research/phase_one_2026-11-05/source_screen_additions.csv','utf8')),
    ];
-   return send(res,{mode:'local',items:items.map(r=>({...r,source_review_url:sourceReviewUrl(r)})),research_plan:researchPlan(items),question_cards:questionCards(all,{approvedAnswers:reviewedAnswers(store,all)}),confirmed_case_readings:store.meta('fellow_confirmed_case_readings_2026_11_05'),rollup:rollup(items),source_ledger:sourceLedger(all,screen,collectionRuns),readiness:corpusReadiness(all),drivers:driverEvidence(items),survey_secondary:surveySecondary(),model:modelStatus(),pipeline:{lean_batch_ready:false,live_paste_ready:false,reason:'Lean extraction failed its development quality gate; source-reviewed manual evidence is the current fallback. Batch and live paste remain held.'},spend:store.spend(),selection:selectTierB(all),active,quality:store.meta('evaluation'),development:developmentStatus(),collection_runs:collectionRuns,runs:store.db.prepare('SELECT id,item_id,tier,state,attempts,error,created_at,model FROM runs ORDER BY created_at DESC LIMIT 30').all()});
+   return send(res,{mode:'local',items:items.map(r=>({...r,source_review_url:sourceReviewUrl(r)})),research_plan:researchPlan(items),preliminary_comparison:preliminaryComparison(all),question_cards:questionCards(all,{approvedAnswers:reviewedAnswers(store,all)}),confirmed_case_readings:store.meta('fellow_confirmed_case_readings_2026_11_05'),rollup:rollup(items),source_ledger:sourceLedger(all,screen,collectionRuns),readiness:corpusReadiness(all),drivers:driverEvidence(items),survey_secondary:surveySecondary(),model:modelStatus(),pipeline:{lean_batch_ready:false,live_paste_ready:false,reason:'Lean extraction failed its development quality gate; source-reviewed manual evidence is the current fallback. Batch and live paste remain held.'},spend:store.spend(),selection:selectTierB(all),active,quality:store.meta('evaluation'),development:developmentStatus(),collection_runs:collectionRuns,runs:store.db.prepare('SELECT id,item_id,tier,state,attempts,error,created_at,model FROM runs ORDER BY created_at DESC LIMIT 30').all()});
   }
   if(req.method==='GET'&&url.pathname==='/api/terms'){return send(res,JSON.parse(readFileSync('research/ENGINE_V1_TERMS_REGISTER.json','utf8')));}
   if(req.method==='GET'&&url.pathname==='/api/review-source'){
