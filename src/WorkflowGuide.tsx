@@ -29,6 +29,6 @@ export function WorkflowGuide({data,onNavigate}:{data:any,onNavigate:(tab:string
   <p className="small">Survey responses are separate first-hand written evidence; expert and company documents are context. Synthetic examples test code and never count as investor evidence. When a source cannot support a question, the answer must say what is unknown and which research method could resolve it.</p>
   <h3>What the finished answer must show</h3>
   <ol>{flow.answer_order.map((s:string)=><li key={s}>{s}</li>)}</ol>
-  <p className="boundary">This is the output contract. Six question cards now show narrow working readings and four situations can be compared locally. None is a reviewed answer or a selected Groww problem. AI extraction remains held after its development quality check; the current source review is manual and labelled as such.</p>
+  <p className="boundary">This is the output contract. {data.question_cards.filter((q:any)=>q.working_reading).length} question cards show narrow working readings and four situations can be compared locally. None is a reviewed answer or a selected Groww problem. AI extraction remains held after its development quality check; the current source review is manual and labelled as such.</p>
  </section>;
 }

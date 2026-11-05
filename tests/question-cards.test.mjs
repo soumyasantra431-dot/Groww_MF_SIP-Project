@@ -38,9 +38,9 @@ test('Unreviewed leads are dependency grouped, local only and excluded from revi
  assert.equal(questionCards(items,{publicOnly:true}).find(x=>x.id==='Q3').unreviewed_leads.length,0);
 });
 test('Working readings require their named usable proposal and never become approved answers',()=>{
- const first=row('I-ee755f7ea081bce89add',{review_state:'proposal',tier_a:{...code,question_ids:['Q1','Q2','Q3','Q5'],paraphrase:'First SIP, initial buy cancelled.'}});
+ const first=row('I-4ee83186cfa8a499dfbe',{review_state:'proposal',tier_a:{...code,question_ids:['Q1','Q8'],paraphrase:'Planned SIP with emergency buffer.'}});
  const q1=questionCards([first]).find(x=>x.id==='Q1');
- assert.match(q1.working_reading.text,/next payment/);
+ assert.match(q1.working_reading.text,/emergency buffer/);
  assert.equal(q1.direct_answer,null);
  assert.equal(q1.source_root_count,0);
  assert.equal(questionCards([{...first,local_use_status:'pending'}]).find(x=>x.id==='Q1').working_reading,null);
