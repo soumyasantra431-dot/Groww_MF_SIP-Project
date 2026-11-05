@@ -21,6 +21,17 @@ export const ANSWER_REQUIREMENTS={
  Q8:'Compare stated circumstances and behaviours with their own denominators. Missing income, age or tenure stays missing; no automatic segment selection.',
  Q9:'Propose a need tied to desired progress, consequences and current alternatives, with a rival explanation and a next test.'
 };
+export const NEXT_EVIDENCE={
+ Q1:'Ask a first-SIP investor what they hoped the recurring payment would achieve and when they expected to notice progress; record who influenced that expectation.',
+ Q2:'Find one person describing their own starting month and a later month, including the changed circumstance, action and resulting payment state.',
+ Q3:'Find an intended next instalment, the initiating event, what the investor did and whether that scheduled payment later succeeded; compare an informed pause.',
+ Q4:'Ask what the investor checked, the explicit checking cadence and the period that cadence covers; public posts without a cadence cannot answer frequency.',
+ Q5:'Find the exact SIP screen, message or control that was interpreted, what action followed and whether the app or an outside actor created the issue.',
+ Q6:'Find a first-person sequence showing what help was sought outside the app, what was actually tried and whether the next SIP action worked.',
+ Q7:'Pair a continuer and an interrupter who faced a comparable difficult month; record circumstances, protective cues and the next scheduled payment for both.',
+ Q8:'Collect explicitly stated income pattern, source of funds, age or influence alongside first-year actions and outcomes; leave unstated attributes unknown.',
+ Q9:'For each candidate need, capture the desired progress, current workaround, reported consequence and a counterexample where existing controls sufficed.'
+};
 export const WORKFLOW={
  purpose:'Help a researcher identify and compare evidence-backed situations that may affect first-year SIP continuation, then decide what to investigate with investors.',
  boundary:'The engine proposes findings and research questions. It does not choose a segment, prove a root cause, calculate Groww retention or recommend investments.',

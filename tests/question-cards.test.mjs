@@ -18,6 +18,9 @@ test('Nine answer packets count accepted local roots but do not manufacture answ
  assert.equal(q3.fit_records.eligibility_unknown,2);
  assert.equal(cards.find(x=>x.id==='Q4').source_root_count,0);
  assert.match(cards.find(x=>x.id==='Q4').unknown,/frequency/i);
+ assert.match(cards.find(x=>x.id==='Q4').next_decision,/cadence/i);
+ assert.match(cards.find(x=>x.id==='Q7').next_decision,/continuer and an interrupter/i);
+ assert.match(cards.find(x=>x.id==='Q8').next_decision,/explicitly stated income pattern/i);
 });
 test('Public answer packets exclude locally usable sources without publication clearance',()=>{
  const items=[row('local'),row('publish',{terms_status:'cleared'})];
