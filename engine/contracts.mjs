@@ -65,6 +65,7 @@ export function privateSignals(text='') {
  if (/\b[A-Z]{5}[0-9]{4}[A-Z]\b/i.test(text)) hits.push('PAN-like identifier');
  if (/\b\d(?:[ -]?\d){8,17}\b/.test(text)) hits.push('account-like number');
  if (/[\w.+-]+@[\w.-]+\.[a-z]{2,}/i.test(text)||/\bu\/[a-z0-9_-]+/i.test(text)) hits.push('contact or username');
+ if(/\b(?:ticket|case|complaint|reference)\s*(?:number|no\.?|id)?\s*(?:is|:|#)?\s*\d{5,20}\b/i.test(text))hits.push('support reference');
  return hits;
 }
 export function safeUrl(value) {

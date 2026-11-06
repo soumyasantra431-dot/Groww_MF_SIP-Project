@@ -1,0 +1,13 @@
+{
+  "run_id": "wOVX8wprd60H8iCTp",
+  "pilot_prefix_rows": 50,
+  "groups": [
+    {"name":"reported_payment_or_mandate","rows":[54,56,67,93,112,141,152,158,168,189,190,195,275],"questions":["Q3","Q5","Q6","Q7"],"reason":"Reports a payment, mandate, allotment or scheduled-SIP difficulty; actor and next scheduled outcome need checking"},
+    {"name":"display_or_interpretation","rows":[59,92,124,127,184,249,297],"questions":["Q2","Q4","Q5","Q6"],"reason":"Reports an MF/SIP display, order or returns interpretation issue; does not by itself prove an instalment failure"},
+    {"name":"adjustment_or_route","rows":[138,153,161,183,203,205,206,226,256,280],"questions":["Q3","Q5","Q6","Q9"],"reason":"Reports an attempted SIP setup or adjustment, a stated route concern, or a desired control; action and final state remain separate"},
+    {"name":"ordinary_or_informed_action","rows":[61,87,101,216,242,263],"questions":["Q1","Q2","Q7"],"reason":"Reports a starting, continuing, tracking or informed withdrawal experience; payment and first-ever-MF status are not inferred"}
+  ],
+  "needs_review":[75,80,94,110,117,134,142,166,200,222,236,254,279,300,301],
+  "cross_instrument":[105,123,136,148,149,150,174,179,246],
+  "note":"Assistant screen of rows 51-301 of the deduplicated 303-row Groww Play run. First 260 characters of each row and the remaining tails of longer rows were read; selected rows were read in full. All are provisional source candidates, not accepted findings."
+}

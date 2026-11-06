@@ -20,3 +20,8 @@ test('Apify adapter rejects private identifiers and redacts exact amounts',()=>{
  assert.equal(out.counts.amounts_redacted,1);
  assert.equal(out.rows[0].text,'My SIP is [amount redacted] monthly.');
 });
+test('Apify adapter removes support ticket references before staging',()=>{
+ const out=normalizeApifyPlay(corpusCsv(columns,[{...review,text:'My SIP is pending. My ticket number is 9999999999.'}]));
+ assert.equal(out.rows.length,1);
+ assert.equal(out.rows[0].text,'My SIP is pending. My ticket number is [reference redacted].');
+});
