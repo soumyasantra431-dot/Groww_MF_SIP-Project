@@ -11,7 +11,7 @@ export function snapshot(store){
  const roots=rootGroups(all);
  const items=rs.filter(r=>!['context','control'].includes(r.evidence_lane)).map(r=>({id:r.id,source_family:r.source_family,url:r.url,source_locator:r.source_locator,date:r.date,tier_a:r.tier_a,tier_b:r.tier_b,review_state:r.review_state,coding_origin:r.coding_origin,hypothesis:r.hypothesis,terms_status:r.terms_status,origin:r.origin,revision:r.revision,evidence_lane:r.evidence_lane,independence_group:'DEP-'+roots.get(r.id)}));
  const answers=reviewedAnswers(store,all,{publicOnly:true});
- return {schema:'sip-snapshot-v1-depth-addendum',created_at:new Date().toISOString(),review_basis:'accepted research proposals; not verified financial transactions',items,approved_answers:Object.fromEntries(Object.entries(answers).filter(([,v])=>v.status==='researcher_approved')),rollup:rollup(items),drivers:driverEvidence(items),quality:store.meta('evaluation')||null};
+ return {schema:'sip-snapshot-v1-depth-addendum',created_at:new Date().toISOString(),review_basis:'accepted research proposals; not verified financial transactions',items,approved_answers:Object.fromEntries(Object.entries(answers).filter(([,v])=>v.status==='researcher_approved')),review_collection:JSON.parse(readFileSync('REVIEW_COLLECTION_AUDIT_2026-11-07.json','utf8')),rollup:rollup(items),drivers:driverEvidence(items),quality:store.meta('evaluation')||null};
 }
 async function main(){const store=openStore();const [command,arg]=process.argv.slice(2);try{
  if(command==='import'){console.log(importCorpus(store,readFileSync(resolve(arg),'utf8')));}

@@ -1,0 +1,26 @@
+{
+  "checked_on": "2026-11-07",
+  "unit": "distinct public app-review IDs in bounded Apify exports",
+  "play_distinct_lower_bound": 902,
+  "play_topic_candidates_distinct": 305,
+  "play_saved_provisional": 50,
+  "apple_retrieved": 30,
+  "apple_topic_candidates": 4,
+  "apple_saved_provisional": 2,
+  "cross_store_distinct_lower_bound": 932,
+  "approved_findings": 0,
+  "arithmetic": {
+    "play_distinct_lower_bound": "600 broad English IDs + 301 targeted English topic IDs + 4 Hindi topic IDs - 3 broad/Hindi overlaps - 0 broad/targeted overlaps - 0 targeted/Hindi overlaps = 902; two targeted non-topic IDs are excluded from this conservative lower bound",
+    "play_topic_candidates_distinct": "301 targeted English + 3 broad English + 4 Hindi - 3 broad/Hindi overlaps = 305",
+    "cross_store_distinct_lower_bound": "902 Play + 30 Apple = 932 review IDs across separate stores"
+  },
+  "runs": [
+    {"source_family":"Play Store","run_id":"wOVX8wprd60H8iCTp","url":"https://console.apify.com/actors/wgy1PBfaWeUL4q0q7/runs/wOVX8wprd60H8iCTp","retrieved_rows":303,"topic_candidates":301,"note":"50-row pilot fully overlaps"},
+    {"source_family":"Play Store","run_id":"DPc2LrI7W3WHpWtMG","url":"https://console.apify.com/actors/wgy1PBfaWeUL4q0q7/runs/DPc2LrI7W3WHpWtMG","retrieved_rows":303,"topic_candidates":301,"note":"Older date yielded the same 303 IDs; zero added"},
+    {"source_family":"Play Store","run_id":"vmjxFyBLHVzFLBHxr","url":"https://console.apify.com/actors/wgy1PBfaWeUL4q0q7/runs/vmjxFyBLHVzFLBHxr","retrieved_rows":4,"topic_candidates":4,"note":"Hindi-language slice; four IDs outside targeted English topic set"},
+    {"source_family":"Play Store","run_id":"pFUw72hMmPxrvO4VR","url":"https://console.apify.com/actors/wgy1PBfaWeUL4q0q7/runs/pFUw72hMmPxrvO4VR","retrieved_rows":600,"topic_candidates":3,"note":"Newest, no keyword prefilter; 597 general/non-topic rows excluded before local text retention"},
+    {"source_family":"App Store","run_id":"rTjdZLKxsr1hmf7ET","url":"https://console.apify.com/actors/2ZZFKbm71jBwPzNlV/runs/rTjdZLKxsr1hmf7ET","retrieved_rows":30,"topic_candidates":4,"note":"Exact original reviews not independently visible; source-use restricted"}
+  ],
+  "scope_note": "Retrieval is not analysis. Topic matches are not first-time mutual-fund investors, unique people, or a measure of 12-month continuation. The 52 saved candidates remain provisional. Play collection route and Apple source-use status remain unresolved or restricted; none is approved answer evidence.",
+  "privacy_note": "Raw Apify downloads containing reviewer-name columns were removed after local normalization. Only de-identified topic candidates and aggregate metadata remain locally. General review text is not retained."
+}
