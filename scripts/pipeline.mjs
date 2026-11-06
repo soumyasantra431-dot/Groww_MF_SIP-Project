@@ -6,12 +6,31 @@ import { importCorpus } from '../engine/intake.mjs';
 import { rollup,selectTierB,deckExports,evaluate } from '../engine/analysis.mjs';
 import { corpusReadiness,driverEvidence,rootGroups } from '../engine/scope.mjs';
 import { reviewedAnswers } from '../engine/answer-review.mjs';
+import { questionCards } from '../engine/question-cards.mjs';
+import { preliminaryComparison } from '../engine/preliminary-comparison.mjs';
+import { researchPlan } from '../engine/research-plan.mjs';
+import { privateSignals } from '../engine/contracts.mjs';
 export function snapshot(store){
  const all=store.items();const rs=all.filter(r=>r.origin==='corpus'&&r.review_state==='accepted'&&r.terms_status==='cleared'&&(r.tier_a||r.tier_b));
  const roots=rootGroups(all);
  const items=rs.filter(r=>!['context','control'].includes(r.evidence_lane)).map(r=>({id:r.id,source_family:r.source_family,url:r.url,source_locator:r.source_locator,date:r.date,tier_a:r.tier_a,tier_b:r.tier_b,review_state:r.review_state,coding_origin:r.coding_origin,hypothesis:r.hypothesis,terms_status:r.terms_status,origin:r.origin,revision:r.revision,evidence_lane:r.evidence_lane,independence_group:'DEP-'+roots.get(r.id)}));
  const answers=reviewedAnswers(store,all,{publicOnly:true});
- return {schema:'sip-snapshot-v1-depth-addendum',created_at:new Date().toISOString(),review_basis:'accepted research proposals; not verified financial transactions',items,approved_answers:Object.fromEntries(Object.entries(answers).filter(([,v])=>v.status==='researcher_approved')),review_collection:JSON.parse(readFileSync('REVIEW_COLLECTION_AUDIT_2026-11-07.json','utf8')),rollup:rollup(items),drivers:driverEvidence(items),quality:store.meta('evaluation')||null};
+ // Fellow-endorsed directions are a separate publication lane: short factual
+ // research interpretations and source links, never raw posts, source labels
+ // promoted to accepted, or approved answers. Publication still needs review.
+ const provisional_cards=questionCards(all).filter(c=>c.working_reading).map(c=>({
+  id:c.id,title:c.title,status:'fellow_endorsed_provisional',direct_answer:null,
+  working_reading:c.working_reading,source_root_count:0,reviewed_root_denominator:0,
+  unreviewed_lead_roots:c.unreviewed_lead_roots,rival_to_check:c.rival_to_check,
+  unknown:c.unknown,next_decision:c.next_decision
+ }));
+ const comparison=preliminaryComparison(all);
+ const preliminary_comparison={status:'fellow_endorsed_provisional',candidates:comparison.candidates,
+  limitation:'Unscored research leads from unreviewed, adjacent or eligibility-unknown accounts; not selected Groww problems.'};
+ if((provisional_cards.length||preliminary_comparison.candidates.length)&&(provisional_cards.length!==9||preliminary_comparison.candidates.length!==4))throw Error('Editorial publication packet changed; inspect all nine readings and four leads before snapshot');
+ if(privateSignals(JSON.stringify({provisional_cards,preliminary_comparison})).length)throw Error('Private pattern in editorial publication packet');
+ const plan=researchPlan(all),global_rollup=rollup(all);
+ return {schema:'sip-snapshot-v1-depth-addendum',created_at:new Date().toISOString(),review_basis:'Fellow-endorsed provisional directions; zero source-level approval unless separately recorded',items,approved_answers:Object.fromEntries(Object.entries(answers).filter(([,v])=>v.status==='researcher_approved')),provisional_cards,preliminary_comparison,global_research_plan:{sources:plan.sources},global_rollup:{coded:global_rollup.coded,cells:global_rollup.cells.map(({metric_node,exit_form,count})=>({metric_node,exit_form,count}))},source_ledger:{counts:{stored_evidence_lanes:{user_voice:all.filter(r=>r.evidence_lane==='user_voice'&&r.origin==='corpus').length,control:all.filter(r=>r.evidence_lane==='control'&&r.origin==='corpus').length}}},review_collection:JSON.parse(readFileSync('REVIEW_COLLECTION_AUDIT_2026-11-07.json','utf8')),rollup:rollup(items),drivers:driverEvidence(items),quality:store.meta('evaluation')||null};
 }
 async function main(){const store=openStore();const [command,arg]=process.argv.slice(2);try{
  if(command==='import'){console.log(importCorpus(store,readFileSync(resolve(arg),'utf8')));}

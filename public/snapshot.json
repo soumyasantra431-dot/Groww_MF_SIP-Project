@@ -1,0 +1,1410 @@
+{
+  "schema": "sip-snapshot-v1-depth-addendum",
+  "created_at": "2026-11-06T19:28:26.270Z",
+  "review_basis": "Fellow-endorsed provisional directions; zero source-level approval unless separately recorded",
+  "items": [],
+  "approved_answers": {},
+  "provisional_cards": [
+    {
+      "id": "Q1",
+      "title": "Why start a SIP, and what was expected?",
+      "status": "fellow_endorsed_provisional",
+      "direct_answer": null,
+      "working_reading": {
+        "text": "A new graduate describes a plan to organise investments, keep an emergency buffer and start SIP contributions. This is stated intention before starting, not evidence of an actual SIP or later outcome.",
+        "id": "I-4ee83186cfa8a499dfbe",
+        "url": "https://money.stackexchange.com/questions/36713/lump-sum-investment-vs-sip-when-i-have-the-lump-sum",
+        "source_family": "Investing forums",
+        "source_locator": "question-36713",
+        "scope_lane": "adjacent",
+        "metric_node": "unknown",
+        "exit_form": "unknown"
+      },
+      "source_root_count": 0,
+      "reviewed_root_denominator": 0,
+      "unreviewed_lead_roots": 4,
+      "rival_to_check": "An apparent starting expectation may have come from an adviser or creator rather than the investor.",
+      "unknown": "Starting expectations for the first-time Groww cohort remain unknown unless the investor states them.",
+      "next_decision": "Review these proposed leads. Ask a first-SIP investor what they hoped the recurring payment would achieve and when they expected to notice progress; record who influenced that expectation."
+    },
+    {
+      "id": "Q2",
+      "title": "What changes after starting?",
+      "status": "fellow_endorsed_provisional",
+      "direct_answer": null,
+      "working_reading": {
+        "text": "The same writer describes a start followed by cancellation of the initial buy. That is one short sequence; it does not establish a change over later months or a stopped scheduled SIP.",
+        "id": "I-ee755f7ea081bce89add",
+        "url": "https://tradingqna.com/t/sip-cancel-on-mf/190338/1",
+        "source_family": "Investing forums",
+        "source_locator": "post-1",
+        "scope_lane": "eligibility_unknown",
+        "metric_node": "first_instalment",
+        "exit_form": "unknown"
+      },
+      "source_root_count": 0,
+      "reviewed_root_denominator": 0,
+      "unreviewed_lead_roots": 3,
+      "rival_to_check": "Different stages across different writers may resemble change within one person.",
+      "unknown": "A change needs at least two timepoints from the same investor; separate posts cannot make a trajectory.",
+      "next_decision": "Review these proposed leads. Find one person describing their own starting month and a later month, including the changed circumstance, action and resulting payment state."
+    },
+    {
+      "id": "Q3",
+      "title": "What leads to pausing, reducing or stopping?",
+      "status": "fellow_endorsed_provisional",
+      "direct_answer": null,
+      "working_reading": {
+        "text": "An adjacent-platform writer reports two months when an intended mandate-funded SIP debit did not occur. The cause and later successful instalment are not confirmed.",
+        "id": "I-2744286d3dd5472dcdb8",
+        "url": "https://tradingqna.com/t/discontinuation-of-pooling-for-mutual-funds-and-how-it-affects-coin/120947/911",
+        "source_family": "Investing forums",
+        "source_locator": "post-911",
+        "scope_lane": "adjacent",
+        "metric_node": "unknown",
+        "exit_form": "involuntary"
+      },
+      "source_root_count": 0,
+      "reviewed_root_denominator": 0,
+      "unreviewed_lead_roots": 8,
+      "rival_to_check": "A missed payment may reflect a bank or mandate condition, a deliberate decision, or an unresolved status.",
+      "unknown": "A stated reason does not prove the payment system’s cause or a month-12 outcome.",
+      "next_decision": "Review these proposed leads. Find an intended next instalment, the initiating event, what the investor did and whether that scheduled payment later succeeded; compare an informed pause."
+    },
+    {
+      "id": "Q4",
+      "title": "What do investors check, and how often?",
+      "status": "fellow_endorsed_provisional",
+      "direct_answer": null,
+      "working_reading": {
+        "text": "One experienced Paytm Money investor says they had not checked individual SIP transaction status, then checked after noticing rejected transactions and considered reviewing past transactions. This is one before-and-after checking account, not a frequency estimate for first-year Groww investors.",
+        "id": "I-0e88524ab2d6876e29b7",
+        "url": "https://tradingqna.com/t/best-alternative-to-zerodha-coin/136294/7",
+        "source_family": "Investing forums",
+        "source_locator": "post-7",
+        "scope_lane": "adjacent",
+        "metric_node": "unknown",
+        "exit_form": "involuntary"
+      },
+      "source_root_count": 0,
+      "reviewed_root_denominator": 0,
+      "unreviewed_lead_roots": 1,
+      "rival_to_check": "People who post about checking may check more often than quiet investors.",
+      "unknown": "Checking frequency is unknown unless a person states a cadence and reference period.",
+      "next_decision": "Review these proposed leads. Ask what the investor checked, the explicit checking cadence and the period that cadence covers; public posts without a cadence cannot answer frequency."
+    },
+    {
+      "id": "Q5",
+      "title": "What confuses or worries them in the app?",
+      "status": "fellow_endorsed_provisional",
+      "direct_answer": null,
+      "working_reading": {
+        "text": "A writer reports pausing then accidentally deleting one SIP and asks what happens to the holding. This shows a stated control question, while its later payment consequence remains unknown.",
+        "id": "I-58c3ce0df1ef992c0688",
+        "url": "https://tradingqna.com/t/delete-option-in-sip-conditional-order-in-coin/96985/1",
+        "source_family": "Investing forums",
+        "source_locator": "post-1",
+        "scope_lane": "eligibility_unknown",
+        "metric_node": "unknown",
+        "exit_form": "unknown"
+      },
+      "source_root_count": 0,
+      "reviewed_root_denominator": 0,
+      "unreviewed_lead_roots": 7,
+      "rival_to_check": "The control may be available but hard to find, or the underlying payment status may be unclear.",
+      "unknown": "A documented control does not prove that investors noticed or understood it.",
+      "next_decision": "Review these proposed leads. Find the exact SIP screen, message or control that was interpreted, what action followed and whether the app or an outside actor created the issue."
+    },
+    {
+      "id": "Q6",
+      "title": "What happens outside the app?",
+      "status": "fellow_endorsed_provisional",
+      "direct_answer": null,
+      "working_reading": {
+        "text": "In a follow-up to a Coin payment problem, the same poster reports using another UPI app and says current payments work. The later scheduled SIP outcome is not verified.",
+        "id": "I-50a772eddc9a02120c1e",
+        "url": "https://tradingqna.com/t/peculiar-payment-problem-in-coin/156840/9",
+        "source_family": "Investing forums",
+        "source_locator": "post-9",
+        "scope_lane": "adjacent",
+        "metric_node": "recovery",
+        "exit_form": "unknown"
+      },
+      "source_root_count": 0,
+      "reviewed_root_denominator": 0,
+      "unreviewed_lead_roots": 4,
+      "rival_to_check": "A reply may suggest a workaround that the original writer never tried.",
+      "unknown": "Advice received, support contacted and action completed are different events.",
+      "next_decision": "Review these proposed leads. Find a first-person sequence showing what help was sought outside the app, what was actually tried and whether the next SIP action worked."
+    },
+    {
+      "id": "Q7",
+      "title": "What differs between continuation and interruption?",
+      "status": "fellow_endorsed_provisional",
+      "direct_answer": null,
+      "working_reading": {
+        "text": "One writer reports roughly a year of SIP investing and considers increasing the amount. Their platform, first-ever MF status and a comparable difficult-month outcome are unknown.",
+        "id": "I-14cd3dbb137c38498cf3",
+        "url": "https://tradingqna.com/t/suggestion-for-my-portfolio/133623/1",
+        "source_family": "Investing forums",
+        "source_locator": "post-1",
+        "scope_lane": "eligibility_unknown",
+        "metric_node": "unknown",
+        "exit_form": "continuer"
+      },
+      "source_root_count": 0,
+      "reviewed_root_denominator": 0,
+      "unreviewed_lead_roots": 3,
+      "rival_to_check": "A continuation difference may reflect circumstances rather than the app experience.",
+      "unknown": "Public posts cannot reveal silent continuers or silent drop-offs, or establish a causal difference.",
+      "next_decision": "Review these proposed leads. Pair a continuer and an interrupter who faced a comparable difficult month; record circumstances, protective cues and the next scheduled payment for both."
+    },
+    {
+      "id": "Q8",
+      "title": "How do circumstances differ across accounts?",
+      "status": "fellow_endorsed_provisional",
+      "direct_answer": null,
+      "working_reading": {
+        "text": "One pre-start writer explicitly mentions a new job, a planned emergency buffer and a support system. This describes one person’s circumstances; there is no observed SIP outcome or basis for a segment comparison.",
+        "id": "I-4ee83186cfa8a499dfbe",
+        "url": "https://money.stackexchange.com/questions/36713/lump-sum-investment-vs-sip-when-i-have-the-lump-sum",
+        "source_family": "Investing forums",
+        "source_locator": "question-36713",
+        "scope_lane": "adjacent",
+        "metric_node": "unknown",
+        "exit_form": "unknown"
+      },
+      "source_root_count": 0,
+      "reviewed_root_denominator": 0,
+      "unreviewed_lead_roots": 3,
+      "rival_to_check": "A visible pattern may reflect who posts publicly rather than a meaningful investor segment.",
+      "unknown": "Age, income stability and source of money stay unknown unless the person states them.",
+      "next_decision": "Review these proposed leads. Collect explicitly stated income pattern, source of funds, age or influence alongside first-year actions and outcomes; leave unstated attributes unknown."
+    },
+    {
+      "id": "Q9",
+      "title": "Which unmet needs deserve investigation?",
+      "status": "fellow_endorsed_provisional",
+      "direct_answer": null,
+      "working_reading": {
+        "text": "A Coin writer reports a missing due-date payment link, an inconsistent next-instalment display and no visible modify/cancel tab, then asks for help. A need for clearer status or control discovery is a hypothesis; the source does not establish the current option, payment outcome or Groww fit.",
+        "id": "I-b07a7a3c97ad3462ebf3",
+        "url": "https://tradingqna.com/t/coin-sip-not-working/157190/1",
+        "source_family": "Investing forums",
+        "source_locator": "post-1",
+        "scope_lane": "adjacent",
+        "metric_node": "unknown",
+        "exit_form": "unknown"
+      },
+      "source_root_count": 0,
+      "reviewed_root_denominator": 0,
+      "unreviewed_lead_roots": 2,
+      "rival_to_check": "An apparent unmet need may already be met by an existing control that the writer did not know about.",
+      "unknown": "Repeated complaint language is a need hypothesis until the desired progress and current alternative are checked.",
+      "next_decision": "Review these proposed leads. For each candidate need, capture the desired progress, current workaround, reported consequence and a counterexample where existing controls sufficed."
+    }
+  ],
+  "preliminary_comparison": {
+    "status": "fellow_endorsed_provisional",
+    "candidates": [
+      {
+        "id": "schedule_meaning",
+        "name": "What does the first payment set up?",
+        "observed": "A first-SIP writer reported cancelling the initial buy while unsure when the next payment would occur.",
+        "consequence": "The initial order was reportedly cancelled; the recurring SIP and later payment outcomes are unknown.",
+        "pathway": "A misunderstood schedule could affect an intended contribution, but this account does not establish a lost scheduled instalment.",
+        "rival": "Normal first-time learning or a deliberate order cancellation with no missed later payment.",
+        "next_test": "Ask a first-year Groww investor to distinguish the initial buy, next due date and next successful instalment; check the actual next-payment outcome.",
+        "source_root_count": 1,
+        "denominator_roots": 13,
+        "record_count": 1,
+        "target_records": 0,
+        "adjacent_records": 0,
+        "eligibility_unknown_records": 1,
+        "source_families": [
+          "Investing forums"
+        ],
+        "metric_tags": [
+          "first_instalment/unknown"
+        ],
+        "sources": [
+          {
+            "id": "I-ee755f7ea081bce89add",
+            "url": "https://tradingqna.com/t/sip-cancel-on-mf/190338/1",
+            "locator": "post-1",
+            "platform": "unknown"
+          }
+        ]
+      },
+      {
+        "id": "payment_recovery",
+        "name": "When an intended payment does not complete",
+        "observed": "Adjacent-platform writers described mandate or payment-route trouble; one later reported that another UPI app worked.",
+        "consequence": "Payment execution was reported as interrupted in some posts. The later update describes a workaround, not a verified scheduled SIP recovery.",
+        "pathway": "If an intended scheduled instalment fails and recovery is possible, clarity about status and options may matter to a later qualifying payment.",
+        "rival": "Bank or UPI rail conditions, normal processing delay, or payment recovery unrelated to the platform interface.",
+        "next_test": "For one Groww due-date episode, record the intended payment, bank/mandate status, app status, action and next scheduled instalment.",
+        "source_root_count": 3,
+        "denominator_roots": 13,
+        "record_count": 4,
+        "target_records": 0,
+        "adjacent_records": 4,
+        "eligibility_unknown_records": 0,
+        "source_families": [
+          "Investing forums"
+        ],
+        "metric_tags": [
+          "unknown/involuntary",
+          "recovery/unknown",
+          "setup_mandate/involuntary"
+        ],
+        "sources": [
+          {
+            "id": "I-2744286d3dd5472dcdb8",
+            "url": "https://tradingqna.com/t/discontinuation-of-pooling-for-mutual-funds-and-how-it-affects-coin/120947/911",
+            "locator": "post-911",
+            "platform": "Coin"
+          },
+          {
+            "id": "I-4a433e8feec6d06a4d97",
+            "url": "https://tradingqna.com/t/peculiar-payment-problem-in-coin/156840/1",
+            "locator": "post-1",
+            "platform": "Coin"
+          },
+          {
+            "id": "I-50a772eddc9a02120c1e",
+            "url": "https://tradingqna.com/t/peculiar-payment-problem-in-coin/156840/9",
+            "locator": "post-9",
+            "platform": "unknown"
+          },
+          {
+            "id": "I-49ae1e3cd8f37349df1f",
+            "url": "https://tradingqna.com/t/introducing-upi-autopay-for-sip-payments/173064/3",
+            "locator": "post-3",
+            "platform": "unknown"
+          }
+        ]
+      },
+      {
+        "id": "control_meaning",
+        "name": "What does pause, delete or cancel change?",
+        "observed": "Writers asked about or acted on pause, delete, initial-order cancellation and stopping SIP transactions; later contribution or redemption states were not established.",
+        "consequence": "A paused SIP was reportedly deleted in one account; whether holdings changed or future payments stopped is unknown.",
+        "pathway": "Understanding control consequences could help an investor carry out an informed choice; continuation is not automatically the right outcome.",
+        "rival": "The controls may behave correctly and the writer may simply be seeking confirmation after a valid choice.",
+        "next_test": "Observe a safe, non-transactional Groww task: explain what each control changes, then verify the current product behaviour.",
+        "source_root_count": 3,
+        "denominator_roots": 13,
+        "record_count": 3,
+        "target_records": 0,
+        "adjacent_records": 1,
+        "eligibility_unknown_records": 2,
+        "source_families": [
+          "Investing forums"
+        ],
+        "metric_tags": [
+          "unknown/unknown",
+          "first_instalment/unknown",
+          "unknown/voluntary"
+        ],
+        "sources": [
+          {
+            "id": "I-58c3ce0df1ef992c0688",
+            "url": "https://tradingqna.com/t/delete-option-in-sip-conditional-order-in-coin/96985/1",
+            "locator": "post-1",
+            "platform": "unknown"
+          },
+          {
+            "id": "I-ee755f7ea081bce89add",
+            "url": "https://tradingqna.com/t/sip-cancel-on-mf/190338/1",
+            "locator": "post-1",
+            "platform": "unknown"
+          },
+          {
+            "id": "I-c8e7e6f6237819690bb7",
+            "url": "https://money.stackexchange.com/questions/102035/icici-redeem-mutual-fund-sips-through-net-banking",
+            "locator": "question-102035",
+            "platform": "ICICI net banking"
+          }
+        ]
+      },
+      {
+        "id": "trust_support",
+        "name": "What happens when payment trust weakens?",
+        "observed": "Adjacent-platform writers raised support or control questions; one reported pausing investments amid redemption and support concerns.",
+        "consequence": "A reported investment pause is not proof that a scheduled SIP stopped or that support caused it.",
+        "pathway": "Unresolved status or support may change an investor’s next choice, but its link to a qualifying month-12 payment is unmeasured.",
+        "rival": "The pause may reflect circumstances outside the app, and the support question may never have affected a payment.",
+        "next_test": "Ask what the investor sought from support, what response arrived, what choice followed, and what happened to the next due payment.",
+        "source_root_count": 2,
+        "denominator_roots": 13,
+        "record_count": 2,
+        "target_records": 0,
+        "adjacent_records": 2,
+        "eligibility_unknown_records": 0,
+        "source_families": [
+          "Investing forums"
+        ],
+        "metric_tags": [
+          "unknown/unknown"
+        ],
+        "sources": [
+          {
+            "id": "I-0fdc1add96cfb39774ac",
+            "url": "https://tradingqna.com/t/discontinuation-of-pooling-for-mutual-funds-and-how-it-affects-coin/120947/935",
+            "locator": "post-935",
+            "platform": "Coin"
+          },
+          {
+            "id": "I-21f5cec36a90bef96234",
+            "url": "https://tradingqna.com/t/coin-sip-vs-amc-sip/127618/1",
+            "locator": "post-1",
+            "platform": "Zerodha"
+          }
+        ]
+      }
+    ],
+    "limitation": "Unscored research leads from unreviewed, adjacent or eligibility-unknown accounts; not selected Groww problems."
+  },
+  "global_research_plan": {
+    "sources": [
+      {
+        "source_family": "App Store",
+        "user_voice_inputs": 2,
+        "coded_user_voice": 0,
+        "tier_b": 0,
+        "dependency_grouped_roots": 0,
+        "context_or_controls": 0,
+        "status": "restricted under checked India terms",
+        "seek": "SIP-specific execution and comprehension experiences; compare platform differences only when stated.",
+        "route": "No review collection under the currently checked India terms; reconsider only with an explicit valid permission basis.",
+        "tier": "Potential Tier A if a lawful route later exists.",
+        "limit": "Apple India terms restrict automated or equivalent manual collection and analysis of App Store content. No review corpus is admitted.",
+        "connection_status": "input supported; automated source connection not established"
+      },
+      {
+        "source_family": "Play Store",
+        "user_voice_inputs": 50,
+        "coded_user_voice": 0,
+        "tier_b": 0,
+        "dependency_grouped_roots": 0,
+        "context_or_controls": 0,
+        "status": "route unresolved",
+        "seek": "SIP-specific payment, status, adjustment and ordinary-success experiences.",
+        "route": "Permission-checked public originals or an authorised review export → local CSV.",
+        "tier": "Tier A first; Tier B only if an actual sequence is stated.",
+        "limit": "Developer credentials for our own app do not unlock Groww review data. Public collection route remains unresolved.",
+        "connection_status": "input supported; automated source connection not established"
+      },
+      {
+        "source_family": "Reddit",
+        "user_voice_inputs": 13,
+        "coded_user_voice": 0,
+        "tier_b": 0,
+        "dependency_grouped_roots": 0,
+        "context_or_controls": 0,
+        "status": "restricted without approved research access",
+        "seek": "Starting expectations, changing circumstances, informed pauses, ordinary continuation and recovery narratives.",
+        "route": "Approved research access/export → local CSV; no manual-copy bypass of a restricted route.",
+        "tier": "Tier A first; select source-linked narratives for Tier B.",
+        "limit": "Historical seed inputs are not cleared for model use. Approved researcher access remains unresolved.",
+        "connection_status": "input supported; automated source connection not established"
+      },
+      {
+        "source_family": "Investing forums",
+        "user_voice_inputs": 35,
+        "coded_user_voice": 15,
+        "tier_b": 0,
+        "dependency_grouped_roots": 13,
+        "context_or_controls": 0,
+        "status": "bounded source-specific local assessment",
+        "seek": "A specific SIP event, speaker-separated replies, workarounds and reported endings.",
+        "route": "Bounded original-page reading → de-identified local CSV with topic/post locator.",
+        "tier": "Tier A first; qualifying narratives feed Tier B.",
+        "limit": "TradingQ&A and Personal Finance & Money Stack Exchange have separate recorded local-use decisions. The posts are mostly adjacent to the Groww target; public raw-text redistribution remains held.",
+        "connection_status": "input supported; automated source connection not established"
+      },
+      {
+        "source_family": "Social",
+        "user_voice_inputs": 0,
+        "coded_user_voice": 0,
+        "tier_b": 0,
+        "dependency_grouped_roots": 0,
+        "context_or_controls": 0,
+        "status": "source not selected",
+        "seek": "A named gap, such as a stated influence, life event or ordinary-success account.",
+        "route": "Choose a public platform and inspect its terms before bounded collection/import.",
+        "tier": "Tier A; Tier B only for a supported personal sequence.",
+        "limit": "No platform-specific collection route is established. No private groups or profile harvesting.",
+        "connection_status": "input supported; automated source connection not established"
+      },
+      {
+        "source_family": "YouTube",
+        "user_voice_inputs": 0,
+        "coded_user_voice": 0,
+        "tier_b": 0,
+        "dependency_grouped_roots": 0,
+        "context_or_controls": 0,
+        "status": "analytics amendment not confirmed",
+        "seek": "Commenters’ own SIP experiences and explicitly stated influence; creator advice is context.",
+        "route": "Optional official comments API → local CSV, only after the source-use basis is resolved.",
+        "tier": "Tier A first; longer first-person sequences may qualify for Tier B.",
+        "limit": "The key is available locally, but comment tagging and counts need a qualifying YouTube analytics amendment. No YouTube request has run; replies are not collected by this adapter.",
+        "connection_status": "input supported; automated source connection not established"
+      },
+      {
+        "source_family": "Other",
+        "user_voice_inputs": 0,
+        "coded_user_voice": 0,
+        "tier_b": 0,
+        "dependency_grouped_roots": 0,
+        "context_or_controls": 3,
+        "status": "original-specific review required",
+        "seek": "Published investor stories or reader questions with a traceable original, speaker and reported experience.",
+        "route": "Check the individual publisher and story provenance → bounded manual CSV.",
+        "tier": "User accounts: Tier A then eligible Tier B. Expert/company material: separate context.",
+        "limit": "Illustrative stories, expert prescriptions and company documents do not become investor episodes. No generic source clearance.",
+        "connection_status": "input supported; automated source connection not established"
+      }
+    ]
+  },
+  "global_rollup": {
+    "coded": 15,
+    "cells": [
+      {
+        "metric_node": "setup_mandate",
+        "exit_form": "involuntary",
+        "count": 1
+      },
+      {
+        "metric_node": "setup_mandate",
+        "exit_form": "voluntary",
+        "count": 0
+      },
+      {
+        "metric_node": "setup_mandate",
+        "exit_form": "passive",
+        "count": 0
+      },
+      {
+        "metric_node": "setup_mandate",
+        "exit_form": "not_real",
+        "count": 0
+      },
+      {
+        "metric_node": "setup_mandate",
+        "exit_form": "continuer",
+        "count": 0
+      },
+      {
+        "metric_node": "setup_mandate",
+        "exit_form": "unknown",
+        "count": 0
+      },
+      {
+        "metric_node": "first_instalment",
+        "exit_form": "involuntary",
+        "count": 0
+      },
+      {
+        "metric_node": "first_instalment",
+        "exit_form": "voluntary",
+        "count": 0
+      },
+      {
+        "metric_node": "first_instalment",
+        "exit_form": "passive",
+        "count": 0
+      },
+      {
+        "metric_node": "first_instalment",
+        "exit_form": "not_real",
+        "count": 0
+      },
+      {
+        "metric_node": "first_instalment",
+        "exit_form": "continuer",
+        "count": 0
+      },
+      {
+        "metric_node": "first_instalment",
+        "exit_form": "unknown",
+        "count": 1
+      },
+      {
+        "metric_node": "second_instalment",
+        "exit_form": "involuntary",
+        "count": 0
+      },
+      {
+        "metric_node": "second_instalment",
+        "exit_form": "voluntary",
+        "count": 0
+      },
+      {
+        "metric_node": "second_instalment",
+        "exit_form": "passive",
+        "count": 0
+      },
+      {
+        "metric_node": "second_instalment",
+        "exit_form": "not_real",
+        "count": 0
+      },
+      {
+        "metric_node": "second_instalment",
+        "exit_form": "continuer",
+        "count": 0
+      },
+      {
+        "metric_node": "second_instalment",
+        "exit_form": "unknown",
+        "count": 0
+      },
+      {
+        "metric_node": "months_3_6",
+        "exit_form": "involuntary",
+        "count": 0
+      },
+      {
+        "metric_node": "months_3_6",
+        "exit_form": "voluntary",
+        "count": 0
+      },
+      {
+        "metric_node": "months_3_6",
+        "exit_form": "passive",
+        "count": 0
+      },
+      {
+        "metric_node": "months_3_6",
+        "exit_form": "not_real",
+        "count": 0
+      },
+      {
+        "metric_node": "months_3_6",
+        "exit_form": "continuer",
+        "count": 0
+      },
+      {
+        "metric_node": "months_3_6",
+        "exit_form": "unknown",
+        "count": 0
+      },
+      {
+        "metric_node": "months_7_12",
+        "exit_form": "involuntary",
+        "count": 0
+      },
+      {
+        "metric_node": "months_7_12",
+        "exit_form": "voluntary",
+        "count": 0
+      },
+      {
+        "metric_node": "months_7_12",
+        "exit_form": "passive",
+        "count": 0
+      },
+      {
+        "metric_node": "months_7_12",
+        "exit_form": "not_real",
+        "count": 0
+      },
+      {
+        "metric_node": "months_7_12",
+        "exit_form": "continuer",
+        "count": 0
+      },
+      {
+        "metric_node": "months_7_12",
+        "exit_form": "unknown",
+        "count": 0
+      },
+      {
+        "metric_node": "recovery",
+        "exit_form": "involuntary",
+        "count": 0
+      },
+      {
+        "metric_node": "recovery",
+        "exit_form": "voluntary",
+        "count": 0
+      },
+      {
+        "metric_node": "recovery",
+        "exit_form": "passive",
+        "count": 0
+      },
+      {
+        "metric_node": "recovery",
+        "exit_form": "not_real",
+        "count": 0
+      },
+      {
+        "metric_node": "recovery",
+        "exit_form": "continuer",
+        "count": 0
+      },
+      {
+        "metric_node": "recovery",
+        "exit_form": "unknown",
+        "count": 1
+      },
+      {
+        "metric_node": "unknown",
+        "exit_form": "involuntary",
+        "count": 3
+      },
+      {
+        "metric_node": "unknown",
+        "exit_form": "voluntary",
+        "count": 2
+      },
+      {
+        "metric_node": "unknown",
+        "exit_form": "passive",
+        "count": 0
+      },
+      {
+        "metric_node": "unknown",
+        "exit_form": "not_real",
+        "count": 0
+      },
+      {
+        "metric_node": "unknown",
+        "exit_form": "continuer",
+        "count": 1
+      },
+      {
+        "metric_node": "unknown",
+        "exit_form": "unknown",
+        "count": 6
+      }
+    ]
+  },
+  "source_ledger": {
+    "counts": {
+      "stored_evidence_lanes": {
+        "user_voice": 100,
+        "control": 3
+      }
+    }
+  },
+  "review_collection": {
+    "checked_on": "2026-11-07",
+    "unit": "distinct public app-review IDs in bounded Apify exports",
+    "play_distinct_lower_bound": 902,
+    "play_topic_candidates_distinct": 305,
+    "play_saved_provisional": 50,
+    "apple_retrieved": 30,
+    "apple_topic_candidates": 4,
+    "apple_saved_provisional": 2,
+    "cross_store_distinct_lower_bound": 932,
+    "approved_findings": 0,
+    "arithmetic": {
+      "play_distinct_lower_bound": "600 broad English IDs + 301 targeted English topic IDs + 4 Hindi topic IDs - 3 broad/Hindi overlaps - 0 broad/targeted overlaps - 0 targeted/Hindi overlaps = 902; two targeted non-topic IDs are excluded from this conservative lower bound",
+      "play_topic_candidates_distinct": "301 targeted English + 3 broad English + 4 Hindi - 3 broad/Hindi overlaps = 305",
+      "cross_store_distinct_lower_bound": "902 Play + 30 Apple = 932 review IDs across separate stores"
+    },
+    "runs": [
+      {
+        "source_family": "Play Store",
+        "run_id": "wOVX8wprd60H8iCTp",
+        "url": "https://console.apify.com/actors/wgy1PBfaWeUL4q0q7/runs/wOVX8wprd60H8iCTp",
+        "retrieved_rows": 303,
+        "topic_candidates": 301,
+        "note": "50-row pilot fully overlaps"
+      },
+      {
+        "source_family": "Play Store",
+        "run_id": "DPc2LrI7W3WHpWtMG",
+        "url": "https://console.apify.com/actors/wgy1PBfaWeUL4q0q7/runs/DPc2LrI7W3WHpWtMG",
+        "retrieved_rows": 303,
+        "topic_candidates": 301,
+        "note": "Older date yielded the same 303 IDs; zero added"
+      },
+      {
+        "source_family": "Play Store",
+        "run_id": "vmjxFyBLHVzFLBHxr",
+        "url": "https://console.apify.com/actors/wgy1PBfaWeUL4q0q7/runs/vmjxFyBLHVzFLBHxr",
+        "retrieved_rows": 4,
+        "topic_candidates": 4,
+        "note": "Hindi-language slice; four IDs outside targeted English topic set"
+      },
+      {
+        "source_family": "Play Store",
+        "run_id": "pFUw72hMmPxrvO4VR",
+        "url": "https://console.apify.com/actors/wgy1PBfaWeUL4q0q7/runs/pFUw72hMmPxrvO4VR",
+        "retrieved_rows": 600,
+        "topic_candidates": 3,
+        "note": "Newest, no keyword prefilter; 597 general/non-topic rows excluded before local text retention"
+      },
+      {
+        "source_family": "App Store",
+        "run_id": "rTjdZLKxsr1hmf7ET",
+        "url": "https://console.apify.com/actors/2ZZFKbm71jBwPzNlV/runs/rTjdZLKxsr1hmf7ET",
+        "retrieved_rows": 30,
+        "topic_candidates": 4,
+        "note": "Exact original reviews not independently visible; source-use restricted"
+      }
+    ],
+    "scope_note": "Retrieval is not analysis. Topic matches are not first-time mutual-fund investors, unique people, or a measure of 12-month continuation. The 52 saved candidates remain provisional. Play collection route and Apple source-use status remain unresolved or restricted; none is approved answer evidence.",
+    "privacy_note": "Raw Apify downloads containing reviewer-name columns were removed after local normalization. Only de-identified topic candidates and aggregate metadata remain locally. General review text is not retained."
+  },
+  "rollup": {
+    "unit": "selected user-voice input items; not investors",
+    "total": 0,
+    "coded": 0,
+    "uncoded": 0,
+    "user_voice_coded": 0,
+    "analysis_dispositions": {
+      "eligible_user_voice": 0,
+      "control": 0,
+      "context": 0,
+      "unresolved_provenance": 0,
+      "rejected": 0,
+      "out_of_scope": 0,
+      "scope_inconsistent": 0,
+      "synthetic_fixture": 0
+    },
+    "source_lanes": {
+      "user_voice": 0,
+      "context": 0,
+      "control": 0,
+      "unknown": 0
+    },
+    "scope_lanes": {
+      "target": 0,
+      "adjacent": 0,
+      "eligibility_unknown": 0,
+      "context": 0,
+      "out_of_scope": 0
+    },
+    "relevance": {
+      "yes": 0,
+      "no": 0,
+      "uncertain": 0
+    },
+    "cells": [
+      {
+        "metric_node": "setup_mandate",
+        "exit_form": "involuntary",
+        "count": 0,
+        "item_ids": []
+      },
+      {
+        "metric_node": "setup_mandate",
+        "exit_form": "voluntary",
+        "count": 0,
+        "item_ids": []
+      },
+      {
+        "metric_node": "setup_mandate",
+        "exit_form": "passive",
+        "count": 0,
+        "item_ids": []
+      },
+      {
+        "metric_node": "setup_mandate",
+        "exit_form": "not_real",
+        "count": 0,
+        "item_ids": []
+      },
+      {
+        "metric_node": "setup_mandate",
+        "exit_form": "continuer",
+        "count": 0,
+        "item_ids": []
+      },
+      {
+        "metric_node": "setup_mandate",
+        "exit_form": "unknown",
+        "count": 0,
+        "item_ids": []
+      },
+      {
+        "metric_node": "first_instalment",
+        "exit_form": "involuntary",
+        "count": 0,
+        "item_ids": []
+      },
+      {
+        "metric_node": "first_instalment",
+        "exit_form": "voluntary",
+        "count": 0,
+        "item_ids": []
+      },
+      {
+        "metric_node": "first_instalment",
+        "exit_form": "passive",
+        "count": 0,
+        "item_ids": []
+      },
+      {
+        "metric_node": "first_instalment",
+        "exit_form": "not_real",
+        "count": 0,
+        "item_ids": []
+      },
+      {
+        "metric_node": "first_instalment",
+        "exit_form": "continuer",
+        "count": 0,
+        "item_ids": []
+      },
+      {
+        "metric_node": "first_instalment",
+        "exit_form": "unknown",
+        "count": 0,
+        "item_ids": []
+      },
+      {
+        "metric_node": "second_instalment",
+        "exit_form": "involuntary",
+        "count": 0,
+        "item_ids": []
+      },
+      {
+        "metric_node": "second_instalment",
+        "exit_form": "voluntary",
+        "count": 0,
+        "item_ids": []
+      },
+      {
+        "metric_node": "second_instalment",
+        "exit_form": "passive",
+        "count": 0,
+        "item_ids": []
+      },
+      {
+        "metric_node": "second_instalment",
+        "exit_form": "not_real",
+        "count": 0,
+        "item_ids": []
+      },
+      {
+        "metric_node": "second_instalment",
+        "exit_form": "continuer",
+        "count": 0,
+        "item_ids": []
+      },
+      {
+        "metric_node": "second_instalment",
+        "exit_form": "unknown",
+        "count": 0,
+        "item_ids": []
+      },
+      {
+        "metric_node": "months_3_6",
+        "exit_form": "involuntary",
+        "count": 0,
+        "item_ids": []
+      },
+      {
+        "metric_node": "months_3_6",
+        "exit_form": "voluntary",
+        "count": 0,
+        "item_ids": []
+      },
+      {
+        "metric_node": "months_3_6",
+        "exit_form": "passive",
+        "count": 0,
+        "item_ids": []
+      },
+      {
+        "metric_node": "months_3_6",
+        "exit_form": "not_real",
+        "count": 0,
+        "item_ids": []
+      },
+      {
+        "metric_node": "months_3_6",
+        "exit_form": "continuer",
+        "count": 0,
+        "item_ids": []
+      },
+      {
+        "metric_node": "months_3_6",
+        "exit_form": "unknown",
+        "count": 0,
+        "item_ids": []
+      },
+      {
+        "metric_node": "months_7_12",
+        "exit_form": "involuntary",
+        "count": 0,
+        "item_ids": []
+      },
+      {
+        "metric_node": "months_7_12",
+        "exit_form": "voluntary",
+        "count": 0,
+        "item_ids": []
+      },
+      {
+        "metric_node": "months_7_12",
+        "exit_form": "passive",
+        "count": 0,
+        "item_ids": []
+      },
+      {
+        "metric_node": "months_7_12",
+        "exit_form": "not_real",
+        "count": 0,
+        "item_ids": []
+      },
+      {
+        "metric_node": "months_7_12",
+        "exit_form": "continuer",
+        "count": 0,
+        "item_ids": []
+      },
+      {
+        "metric_node": "months_7_12",
+        "exit_form": "unknown",
+        "count": 0,
+        "item_ids": []
+      },
+      {
+        "metric_node": "recovery",
+        "exit_form": "involuntary",
+        "count": 0,
+        "item_ids": []
+      },
+      {
+        "metric_node": "recovery",
+        "exit_form": "voluntary",
+        "count": 0,
+        "item_ids": []
+      },
+      {
+        "metric_node": "recovery",
+        "exit_form": "passive",
+        "count": 0,
+        "item_ids": []
+      },
+      {
+        "metric_node": "recovery",
+        "exit_form": "not_real",
+        "count": 0,
+        "item_ids": []
+      },
+      {
+        "metric_node": "recovery",
+        "exit_form": "continuer",
+        "count": 0,
+        "item_ids": []
+      },
+      {
+        "metric_node": "recovery",
+        "exit_form": "unknown",
+        "count": 0,
+        "item_ids": []
+      },
+      {
+        "metric_node": "unknown",
+        "exit_form": "involuntary",
+        "count": 0,
+        "item_ids": []
+      },
+      {
+        "metric_node": "unknown",
+        "exit_form": "voluntary",
+        "count": 0,
+        "item_ids": []
+      },
+      {
+        "metric_node": "unknown",
+        "exit_form": "passive",
+        "count": 0,
+        "item_ids": []
+      },
+      {
+        "metric_node": "unknown",
+        "exit_form": "not_real",
+        "count": 0,
+        "item_ids": []
+      },
+      {
+        "metric_node": "unknown",
+        "exit_form": "continuer",
+        "count": 0,
+        "item_ids": []
+      },
+      {
+        "metric_node": "unknown",
+        "exit_form": "unknown",
+        "count": 0,
+        "item_ids": []
+      }
+    ],
+    "equations": {
+      "base": "0 inventory = 0 coded + 0 uncoded",
+      "matrix": "0 relevant/uncertain, non-rejected user-voice items = 0 node × exit assignments",
+      "source_lanes": "0 = 0 user voice + 0 context + 0 controls + 0 unresolved provenance"
+    },
+    "questions": [
+      {
+        "id": "Q1",
+        "title": "Why start a SIP, and what was expected?",
+        "count": 0,
+        "denominator": 0,
+        "unit": "selected relevant/uncertain user-voice items",
+        "reviewed_count": 0,
+        "reviewed_denominator": 0,
+        "reviewed_target_count": 0,
+        "distinct_source_roots": 0,
+        "target_count": 0,
+        "target_denominator": 0,
+        "adjacent_count": 0,
+        "eligibility_unknown_count": 0,
+        "item_ids": [],
+        "tier_b_supported": 0,
+        "tier_b_denominator": 0,
+        "status": "analysis unrun — evidence not assessed",
+        "limitation": null,
+        "metric_tags": []
+      },
+      {
+        "id": "Q2",
+        "title": "What changes after starting?",
+        "count": 0,
+        "denominator": 0,
+        "unit": "selected relevant/uncertain user-voice items",
+        "reviewed_count": 0,
+        "reviewed_denominator": 0,
+        "reviewed_target_count": 0,
+        "distinct_source_roots": 0,
+        "target_count": 0,
+        "target_denominator": 0,
+        "adjacent_count": 0,
+        "eligibility_unknown_count": 0,
+        "item_ids": [],
+        "tier_b_supported": 0,
+        "tier_b_denominator": 0,
+        "status": "analysis unrun — evidence not assessed",
+        "limitation": null,
+        "metric_tags": []
+      },
+      {
+        "id": "Q3",
+        "title": "What leads to pausing, reducing or stopping?",
+        "count": 0,
+        "denominator": 0,
+        "unit": "selected relevant/uncertain user-voice items",
+        "reviewed_count": 0,
+        "reviewed_denominator": 0,
+        "reviewed_target_count": 0,
+        "distinct_source_roots": 0,
+        "target_count": 0,
+        "target_denominator": 0,
+        "adjacent_count": 0,
+        "eligibility_unknown_count": 0,
+        "item_ids": [],
+        "tier_b_supported": 0,
+        "tier_b_denominator": 0,
+        "status": "analysis unrun — evidence not assessed",
+        "limitation": null,
+        "metric_tags": []
+      },
+      {
+        "id": "Q4",
+        "title": "What do investors check, and how often?",
+        "count": 0,
+        "denominator": 0,
+        "unit": "selected relevant/uncertain user-voice items",
+        "reviewed_count": 0,
+        "reviewed_denominator": 0,
+        "reviewed_target_count": 0,
+        "distinct_source_roots": 0,
+        "target_count": 0,
+        "target_denominator": 0,
+        "adjacent_count": 0,
+        "eligibility_unknown_count": 0,
+        "item_ids": [],
+        "tier_b_supported": 0,
+        "tier_b_denominator": 0,
+        "status": "analysis unrun — evidence not assessed",
+        "limitation": "Checking frequency is an expected evidence gap; actual coverage is not established. Inspect stated cues; never infer frequency from silence.",
+        "metric_tags": []
+      },
+      {
+        "id": "Q5",
+        "title": "What confuses or worries them in the app?",
+        "count": 0,
+        "denominator": 0,
+        "unit": "selected relevant/uncertain user-voice items",
+        "reviewed_count": 0,
+        "reviewed_denominator": 0,
+        "reviewed_target_count": 0,
+        "distinct_source_roots": 0,
+        "target_count": 0,
+        "target_denominator": 0,
+        "adjacent_count": 0,
+        "eligibility_unknown_count": 0,
+        "item_ids": [],
+        "tier_b_supported": 0,
+        "tier_b_denominator": 0,
+        "status": "analysis unrun — evidence not assessed",
+        "limitation": null,
+        "metric_tags": []
+      },
+      {
+        "id": "Q6",
+        "title": "What happens outside the app?",
+        "count": 0,
+        "denominator": 0,
+        "unit": "selected relevant/uncertain user-voice items",
+        "reviewed_count": 0,
+        "reviewed_denominator": 0,
+        "reviewed_target_count": 0,
+        "distinct_source_roots": 0,
+        "target_count": 0,
+        "target_denominator": 0,
+        "adjacent_count": 0,
+        "eligibility_unknown_count": 0,
+        "item_ids": [],
+        "tier_b_supported": 0,
+        "tier_b_denominator": 0,
+        "status": "analysis unrun — evidence not assessed",
+        "limitation": null,
+        "metric_tags": []
+      },
+      {
+        "id": "Q7",
+        "title": "What differs between continuation and interruption?",
+        "count": 0,
+        "denominator": 0,
+        "unit": "selected relevant/uncertain user-voice items",
+        "reviewed_count": 0,
+        "reviewed_denominator": 0,
+        "reviewed_target_count": 0,
+        "distinct_source_roots": 0,
+        "target_count": 0,
+        "target_denominator": 0,
+        "adjacent_count": 0,
+        "eligibility_unknown_count": 0,
+        "item_ids": [],
+        "tier_b_supported": 0,
+        "tier_b_denominator": 0,
+        "status": "analysis unrun — evidence not assessed",
+        "limitation": null,
+        "metric_tags": []
+      },
+      {
+        "id": "Q8",
+        "title": "How do circumstances differ across accounts?",
+        "count": 0,
+        "denominator": 0,
+        "unit": "selected relevant/uncertain user-voice items",
+        "reviewed_count": 0,
+        "reviewed_denominator": 0,
+        "reviewed_target_count": 0,
+        "distinct_source_roots": 0,
+        "target_count": 0,
+        "target_denominator": 0,
+        "adjacent_count": 0,
+        "eligibility_unknown_count": 0,
+        "item_ids": [],
+        "tier_b_supported": 0,
+        "tier_b_denominator": 0,
+        "status": "analysis unrun — evidence not assessed",
+        "limitation": null,
+        "metric_tags": []
+      },
+      {
+        "id": "Q9",
+        "title": "Which unmet needs deserve investigation?",
+        "count": 0,
+        "denominator": 0,
+        "unit": "selected relevant/uncertain user-voice items",
+        "reviewed_count": 0,
+        "reviewed_denominator": 0,
+        "reviewed_target_count": 0,
+        "distinct_source_roots": 0,
+        "target_count": 0,
+        "target_denominator": 0,
+        "adjacent_count": 0,
+        "eligibility_unknown_count": 0,
+        "item_ids": [],
+        "tier_b_supported": 0,
+        "tier_b_denominator": 0,
+        "status": "analysis unrun — evidence not assessed",
+        "limitation": null,
+        "metric_tags": []
+      }
+    ]
+  },
+  "drivers": [],
+  "quality": {
+    "status": "unrun",
+    "label_basis": "assistant-labelled excerpt reference; NOT independent human verification",
+    "items": 20,
+    "predicted_items": 0,
+    "unrun_items": 20,
+    "K": 0,
+    "C": 0,
+    "W": 0,
+    "A": 0,
+    "invented_values": 0,
+    "explicit_field_recall": null,
+    "comparable": 0,
+    "correct": 0,
+    "agreement": null,
+    "fields": {
+      "source_family": {
+        "reference_mix": {
+          "supported": 20,
+          "unknown": 0,
+          "not_applicable": 0
+        },
+        "K": 0,
+        "C": 0,
+        "W": 0,
+        "A": 0,
+        "invented_values": 0,
+        "comparable": 0,
+        "correct": 0,
+        "explicit_field_recall": null
+      },
+      "platform": {
+        "reference_mix": {
+          "supported": 0,
+          "unknown": 17,
+          "not_applicable": 3
+        },
+        "K": 0,
+        "C": 0,
+        "W": 0,
+        "A": 0,
+        "invented_values": 0,
+        "comparable": 0,
+        "correct": 0,
+        "explicit_field_recall": null
+      },
+      "instrument": {
+        "reference_mix": {
+          "supported": 5,
+          "unknown": 12,
+          "not_applicable": 3
+        },
+        "K": 0,
+        "C": 0,
+        "W": 0,
+        "A": 0,
+        "invented_values": 0,
+        "comparable": 0,
+        "correct": 0,
+        "explicit_field_recall": null
+      },
+      "journey_stage": {
+        "reference_mix": {
+          "supported": 0,
+          "unknown": 17,
+          "not_applicable": 3
+        },
+        "K": 0,
+        "C": 0,
+        "W": 0,
+        "A": 0,
+        "invented_values": 0,
+        "comparable": 0,
+        "correct": 0,
+        "explicit_field_recall": null
+      },
+      "action_status": {
+        "reference_mix": {
+          "supported": 5,
+          "unknown": 12,
+          "not_applicable": 3
+        },
+        "K": 0,
+        "C": 0,
+        "W": 0,
+        "A": 0,
+        "invented_values": 0,
+        "comparable": 0,
+        "correct": 0,
+        "explicit_field_recall": null
+      },
+      "trigger": {
+        "reference_mix": {
+          "supported": 1,
+          "unknown": 16,
+          "not_applicable": 3
+        },
+        "K": 0,
+        "C": 0,
+        "W": 0,
+        "A": 0,
+        "invented_values": 0,
+        "comparable": 0,
+        "correct": 0,
+        "explicit_field_recall": null
+      },
+      "reported_reason": {
+        "reference_mix": {
+          "supported": 2,
+          "unknown": 15,
+          "not_applicable": 3
+        },
+        "K": 0,
+        "C": 0,
+        "W": 0,
+        "A": 0,
+        "invented_values": 0,
+        "comparable": 0,
+        "correct": 0,
+        "explicit_field_recall": null
+      },
+      "blamed_actor": {
+        "reference_mix": {
+          "supported": 0,
+          "unknown": 17,
+          "not_applicable": 3
+        },
+        "K": 0,
+        "C": 0,
+        "W": 0,
+        "A": 0,
+        "invented_values": 0,
+        "comparable": 0,
+        "correct": 0,
+        "explicit_field_recall": null
+      },
+      "outcome": {
+        "reference_mix": {
+          "supported": 0,
+          "unknown": 17,
+          "not_applicable": 3
+        },
+        "K": 0,
+        "C": 0,
+        "W": 0,
+        "A": 0,
+        "invented_values": 0,
+        "comparable": 0,
+        "correct": 0,
+        "explicit_field_recall": null
+      },
+      "continuer": {
+        "reference_mix": {
+          "supported": 0,
+          "unknown": 17,
+          "not_applicable": 3
+        },
+        "K": 0,
+        "C": 0,
+        "W": 0,
+        "A": 0,
+        "invented_values": 0,
+        "comparable": 0,
+        "correct": 0,
+        "explicit_field_recall": null
+      }
+    },
+    "note": "Scored fields only where a prediction exists; missing predictions are unrun, not model abstention. Exact/canonical matching; free-text semantic alternatives require explicit adjudication. Invented conflicts with supported gold require source review beyond this automatic count. Assistant labels are not independent human verification."
+  }
+}
