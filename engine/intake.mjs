@@ -2,7 +2,7 @@ import { parse } from 'csv-parse/sync';
 import { mkdirSync,writeFileSync,readFileSync } from 'node:fs';
 import { join,basename } from 'node:path';
 import { createHash,randomUUID } from 'node:crypto';
-import { FAMILIES,privateSignals,safeUrl } from './contracts.mjs';
+import { FAMILIES,privateSignals,safeUrl,isPlayReviewLocator,isAppleReviewLocator } from './contracts.mjs';
 import { normalizeSourceFamily,fingerprint,copyCandidateKey,sourceUnitKey } from './normalization.mjs';
 // Local raw corpus is a machine input, not a spreadsheet export: never prefix a
 // leading -, +, = or @ in the author's original text. Deck CSVs use a different writer.
@@ -10,7 +10,7 @@ export function corpusCsv(columns,rows){const cell=v=>'"'+String(v??'').replaceA
 export function parseCorpus(csv){
  let rows;try{rows=parse(csv.replace(/^\uFEFF/,''),{columns:true,skip_empty_lines:true,bom:true});}catch{throw Error('CSV could not be parsed; check quoting and column counts. Original text is not included in errors.');}
  if(!rows.length||rows.length>200)throw Error('Upload 1–200 rows per Tier A batch');
- for(const r of rows){for(const k of ['source_family','url','date','text'])if(!(k in r))throw Error('Required CSV columns: source_family,url,date,text');r.source_family=normalizeSourceFamily(r.source_family);if(!FAMILIES.includes(r.source_family))throw Error('Unrecognised source_family');r.url=r.url.trim();r.date=r.date.trim();if(!safeUrl(r.url))throw Error('Use a public HTTPS source URL without identifiers');if(r.text.length>24000)throw Error('Text exceeds 24,000 character limit; split explicitly');if(privateSignals(r.text).length||privateSignals(r.source_locator||'').length)throw Error('Remove PAN, account-like numbers, contact details or usernames before import');if(r.date&&(!/^\d{4}-\d{2}-\d{2}$/.test(r.date)||Number.isNaN(Date.parse(r.date+'T00:00:00Z'))||new Date(r.date+'T00:00:00Z').toISOString().slice(0,10)!==r.date))throw Error('Date must be a real YYYY-MM-DD date or blank (unknown)');}
+ for(const r of rows){for(const k of ['source_family','url','date','text'])if(!(k in r))throw Error('Required CSV columns: source_family,url,date,text');r.source_family=normalizeSourceFamily(r.source_family);if(!FAMILIES.includes(r.source_family))throw Error('Unrecognised source_family');r.url=r.url.trim();r.date=r.date.trim();if(!safeUrl(r.url))throw Error('Use a public HTTPS source URL without identifiers');if(r.text.length>24000)throw Error('Text exceeds 24,000 character limit; split explicitly');if(privateSignals(r.text).length||(privateSignals(r.source_locator||'').length&&!isPlayReviewLocator(r.url,r.source_locator||'')&&!isAppleReviewLocator(r.url,r.source_locator||'')))throw Error('Remove PAN, account-like numbers, contact details or usernames before import');if(r.date&&(!/^\d{4}-\d{2}-\d{2}$/.test(r.date)||Number.isNaN(Date.parse(r.date+'T00:00:00Z'))||new Date(r.date+'T00:00:00Z').toISOString().slice(0,10)!==r.date))throw Error('Date must be a real YYYY-MM-DD date or blank (unknown)');}
  for(const r of rows){
   if(Object.keys(r).some(k=>!['source_family','url','date','text','platform_stated','source_locator','evidence_lane','independence_group'].includes(k)))throw Error('Remove unsupported CSV columns, including author/profile/account data, before import');
   if((r.platform_stated||'').length>80||privateSignals(r.platform_stated||'').length)throw Error('Use a short platform hint without identifiers');

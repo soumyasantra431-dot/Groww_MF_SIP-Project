@@ -1,0 +1,21 @@
+{
+  "sha256": "884B923E93C013B295D3071327F9FE26A54A7D03777519EF39E60476595B1BEB",
+  "selected": [
+    {"row":10,"questions":["Q5","Q6"],"reason":"Reported MF holdings display mismatch and repeated support contact; payment outcome unknown"},
+    {"row":12,"questions":["Q3","Q5"],"target_fit":"adjacent_experienced","reason":"Older SIP redemption delay account; adjacent to continuation, not a first-year exit","journey_window":"after_year_one"},
+    {"row":20,"questions":["Q5"],"reason":"KYC requirement reported as a barrier to viewing the app; no investment established","journey_window":"setup"},
+    {"row":21,"questions":["Q3","Q9"],"reason":"Author reports moving to Coin after not finding quarterly or AMC SIP controls on Groww","reported_state":"platform_switch_reported"},
+    {"row":23,"questions":["Q5","Q9"],"reason":"MF Prime route and regular-plan disclosure concern; investment and SIP outcome unknown"},
+    {"row":34,"questions":["Q5","Q6"],"reason":"Reported MF holding visibility problem and support contact; exact cause unknown"},
+    {"row":36,"questions":["Q3","Q5","Q6","Q7"],"reason":"Reported MF SIP auto-payment failure and manual payment workaround; next scheduled outcome unknown","reported_state":"manual_workaround_reported"},
+    {"row":37,"questions":["Q4","Q5"],"reason":"Reported need to switch views to see family MF portfolios; no SIP status stated"},
+    {"row":38,"questions":["Q4","Q5","Q6"],"reason":"Reported checking daily MF gains in another app because Groww display is slow","reported_state":"outside_app_check_reported"},
+    {"row":39,"questions":["Q5","Q6"],"reason":"Reported MF display, XIRR and redemption issues with later support resolution; no SIP outcome"},
+    {"row":41,"questions":["Q5","Q9"],"reason":"Expense-ratio visibility concern for MF comparison; no continuation behavior stated"},
+    {"row":42,"questions":["Q1","Q4","Q7"],"reason":"Positive account of beginner MF SIP setup, tracking and AutoPay; ongoing payment history unstated","reported_state":"positive_setup_reported"},
+    {"row":46,"questions":["Q3","Q5","Q7"],"target_fit":"adjacent_experienced","reason":"Three-year SIP account reports MF Prime changes and withdrawal; outside first-year target","journey_window":"after_year_one","reported_state":"withdrawal_reported"},
+    {"row":50,"questions":["Q5","Q6"],"reason":"Reported MF dashboard error and support contact; SIP status unknown"}
+  ],
+  "needs_review": [14,16,25,29,31,32,33],
+  "cross_instrument": [1,27,28,30,35,48]
+}

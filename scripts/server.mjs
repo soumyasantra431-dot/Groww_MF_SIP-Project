@@ -1,7 +1,8 @@
 import { createServer } from 'node:http';
 import { randomUUID } from 'node:crypto';
 import { createServer as createViteServer } from 'vite';
-import { readFileSync,writeFileSync,mkdirSync } from 'node:fs';
+import { readFileSync,writeFileSync,mkdirSync,existsSync,readdirSync } from 'node:fs';
+import { join } from 'node:path';
 import { openStore } from '../engine/store.mjs';
 import { importCorpus,originalInput } from '../engine/intake.mjs';
 import { reviewedFieldDatum } from '../engine/manual-review.mjs';
@@ -23,6 +24,7 @@ const vite=await createViteServer({server:{middlewareMode:true,fs:{deny:['**/.lo
 let active=false;
 function developmentStatus(){try{const r=JSON.parse(readFileSync('.local/lean-frozen-2026-11-03-v7-development-reuse/development-comparison.json','utf8'));const x=r.exact_label_comparison.source_text;return {kind:r.kind,inputs:r.input_count,requests:r.model_requests,structural_proposals:r.structure_pass,whole_item_failures:r.processing_failures,rejected_fields:r.field_rejections.length,ambiguous_anchors:r.ambiguous_anchor_fields.length,provider_tokens:r.measured_tokens,latency_sum_ms:r.latency_ms.sum,supported:{exact:x.C,different_supported:x.W,abstained:x.A,denominator:x.K},unknown:{preserved:x.unknown_retention.numerator,denominator:x.unknown_retention.denominator},decision:'failed development gate; extraction, batch and live paste held',independent_accuracy:false};}catch{return null;}}
 function surveySecondary(){try{return summarizeSurvey(JSON.parse(readFileSync('research/private/survey_coded_2026-10-29.json','utf8')));}catch{return {evidence_lane:'private_written_survey_secondary',available:false,corpus_included:false};}}
+function apifySourceScreens(){return ['.local/apify-play','.local/apify-apple'].flatMap(dir=>!existsSync(dir)?[]:readdirSync(dir,{withFileTypes:true}).filter(x=>x.isDirectory()).flatMap(x=>{const file=join(dir,x.name,'source_screen.csv');return existsSync(file)?parseSourceScreen(readFileSync(file,'utf8')):[];}));}
 function send(res,value,status=200){res.writeHead(status,{'Content-Type':'application/json','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'});res.end(JSON.stringify(value));}
 async function body(req){let size=0,chunks=[];for await(const chunk of req){size+=chunk.length;if(size>6e6)throw Error('Request too large');chunks.push(chunk);}try{return JSON.parse(Buffer.concat(chunks).toString());}catch{throw Error('Invalid JSON request');}}
 createServer(async(req,res)=>{
@@ -38,6 +40,7 @@ createServer(async(req,res)=>{
    const screen=[
     ...parseSourceScreen(readFileSync('research/phase_one_2026-11-04/source_screen.csv','utf8')),
     ...parseSourceScreen(readFileSync('research/phase_one_2026-11-05/source_screen_additions.csv','utf8')),
+    ...apifySourceScreens(),
    ];
    return send(res,{mode:'local',items:items.map(r=>({...r,source_review_url:sourceReviewUrl(r)})),research_plan:researchPlan(items),global_research_plan:researchPlan(all),preliminary_comparison:preliminaryComparison(all),question_cards:questionCards(all,{approvedAnswers:reviewedAnswers(store,all)}),confirmed_case_readings:store.meta('fellow_confirmed_case_readings_2026_11_05'),rollup:rollup(items),global_rollup:rollup(all),source_ledger:sourceLedger(all,screen,collectionRuns),readiness:corpusReadiness(all),drivers:driverEvidence(items),survey_secondary:surveySecondary(),model:modelStatus(),pipeline:{lean_batch_ready:false,live_paste_ready:false,reason:'Lean extraction failed its development quality gate; source-reviewed manual evidence is the current fallback. Batch and live paste remain held.'},spend:store.spend(),selection:selectTierB(all),active,quality:store.meta('evaluation'),development:developmentStatus(),collection_runs:collectionRuns,runs:store.db.prepare('SELECT id,item_id,tier,state,attempts,error,created_at,model FROM runs ORDER BY created_at DESC LIMIT 30').all()});
   }

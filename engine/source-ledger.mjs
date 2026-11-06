@@ -13,7 +13,9 @@ export function parseSourceScreen(csv){
  for(const r of rows){
   if(!FAMILIES.includes(r.source_family)||!safeUrl(r.url)||!r.source_locator||r.source_locator.length>220||!fits.includes(r.target_fit)||!relevance.includes(r.relevance_screen)||!['admitted_local_unreviewed','excluded'].includes(r.disposition)||r.disposition==='excluded'&&r.relevance_screen!=='not_assessed')throw Error('Invalid source-screen metadata');
   if(r.date&&(!/^\d{4}-\d{2}-\d{2}$/.test(r.date)||new Date(r.date+'T00:00:00Z').toISOString().slice(0,10)!==r.date))throw Error('Invalid source-screen date');
-  if(privateSignals(JSON.stringify(r)).length)throw Error('Private detail in source-screen metadata');
+  // The validated Google Play review UUID is a public source locator, not a
+  // financial account number. Screen all other metadata for private detail.
+  if(privateSignals(JSON.stringify({...r,url:'',source_locator:''})).length)throw Error('Private detail in source-screen metadata');
   const key=sourceUnitKey(r);if(units.has(key))throw Error('Repeated source-screen unit');units.add(key);
  }
  return rows;

@@ -1,5 +1,7 @@
 # Source access decision — 6 November 2026
 
+**Later same-day collection update:** The zero-review counts below describe the initial access decision, not the current intake. A bounded Groww Play Actor retrieved 303 unique reviews, of which 301 passed mechanical topic/locator checks; 14 from the first 50 read were saved provisionally. A bounded Groww Apple India Actor retrieved 30 reviews, four topic hits were read, and two SIP adjustment accounts were saved provisionally without exact original-page verification. No new review has an approved finding or a confirmed first-time, first-year cohort fit. See [APIFY_COLLECTION_CHECKPOINT_2026-11-06.md](APIFY_COLLECTION_CHECKPOINT_2026-11-06.md).
+
 **Decision served:** choose real input routes for the seven source families without counting a configured connector as collected evidence. The opening screen reports only stored inputs and analysis that actually occurred.
 
 - **Play Store:** Google's [reviews.list](https://developers.google.com/android-publisher/api-ref/rest/v3/reviews/list) requires the Android Publisher authorization scope for the app. A personal API key does not provide access to Groww's developer reviews. Use a source-permitted export with individual review locators, or source-linked manual review. Current analysed count: **0**.

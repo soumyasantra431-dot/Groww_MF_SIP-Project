@@ -68,7 +68,24 @@ export function privateSignals(text='') {
  return hits;
 }
 export function safeUrl(value) {
- try {const u=new URL(value);if(u.protocol!=='https:'||u.username||u.password||u.port||u.hostname==='localhost'||u.hostname.endsWith('.local')||/^(127\.|10\.|192\.168\.|169\.254\.|172\.(1[6-9]|2\d|3[01])\.)/.test(u.hostname)||u.hostname.includes(':')||!u.hostname.includes('.')||privateSignals(u.href).length||/\/(user|users|u|profile)\//i.test(u.pathname))return null;return u.href;}catch{return null;}
+ try {const u=new URL(value);const privacyCheck=new URL(u);
+  // Google Play's public UUID locator can contain a run of digits that resembles
+  // an account number. Exempt only that exact locator parameter on that host.
+  const reviewId=u.hostname==='play.google.com'?u.searchParams.get('reviewId'):null;
+  if(reviewId&&/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i.test(reviewId))privacyCheck.searchParams.delete('reviewId');
+  // Apple's public app and review IDs are numeric. Exempt only the narrowly
+  // validated App Store review URL, not arbitrary numeric paths or fragments.
+  if(u.hostname==='apps.apple.com'&&/^\/in\/app\/(?:[^/]+\/)?id\d{8,12}$/.test(u.pathname)&&u.search==='?see-all=reviews'&&/^#\d{8,14}$/.test(u.hash)){
+   privacyCheck.pathname='/in/app/id-public';privacyCheck.hash='';
+  }
+  if(u.protocol!=='https:'||u.username||u.password||u.port||u.hostname==='localhost'||u.hostname.endsWith('.local')||/^(127\.|10\.|192\.168\.|169\.254\.|172\.(1[6-9]|2\d|3[01])\.)/.test(u.hostname)||u.hostname.includes(':')||!u.hostname.includes('.')||privateSignals(privacyCheck.href).length||/\/(user|users|u|profile)\//i.test(u.pathname))return null;return u.href;
+ }catch{return null;}
+}
+export function isPlayReviewLocator(url,locator){
+ try{const u=new URL(url);return u.hostname==='play.google.com'&&u.pathname==='/store/apps/details'&&u.searchParams.get('reviewId')===locator&&/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i.test(locator);}catch{return false;}
+}
+export function isAppleReviewLocator(url,locator){
+ try{const u=new URL(url);return u.hostname==='apps.apple.com'&&/^\/in\/app\/(?:[^/]+\/)?id\d{8,12}$/.test(u.pathname)&&u.search==='?see-all=reviews'&&u.hash==='#'+locator&&/^\d{8,14}$/.test(locator);}catch{return false;}
 }
 export function unknownDatum(){return {state:'unknown',value:null,missing_reason:'not_stated',start:null,end:null};}
 export function persistable(result,{retainOffsets=false}={}) {

@@ -1,5 +1,7 @@
 # SIP source queue and Apify pilot — 6 November 2026
 
+**Later same-day collection update:** The earlier zero-run route assessment below is a historical planning snapshot. Two different Apify Actors were pilot tested. The current observed counts, exact run links, overlap correction and limitations are in [APIFY_COLLECTION_CHECKPOINT_2026-11-06.md](APIFY_COLLECTION_CHECKPOINT_2026-11-06.md). The old saved task was not run.
+
 ## Decision served
 
 Find real, attributable MF/SIP conversations that can help the engine answer its nine discovery questions. Collection volume is an intake count, not the number of first-time Groww investors and not evidence of a retention rate. Count a post as analysed only after original text, source locator, source-use status, privacy screen, duplicate check, relevance coding and researcher review are recorded.
