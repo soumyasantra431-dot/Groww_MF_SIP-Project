@@ -10,6 +10,11 @@ import { questionCards } from '../engine/question-cards.mjs';
 import { preliminaryComparison } from '../engine/preliminary-comparison.mjs';
 import { researchPlan } from '../engine/research-plan.mjs';
 import { privateSignals } from '../engine/contracts.mjs';
+function developmentSummary(){try{
+ const r=JSON.parse(readFileSync('.local/lean-frozen-2026-11-06-v12-development-reuse/development-comparison.json','utf8'));
+ const x=r.episode_only_diagnostic.source_text;
+ return {kind:r.kind,inputs:r.input_count,episode_inputs:r.episode_only_diagnostic.denominator_items,requests:r.model_requests,structural_proposals:r.structure_pass,processing_failures:r.processing_failures,supported:{exact:x.C,denominator:x.K},unknown:{preserved:x.unknown_retention.numerator,denominator:x.unknown_retention.denominator},decision:'failed development gate; live AI held',independent_accuracy:false};
+}catch{return null;}}
 export function snapshot(store){
  const all=store.items();const rs=all.filter(r=>r.origin==='corpus'&&r.review_state==='accepted'&&r.terms_status==='cleared'&&(r.tier_a||r.tier_b));
  const roots=rootGroups(all);
@@ -30,7 +35,7 @@ export function snapshot(store){
  if((provisional_cards.length||preliminary_comparison.candidates.length)&&(provisional_cards.length!==9||preliminary_comparison.candidates.length!==4))throw Error('Editorial publication packet changed; inspect all nine readings and four leads before snapshot');
  if(privateSignals(JSON.stringify({provisional_cards,preliminary_comparison})).length)throw Error('Private pattern in editorial publication packet');
  const plan=researchPlan(all),global_rollup=rollup(all);
- return {schema:'sip-snapshot-v1-depth-addendum',created_at:new Date().toISOString(),review_basis:'Fellow-endorsed provisional directions; zero source-level approval unless separately recorded',items,approved_answers:Object.fromEntries(Object.entries(answers).filter(([,v])=>v.status==='researcher_approved')),provisional_cards,preliminary_comparison,global_research_plan:{sources:plan.sources},global_rollup:{coded:global_rollup.coded,cells:global_rollup.cells.map(({metric_node,exit_form,count})=>({metric_node,exit_form,count}))},source_ledger:{counts:{stored_evidence_lanes:{user_voice:all.filter(r=>r.evidence_lane==='user_voice'&&r.origin==='corpus').length,control:all.filter(r=>r.evidence_lane==='control'&&r.origin==='corpus').length}}},review_collection:JSON.parse(readFileSync('REVIEW_COLLECTION_AUDIT_2026-11-07.json','utf8')),rollup:rollup(items),drivers:driverEvidence(items),quality:store.meta('evaluation')||null};
+ return {schema:'sip-snapshot-v1-depth-addendum',created_at:new Date().toISOString(),review_basis:'Fellow-endorsed provisional directions; zero source-level approval unless separately recorded',items,approved_answers:Object.fromEntries(Object.entries(answers).filter(([,v])=>v.status==='researcher_approved')),provisional_cards,preliminary_comparison,global_research_plan:{sources:plan.sources},global_rollup:{coded:global_rollup.coded,cells:global_rollup.cells.map(({metric_node,exit_form,count})=>({metric_node,exit_form,count}))},source_ledger:{counts:{stored_evidence_lanes:{user_voice:all.filter(r=>r.evidence_lane==='user_voice'&&r.origin==='corpus').length,control:all.filter(r=>r.evidence_lane==='control'&&r.origin==='corpus').length}}},review_collection:JSON.parse(readFileSync('REVIEW_COLLECTION_AUDIT_2026-11-07.json','utf8')),rollup:rollup(items),drivers:driverEvidence(items),development:developmentSummary(),quality:store.meta('evaluation')||null};
 }
 async function main(){const store=openStore();const [command,arg]=process.argv.slice(2);try{
  if(command==='import'){console.log(importCorpus(store,readFileSync(resolve(arg),'utf8')));}

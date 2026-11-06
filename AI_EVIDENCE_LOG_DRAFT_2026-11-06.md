@@ -2,7 +2,9 @@
 
 **Date:** 6 November 2026. **Purpose:** show what real source material entered the local Groww SIP discovery workspace, what the AI actually attempted, what was rejected, and what remains unvalidated. This is an honest draft for the graduation submission, not a completed golden-set report.
 
-## Source and volume accounting
+**7 November release update:** A focused forum intake added one first-person account of an informed SIP stop after a change in income pattern. The ledger is now **103 stored rows = 100 user-voice entries + 3 controls**; **31** distinct source units are locally usable; **15** have assistant coding proposals; **0** are researcher-accepted. This new item is eligibility-unknown for the Groww first-year cohort and is not a model prediction or public reviewed source. The bounded collection and source-use decision are recorded in the implementation plan. A read-only public snapshot has been built with **nine Fellow-endorsed provisional readings, four unscored leads, zero published source records and zero approved answers**. The snapshot has no original posts, survey data or credentials, and passed a local Cloudflare Worker API check. GitHub main includes the versioned snapshot; the live Cloudflare URL is pending authentication and remote verification. The failed model-quality gate below is unchanged.
+
+## Source and volume accounting — 6 November checkpoint, before the update above
 
 - **102 stored rows = 99 user-voice input rows + 3 non-investor controls.** A stored row is not an analysed account or a unique investor.
 - **30 distinct locally usable source units** are present, all under the **Investing forums** source family. Local use does not grant public redistribution.

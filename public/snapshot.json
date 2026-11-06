@@ -1,6 +1,6 @@
 {
   "schema": "sip-snapshot-v1-depth-addendum",
-  "created_at": "2026-11-06T19:28:26.270Z",
+  "created_at": "2026-11-06T19:37:11.261Z",
   "review_basis": "Fellow-endorsed provisional directions; zero source-level approval unless separately recorded",
   "items": [],
   "approved_answers": {},
@@ -1238,6 +1238,24 @@
     ]
   },
   "drivers": [],
+  "development": {
+    "kind": "post_ai_development_comparison_not_independent_accuracy",
+    "inputs": 10,
+    "episode_inputs": 8,
+    "requests": 10,
+    "structural_proposals": 10,
+    "processing_failures": 0,
+    "supported": {
+      "exact": 12,
+      "denominator": 41
+    },
+    "unknown": {
+      "preserved": 28,
+      "denominator": 29
+    },
+    "decision": "failed development gate; live AI held",
+    "independent_accuracy": false
+  },
   "quality": {
     "status": "unrun",
     "label_basis": "assistant-labelled excerpt reference; NOT independent human verification",
