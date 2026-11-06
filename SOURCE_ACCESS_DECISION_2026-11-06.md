@@ -1,0 +1,12 @@
+# Source access decision — 6 November 2026
+
+**Decision served:** choose real input routes for the seven source families without counting a configured connector as collected evidence. The opening screen reports only stored inputs and analysis that actually occurred.
+
+- **Play Store:** Google's [reviews.list](https://developers.google.com/android-publisher/api-ref/rest/v3/reviews/list) requires the Android Publisher authorization scope for the app. A personal API key does not provide access to Groww's developer reviews. Use a source-permitted export with individual review locators, or source-linked manual review. Current analysed count: **0**.
+- **App Store:** Apple's [Customer Reviews API](https://developer.apple.com/documentation/appstoreconnectapi/customer-reviews) describes reviews **for your app**. A personal App Store Connect key does not grant Groww's publisher access. Use an allowed public review route with locators. Current analysed count: **0**.
+- **YouTube:** The official [commentThreads.list](https://developers.google.com/youtube/v3/guides/implementation/comments) can fetch comments for a specified video. Its [developer policies](https://developers.google.com/youtube/terms/developer-policies) restrict aggregation of API data across content owners and limit retention of non-authorized data. Do not use the saved key for a cross-video research corpus until the exact use and display basis is resolved. Current analysed count: **0**.
+- **Reddit:** 13 historical excerpts are saved but held from local AI analysis. Do not call them analysed or add to the nine answers. Review the source-specific route before new collection.
+- **Investing forums:** 34 saved excerpts; 30 distinct source items cleared for local research; 14 provisional readings. Local clearance is not public redistribution clearance. Keep post and thread roots separate.
+- **Social and other public conversations:** no items loaded. A post counts only after its original text, exact source link, source-use decision, privacy screen and duplicate check are recorded.
+
+**PM consequence:** no additional API key is the immediate bottleneck. The next defensible gain is a small number of independently traceable, relevant first-year SIP episodes and a passing extraction evaluation. A larger mock corpus may test engineering, but it must never appear as investor evidence or make the seven-source chart look covered.
