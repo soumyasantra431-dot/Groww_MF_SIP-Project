@@ -5,7 +5,7 @@ export function PreliminaryComparison({data}:{data:any}){
  return <section className="preliminary-comparison" aria-label="Provisional research situations">
   <p className="eyebrow">RESEARCH LEADS · NOT RANKED</p>
   <h2>Four situations worth checking</h2>
-  <p>These are source-linked proposals from adjacent or unconfirmed accounts. None is a proven Groww problem. Open a card to see the rival explanation and next test.</p>
+  <p>The Fellow approved these four as research leads. They come from adjacent or unconfirmed accounts; none is a proven Groww problem or a selected opportunity. Open a card to see the rival explanation and next test.</p>
   <div className="lead-grid">{data.candidates.map((c:any)=><article key={c.id}>
    <span className="lead-count">{c.source_root_count} / {c.denominator_roots} source roots in this selected proposal set</span>
    <h3>{c.name}</h3><p>{c.observed}</p>

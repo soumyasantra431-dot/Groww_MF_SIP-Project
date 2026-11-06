@@ -167,3 +167,5 @@ This is a status update to the existing plan, not a change to its gates.
 8. **Phase 7, public handoff: not complete.** No GitHub push or Cloudflare publication is claimed. The public snapshot gate would currently include zero accepted source accounts. A public viewer can show the collection/method audit, but cannot truthfully present validated AI answers or a live classifier until the corresponding gates pass.
 
 **Next dependency:** close the local walkthrough and publication decision with the actual evidence state. The brief's remaining research, user MVP, tests and deck are outside this engine checkpoint and remain separate deliverables.
+
+**Phase 4–5 editorial checkpoint, 7 November:** The Fellow endorsed the nine bounded early readings and four unscored situations as directions for further research. The linked originals were opened and their narrow wording checked by the assistant. This does not change the measured gate: zero researcher-accepted source accounts, zero fully approved answers, no independently validated model accuracy, and no selected Groww problem. See [approval scope and source check](PHASE_4_5_FELLOW_APPROVAL_2026-11-07.md).
