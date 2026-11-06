@@ -1,8 +1,11 @@
 import test from 'node:test';import assert from 'node:assert/strict';
 import {buildRequest,requestSize} from '../engine/request.mjs';
-import {leanSchema,leanWireSchema,validateLean,expandLeanWire,expandLeanWireTolerant,ambiguousLeanAnchors,LEAN_TEXT_FIELDS} from '../engine/lean.mjs';
+import {leanSchema,leanWireSchema,validateLean,expandLeanWire as expand,expandLeanWireTolerant as expandTolerant,ambiguousLeanAnchors,LEAN_TEXT_FIELDS} from '../engine/lean.mjs';
 import {MATERIAL_FIELDS,persistable} from '../engine/contracts.mjs';
 const empty={state:'unknown',value:null,start:null,end:null};
+const withEpisode=(wire,text)=>({...wire,disposition:wire.disposition||{value:'episode',quote:text.slice(0,Math.min(8,text.length))}});
+const expandLeanWire=(wire,text,family)=>expand(withEpisode(wire,text),text,family);
+const expandLeanWireTolerant=(wire,text,family)=>expandTolerant(withEpisode(wire,text),text,family);
 test('Lean strict packet proposes supported quotes and fits frozen-style long synthetic text',()=>{
  const p=buildRequest({source_family:'Other',text:'Synthetic SIP fixture. '.repeat(150)},'lean');
  assert.equal(p.response_format.type,'json_schema');assert.equal(p.response_format.json_schema.strict,true);
@@ -31,7 +34,7 @@ test('Lean wire rejects invented or repeated fields and flags repeated quotes fo
  assert.throws(()=>expandLeanWire({findings:[{field:'outcome',value:'paid',quote:'I paid,'},{field:'outcome',value:'paid',quote:'then I paid'}]},'I paid, then I paid again.','Other'),/Repeated/);
 });
 test('Lean validation keeps metadata and source anchors honest',()=>{
- const value={metric_node:empty,exit_form:empty,material:Object.fromEntries(MATERIAL_FIELDS.map(k=>[k,empty]))};
+ const value={disposition:{value:'episode',start:0,end:9},metric_node:empty,exit_form:empty,material:Object.fromEntries(MATERIAL_FIELDS.map(k=>[k,empty]))};
  value.material.source_family={state:'supported',value:'Other',start:null,end:null};
  assert.doesNotThrow(()=>validateLean(leanSchema.parse(value),'Synthetic fixture','Other'));
  value.metric_node={state:'supported',value:'recovery',start:0,end:9};
@@ -81,4 +84,20 @@ test('First SIP wording cannot anchor a first-instalment tag',()=>{
  const r=expandLeanWireTolerant({findings:[{field:'metric_node',value:'first_instalment',quote:'first SIP on Groww had an auto-debit failure'}]},text,'Other');
  assert.equal(r.value.metric_node.state,'unknown');
  assert.deepEqual(r.rejected_fields,[{field:'metric_node',code:'invalid_value'}]);
+});
+test('A hypothetical is flagged and cannot carry an actual exit tag',()=>{
+ const text='If I lose my job, I might stop a SIP. I have not started one.';
+ const r=expandTolerant({disposition:{value:'flagged_non_episode',quote:'If I lose my job'},findings:[{field:'exit_form',value:'voluntary',quote:'might stop a SIP'}]},text,'Other');
+ assert.equal(r.value.disposition.value,'flagged_non_episode');
+ assert.equal(r.value.exit_form.state,'unknown');
+ assert.deepEqual(r.rejected_fields,[{field:'exit_form',code:'non_episode_event_field'}]);
+ assert.equal(leanWireSchema.required.includes('disposition'),true);
+});
+test('An anchored metric node deterministically fills only its matching journey stage',()=>{
+ const text='I paused my SIP five months after starting it.';
+ const r=expandTolerant({disposition:{value:'episode',quote:'I paused my SIP'},findings:[{field:'metric_node',value:'months_3_6',quote:'five months after starting it'}]},text,'Other');
+ assert.equal(r.value.material.journey_stage.value,'months_3_6');
+ assert.equal(r.value.material.journey_stage.start,r.value.metric_node.start);
+ assert.deepEqual(r.derived_fields,['journey_stage']);
+ assert.equal(r.value.material.continuer.state,'unknown');
 });

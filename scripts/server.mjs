@@ -22,7 +22,13 @@ const port=Number(process.env.PORT)||4317,origin=`http://127.0.0.1:${port}`,stor
 store.db.prepare("UPDATE runs SET state='error',error='Interrupted process; inspect spend reservations before resuming' WHERE state='running'").run();
 const vite=await createViteServer({server:{middlewareMode:true,fs:{deny:['**/.local/**','**/.dev.vars*','**/.env*','**/research/**','**/exports/**','**/.git/**','**/*.sqlite*']}},appType:'spa'});
 let active=false;
-function developmentStatus(){try{const r=JSON.parse(readFileSync('.local/lean-frozen-2026-11-03-v7-development-reuse/development-comparison.json','utf8'));const x=r.exact_label_comparison.source_text;return {kind:r.kind,inputs:r.input_count,requests:r.model_requests,structural_proposals:r.structure_pass,whole_item_failures:r.processing_failures,rejected_fields:r.field_rejections.length,ambiguous_anchors:r.ambiguous_anchor_fields.length,provider_tokens:r.measured_tokens,latency_sum_ms:r.latency_ms.sum,supported:{exact:x.C,different_supported:x.W,abstained:x.A,denominator:x.K},unknown:{preserved:x.unknown_retention.numerator,denominator:x.unknown_retention.denominator},decision:'failed development gate; extraction, batch and live paste held',independent_accuracy:false};}catch{return null;}}
+function developmentStatus(){try{
+ const latest='.local/lean-frozen-2026-11-06-v12-development-reuse/development-comparison.json';
+ const earlier='.local/lean-frozen-2026-11-03-v7-development-reuse/development-comparison.json';
+ const r=JSON.parse(readFileSync(existsSync(latest)?latest:earlier,'utf8'));
+ const x=r.episode_only_diagnostic?.source_text||r.exact_label_comparison.source_text;
+ return {kind:r.kind,inputs:r.input_count,episode_inputs:r.episode_only_diagnostic?.denominator_items??null,requests:r.model_requests,structural_proposals:r.structure_pass,whole_item_failures:r.processing_failures,rejected_fields:r.field_rejections.length,ambiguous_anchors:r.ambiguous_anchor_fields.length,provider_tokens:r.measured_tokens,latency_sum_ms:r.latency_ms.sum,supported:{exact:x.C,different_supported:x.W,abstained:x.A,denominator:x.K},unknown:{preserved:x.unknown_retention.numerator,denominator:x.unknown_retention.denominator},non_episode_controls:r.non_episode_controls?.length??null,non_episode_flagged:r.non_episode_controls?.filter(c=>c.model_disposition==='flagged_non_episode').length??null,decision:'failed development gate; extraction, batch and live paste held',independent_accuracy:false};
+ }catch{return null;}}
 function surveySecondary(){try{return summarizeSurvey(JSON.parse(readFileSync('research/private/survey_coded_2026-10-29.json','utf8')));}catch{return {evidence_lane:'private_written_survey_secondary',available:false,corpus_included:false};}}
 function apifySourceScreens(){return ['.local/apify-play','.local/apify-apple'].flatMap(dir=>!existsSync(dir)?[]:readdirSync(dir,{withFileTypes:true}).filter(x=>x.isDirectory()).flatMap(x=>{const file=join(dir,x.name,'source_screen.csv');return existsSync(file)?parseSourceScreen(readFileSync(file,'utf8')):[];}));}
 function send(res,value,status=200){res.writeHead(status,{'Content-Type':'application/json','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'});res.end(JSON.stringify(value));}
@@ -58,7 +64,7 @@ createServer(async(req,res)=>{
   if(url.pathname==='/api/import')return send(res,importCorpus(store,b.csv));
   if(url.pathname==='/api/select-b')return send(res,selectTierB(store.items()));
   if(url.pathname==='/api/batch')return send(res,{error:'Batch is held: the lean classifier is not yet integrated with the reviewed evidence ledger. No model call was made.'},503);
-  if(url.pathname==='/api/classify')return send(res,{error:'Live paste is held until lean structure and source checks pass. No model call was made.'},503);
+  if(url.pathname==='/api/classify')return send(res,{error:'Live paste is held because the supported-field quality gate failed. No model call was made.'},503);
   if(url.pathname==='/api/review'){
    const r=store.item(b.id);if(!r)throw Error('Unknown item');
    if(!['proposal','accepted','rejected','needs_review'].includes(b.state))throw Error('Invalid review state');

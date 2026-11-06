@@ -3,7 +3,7 @@ import {buildRequest,enforceRequestSize,REQUEST_PROFILE} from './request.mjs';
 import {safeProviderFailure} from './provider-failure.mjs';
 import {validationDiagnostics} from './validation-diagnostics.mjs';
 import {z} from 'zod';
-import {leanSchema,leanWireResultSchema,expandLeanWireTolerant} from './lean.mjs';
+import {leanSchema,leanWireResultSchema,expandLeanWireTolerant,LEAN_POSTPROCESS_PROFILE} from './lean.mjs';
 export const sourceUseAllowed=(family,env=process.env)=>family==='Reddit'?env.REDDIT_RESEARCH_USE_APPROVED==='true':family==='YouTube'?env.YOUTUBE_DERIVED_USE_APPROVED==='true':true;
 export function modelStatus(env=process.env){const cap=Number(env.MODEL_SPEND_CAP_USD??0),valid=(!env.MODEL_BILLING_MODE||env.MODEL_BILLING_MODE==='free')&&cap===0;return {provider:env.MODEL_PROVIDER||'groq',model:env.MODEL_ID||'openai/gpt-oss-120b',billing_mode:'free',free_only:true,configuration_valid:valid,free_plan_confirmed:env.GROQ_FREE_PLAN_CONFIRMED==='true',key_configured:!!env.GROQ_API_KEY,enabled:valid&&env.ALLOW_MODEL_CALLS==='true'&&env.MODEL_KILL_SWITCH==='false'&&env.GROQ_FREE_PLAN_CONFIRMED==='true'&&!!env.GROQ_API_KEY,kill_switch:env.MODEL_KILL_SWITCH!=='false',cap_usd:0};}
 export async function classify(store,input,tier='a',options={}){
@@ -49,12 +49,12 @@ export async function classify(store,input,tier='a',options={}){
  if(!checked.success){telemetry.validation=validationDiagnostics(checked.error,z.toJSONSchema(outputSchema,{reused:'ref'}));throw Error('Provider output failed structure checks; no raw output retained');}
  let value;
  if(tier==='lean'){
-  try{const expanded=expandLeanWireTolerant(checked.data,input.text,input.source_family);value=expanded.value;telemetry.anchor_ambiguous_fields=expanded.anchor_ambiguous_fields;telemetry.field_rejections=expanded.rejected_fields;}
+  try{const expanded=expandLeanWireTolerant(checked.data,input.text,input.source_family);value=expanded.value;telemetry.anchor_ambiguous_fields=expanded.anchor_ambiguous_fields;telemetry.field_rejections=expanded.rejected_fields;telemetry.derived_fields=expanded.derived_fields;}
   catch(error){telemetry.validation={stage:'source_anchor',issue_count:1,issues:[{code:['LEAN_REPEAT_FIELD','LEAN_PRIVATE_VALUE','LEAN_QUOTE_ABSENT','LEAN_QUOTE_AMBIGUOUS','LEAN_VALUE_INVALID'].includes(error.code)?error.code:'LEAN_VALUE_INVALID'}],details_capped:false};throw Error('Lean proposal failed source checks; no raw output retained');}
  }else value=checked.data;
  if(tier!=='lean')validateEvidence(tier==='a'?value:{...value,...value.classification},input.text,input.source_family);
  // Only derived labels/paraphrases and evidence offsets (not spans) can leave transient memory.
  telemetry.processing_status=telemetry.field_rejections?.length?'partial_proposal':'completed';telemetry.latency_ms=Math.round(performance.now()-started);
- return {result:persistable(value,{retainOffsets:tier==='lean'}),run:{model:state.model,extraction_version:EXTRACTION_VERSION,request_profile:preflight.request_profile,proposal:true,reservation:id,billing_mode:state.billing_mode,telemetry}};
+ return {result:persistable(value,{retainOffsets:tier==='lean'}),run:{model:state.model,extraction_version:EXTRACTION_VERSION,request_profile:preflight.request_profile,postprocess_profile:tier==='lean'?LEAN_POSTPROCESS_PROFILE:null,proposal:true,reservation:id,billing_mode:state.billing_mode,telemetry}};
  }catch(error){telemetry.processing_status='failed';telemetry.latency_ms=Math.round(performance.now()-started);error.telemetry=telemetry;throw error;}
 }

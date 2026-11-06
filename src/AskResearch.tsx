@@ -8,7 +8,7 @@ const cues:Record<string,string[]>={
  Q7:['continue','drop off','drop-off','difference','separat'],Q8:['segment','income','age','influence','source of money'],
  Q9:['unmet','need','opportun','gap']
 };
-export function AskResearch({cards,publicMode,onInspect}:{cards:any[],publicMode:boolean,onInspect:(id:string)=>void}){
+export function AskResearch({cards,publicMode,development,onInspect}:{cards:any[],publicMode:boolean,development?:any,onInspect:(id:string)=>void}){
  const [input,setInput]=useState(''),[selected,setSelected]=useState<string|null>('Q3'),[unmatched,setUnmatched]=useState(false);
  const card=cards.find(c=>c.id===selected);
  function ask(){const q=input.trim().toLowerCase();if(!q){setUnmatched(false);setSelected(null);return;}
@@ -32,6 +32,6 @@ export function AskResearch({cards,publicMode,onInspect}:{cards:any[],publicMode
    <p className="next-question"><b>What would change the decision:</b> {card.next_decision}</p>
    <p className="small">{card.reviewed_root_denominator? `${card.source_root_count} of ${card.reviewed_root_denominator} reviewed source roots linked`:'No source has passed full answer review yet'}. Source counts are not investor prevalence or Groww retention. Public posts cannot measure the month-12 metric.</p>
   </article>}
-  <details className="overview-detail"><summary>Why is live AI answering held?</summary><p>The free-tier development extraction returned valid structures, but recovered only 12 of 44 supported fields and kept 28 of 34 unknown fields unknown. These are development diagnostics, not a blind accuracy score. The model stays off until the field quality gate and independent review pass.</p></details>
+  <details className="overview-detail"><summary>Why is live AI answering held?</summary><p>The latest Free-tier development reuse returned {development?.structural_proposals??0} valid structures from {development?.requests??0} requests. Among {development?.episode_inputs??'the'} episode items it exactly recovered {development?.supported?.exact??0} of {development?.supported?.denominator??0} stated fields; {development?.unknown?.preserved??0} of {development?.unknown?.denominator??0} unknown fields stayed unknown. The stated-fact result is below the preset gate. This is not a blind accuracy score, so live AI stays off while source review and independent evaluation remain unfinished.</p></details>
  </section>;
 }

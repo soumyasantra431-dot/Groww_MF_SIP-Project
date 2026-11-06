@@ -6,7 +6,7 @@ import {leanSchema,leanWireSchema,LEAN_RULES} from './lean.mjs';
 
 export const REQUEST_PROFILE='2026-11-02-compact-v1';
 export const GUIDE_REQUEST_PROFILE='2026-11-02-json-guide-v1';
-export const LEAN_REQUEST_PROFILE='2026-11-04-lean-focal-event-v9';
+export const LEAN_REQUEST_PROFILE='2026-11-06-lean-disposition-v12';
 // Rename internal reference identifiers only. These names are never output fields.
 export function compactSchema(schema){
  const names=new Map(Object.keys(schema.$defs||{}).map((name,i)=>[name,'d'+i]));
