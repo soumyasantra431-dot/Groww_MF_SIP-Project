@@ -1,5 +1,4 @@
 import React,{useRef,useState} from 'react';
-import {labelFor} from './evidence-language';
 
 const cues:Record<string,string[]>={
  Q1:['start','begin','why','expect','motivation'],Q2:['change','month','after starting','behavior','behaviour'],
@@ -8,35 +7,29 @@ const cues:Record<string,string[]>={
  Q7:['continue','drop off','drop-off','difference','separat'],Q8:['segment','income','age','influence','source of money'],
  Q9:['unmet','need','opportun','gap']
 };
-export function AskResearch({cards,publicMode,development,onInspect}:{cards:any[],publicMode:boolean,development?:any,onInspect:(id:string)=>void}){
+export function AskResearch({cards,briefs={},sources={},development}:{cards:any[],briefs?:Record<string,any>,sources?:Record<string,any>,publicMode:boolean,development?:any,onInspect:(id:string)=>void}){
  const [input,setInput]=useState(''),[selected,setSelected]=useState<string|null>('Q1'),[unmatched,setUnmatched]=useState(false);
- const [live,setLive]=useState<any>(null),[loading,setLoading]=useState(false);
  const answerRef=useRef<HTMLElement|null>(null);
- const card=cards.find(c=>c.id===selected);
+ const card=cards.find(c=>c.id===selected),brief=selected?briefs[selected]:null;
  function reveal(){requestAnimationFrame(()=>answerRef.current?.scrollIntoView({behavior:'smooth',block:'start'}));}
- async function fetchAnswer(id:string,question:string){if(!publicMode)return;setLoading(true);setLive(null);try{const r=await fetch('/api/answer',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question_id:id,question})});if(r.ok){const value=await r.json();setLive(value);}}catch{}finally{setLoading(false);}}
- function ask(){const q=input.trim().toLowerCase();if(!q){setUnmatched(false);setSelected(null);setLive(null);return;}
+ function ask(){const q=input.trim().toLowerCase();if(!q){setUnmatched(false);setSelected(null);return;}
   const exact=cards.find(c=>c.title.toLowerCase()===q);
   const ranked=cards.map(c=>({id:c.id,score:(cues[c.id]||[]).filter(word=>q.includes(word)).length})).sort((a,b)=>b.score-a.score);
   const best=exact?.id||(ranked[0]?.score>0&&ranked[0].score>ranked[1]?.score?ranked[0].id:null);
-  setSelected(best||null);setUnmatched(!best);setLive(null);if(best){void fetchAnswer(best,input.trim());reveal();}
+  setSelected(best||null);setUnmatched(!best);if(best)reveal();
  }
  return <section className="ask-research" aria-label="Ask the research">
-  <div className="ask-top"><p className="eyebrow">NINE QUESTIONS · SOURCE-LINKED RESEARCH LEADS</p><h1>What do public SIP stories suggest?</h1><p>Each question currently shows one illustrative account, a rival explanation and the missing evidence. These leads are not validated answers about first-time Groww investors.</p>
-   <form className="ask-form" onSubmit={e=>{e.preventDefault();ask();}}><label htmlFor="research-query">Your research question</label><div><input id="research-query" value={input} onChange={e=>setInput(e.target.value)} placeholder="Why do people stop or pause a SIP?"/><button className="primary" type="submit">Show research lead →</button></div></form>
+  <div className="ask-top"><p className="eyebrow">NINE QUESTIONS · SOURCE-LINKED RESEARCH</p><h1>What do SIP investors actually describe?</h1><p>Select a question to see a plain-English reading, the evidence behind it, another explanation, and what we still need to learn. These are research leads, not measured Groww retention or investment advice.</p>
+   <form className="ask-form" onSubmit={e=>{e.preventDefault();ask();}}><label htmlFor="research-query">Ask about an investor behavior</label><div><input id="research-query" value={input} onChange={e=>setInput(e.target.value)} placeholder="Why do people pause or reduce a SIP?"/><button className="primary" type="submit">Find a reading →</button></div></form>
   </div>
-  {unmatched&&<div className="research-answer"><h3>Choose a brief question</h3><p>I cannot safely map that wording to one of the nine questions. Select the closest one below; the engine will not invent an answer.</p></div>}
-  {card&&<article ref={answerRef} className="research-answer" aria-live="polite"><div className="answer-head"><span className="badge">{card.status==='researcher_approved'?'Approved answer':'Provisional lead · source review pending'}</span><span>{card.id} / 9</span></div><h3>{card.title}</h3>
-   <p className="eyebrow">{card.status==='researcher_approved'?'REVIEWED RESEARCH ANSWER':'WHAT ONE ACCOUNT REPORTS'}</p><p className="answer-lead">{loading?'Preparing the source-linked reading…':live?.answer||card.direct_answer||card.working_reading?.text||'This source set cannot yet answer the question for first-time Groww investors.'}</p>
-   {card.signal_breakdown&&<section className="signal-breakdown" aria-label="Behavior behind this reading"><div className="signal-breakdown-head"><b>What is behind this lead?</b><span>1 linked illustration · {card.source_root_count||0} accepted source cases</span></div><div className="signal-breakdown-grid"><div><b>Reported behavior</b><p>{card.signal_breakdown.behavior}</p></div><div><b>Stated investor context</b><p>{card.signal_breakdown.context}</p></div><div><b>Possible need · hypothesis</b><p>{card.signal_breakdown.possible_need}</p></div></div></section>}
-   {live&&<p className="small">{live.generated?'AI wording from the linked provisional reading · not researcher-validated':'Checked reading from the saved research snapshot'}{live.note?` · ${live.note}`:''}</p>}
-   {card.working_reading&&<p className="source-line">Based on <a href={card.working_reading.url} target="_blank" rel="noreferrer">this public {card.working_reading.source_family.toLowerCase()} account ↗</a> · {card.working_reading.scope_lane==='adjacent'?'another platform or investor group':card.working_reading.scope_lane==='eligibility_unknown'?'Groww/first-year fit not stated':'target cohort stated'}</p>}
-   {card.status==='researcher_approved'&&card.sources?.length>0&&<p className="source-line">{card.source_root_count} distinct reviewed source roots linked to this question. <button className="textbutton" onClick={()=>onInspect(card.id)}>Inspect sources →</button></p>}
-   <div className="answer-limits"><div><b>What else could explain it?</b><p>{card.counterexample_or_rival||card.rival_to_check}</p></div><div><b>What is still unknown?</b><p>{card.unknown}</p></div></div>
-   <p className="next-question"><b>What to check next:</b> {card.next_decision}</p>
-   <details className="answer-method"><summary>How this answer was made</summary><p>The project owner endorsed this reading as a research direction. Its linked source still needs individual coding review. {card.working_reading?`The proposed journey stage is ${labelFor(card.working_reading.metric_node)} and the initiating event is ${labelFor(card.working_reading.exit_form)}.`:''} Public posts do not measure Groww’s month-12 SIP retention.</p></details>
+  {unmatched&&<div className="research-answer"><h3>Choose one of the nine questions</h3><p>That wording could match several topics. Select the closest question below so the answer stays tied to sources.</p></div>}
+  {card&&<article ref={answerRef} className="research-answer" aria-live="polite"><div className="answer-head"><span className="badge">Source-checked desk reading · research lead</span><span>{card.id} / 9</span></div><h3>{brief?.title||card.title}</h3>
+   <p className="eyebrow">THE SHORT ANSWER</p><p className="answer-lead">{brief?.answer||card.direct_answer||card.working_reading?.text||'The current material does not answer this question.'}</p>
+   {brief?.points?.length>0&&<section className="brief-points"><h4>What supports this reading</h4><ol>{brief.points.map((point:any,index:number)=><li key={index}><span>{point.text}</span><span className="brief-cites">{point.sources.map((key:string)=><a key={key} href={sources[key]?.url} target="_blank" rel="noreferrer" title={sources[key]?.fit}>{sources[key]?.family||'Source'} ↗</a>)}</span></li>)}</ol></section>}
+   <div className="answer-limits"><div><b>Another explanation</b><p>{brief?.rival||card.counterexample_or_rival||card.rival_to_check}</p></div><div><b>Still unknown</b><p>{brief?.unknown||card.unknown}</p></div></div>
+   <p className="next-question"><b>Best next research step:</b> {brief?.next||card.next_decision}</p>
+   <details className="answer-method"><summary>How to read this answer</summary><p>This is an assistant-written synthesis of linked public accounts and official context, checked against the source pages. It is separate from the stored corpus and its AI coding proposals. Each source may describe a different person; we do not join them into one journey. First-ever mutual fund status, a following scheduled SIP payment, and the month-12 result remain unknown unless explicitly stated.</p><p>The independent model extraction check has not passed. It recovered {development?.supported?.exact??0} of {development?.supported?.denominator??0} supported fields in a development test. A new-post classifier remains off.</p></details>
   </article>}
-  <h3 className="other-questions-title">Explore another question</h3><div className="question-choices" aria-label="Brief questions">{cards.map(c=><button className={selected===c.id?'chosen':''} key={c.id} onClick={()=>{setSelected(c.id);setInput(c.title);setUnmatched(false);setLive(null);void fetchAnswer(c.id,c.title);reveal();}}><span>{c.id}</span><span className="question-choice-body">{c.title}</span></button>)}</div>
-  <details className="overview-detail"><summary>What is the AI allowed to do?</summary><p>It can reword one linked, provisional research reading for one of the nine questions. It cannot classify a new post or turn this reading into a verified investor insight. That separate extraction task recovered {development?.supported?.exact??0} of {development?.supported?.denominator??0} stated fields in a development check, below its preset gate. Its live tester remains off.</p></details>
+  <h3 className="other-questions-title">Explore another question</h3><div className="question-choices" aria-label="Brief questions">{cards.map(c=><button className={selected===c.id?'chosen':''} key={c.id} onClick={()=>{setSelected(c.id);setInput(c.title);setUnmatched(false);reveal();}}><span>{c.id}</span><span className="question-choice-body">{briefs[c.id]?.title||c.title}</span></button>)}</div>
  </section>;
 }

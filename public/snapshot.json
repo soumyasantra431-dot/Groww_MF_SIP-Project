@@ -1468,5 +1468,6 @@
       }
     },
     "note": "Scored fields only where a prediction exists; missing predictions are unrun, not model abstention. Exact/canonical matching; free-text semantic alternatives require explicit adjudication. Invented conflicts with supported gold require source review beyond this automatic count. Assistant labels are not independent human verification."
-  }
+  },
+  "editorial_briefs_version": 1
 }

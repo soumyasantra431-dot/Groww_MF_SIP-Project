@@ -1,5 +1,6 @@
 import { filtered,rollup } from '../engine/analysis.mjs';
 import { questionCards } from '../engine/question-cards.mjs';
+import { editorialBriefs,deskSources } from '../engine/editorial-briefs.mjs';
 import { modelStatus } from '../engine/provider.mjs';
 import { corpusReadiness,driverEvidence } from '../engine/scope.mjs';
 import { researchPlan } from '../engine/research-plan.mjs';
@@ -20,7 +21,7 @@ export default {async fetch(request,env){
   if(!raw.ok)return response({error:'Published snapshot unavailable'},503);
   const s=await raw.json(),items=filtered(s.items,Object.fromEntries(url.searchParams));
   const spend=env.LIMITS?await env.LIMITS.prepare("SELECT COUNT(*) AS calls,COALESCE(SUM(CASE WHEN state='settled' THEN actual ELSE reserved END),0) AS committed_usd FROM spend").first():null;
-  return response({mode:'public',items,research_plan:researchPlan(items),global_research_plan:s.global_research_plan||null,global_rollup:s.global_rollup||null,source_ledger:s.source_ledger||null,preliminary_comparison:s.preliminary_comparison||null,question_cards:s.provisional_cards||questionCards(s.items,{publicOnly:true,approvedAnswers:s.approved_answers||{}}),review_collection:s.review_collection||null,rollup:rollup(items),readiness:s.local_readiness||corpusReadiness(s.items),drivers:driverEvidence(items),model:modelStatus(env),pipeline:{lean_batch_ready:false,live_paste_ready:false,reason:'Lean extraction and the live tester have not passed validation.'},spend,development:s.development||null,quality:s.quality||null});
+  return response({mode:'public',items,research_plan:researchPlan(items),global_research_plan:s.global_research_plan||null,global_rollup:s.global_rollup||null,source_ledger:s.source_ledger||null,preliminary_comparison:s.preliminary_comparison||null,question_cards:s.provisional_cards||questionCards(s.items,{publicOnly:true,approvedAnswers:s.approved_answers||{}}),editorial_briefs:editorialBriefs,desk_sources:deskSources,review_collection:s.review_collection||null,rollup:rollup(items),readiness:s.local_readiness||corpusReadiness(s.items),drivers:driverEvidence(items),model:modelStatus(env),pipeline:{lean_batch_ready:false,live_paste_ready:false,reason:'Lean extraction and the live tester have not passed validation.'},spend,development:s.development||null,quality:s.quality||null});
  }
  if(url.pathname==='/api/answer'&&request.method==='POST'){
   if(request.headers.get('content-length')&&Number(request.headers.get('content-length'))>2048)return response({error:'Question too long'},413);
@@ -31,6 +32,10 @@ export default {async fetch(request,env){
   if(!raw.ok)return response({error:'Research snapshot unavailable'},503);
   const s=await raw.json(),card=s.provisional_cards?.find(c=>c.id===id);
   if(!card)return response({error:'Question unavailable'},404);
+  if(s.editorial_briefs_version===1){
+   const brief=editorialBriefs[id];
+   return response({question_id:id,answer:brief.answer,points:brief.points.map(p=>({text:p.text,sources:p.sources.map(key=>({url:deskSources[key].url,family:deskSources[key].family,fit:deskSources[key].fit}))})),rival:brief.rival,unknown:brief.unknown,next_test:brief.next,status:'source_checked_desk_reading',generated:false,note:'Assistant-written source-linked synthesis; not a validated cohort finding.'});
+  }
   const fallback={question_id:id,answer:card.working_reading?.text||'This question is not answered by the reviewed material yet.',source:card.working_reading?{url:card.working_reading.url,family:card.working_reading.source_family,scope:card.working_reading.scope_lane}:null,rival:card.rival_to_check,unknown:card.unknown,next_test:card.next_decision,status:'provisional_research_direction',generated:false};
   if(!['Q1','Q3','Q5','Q6','Q9'].includes(id))return response({...fallback,note:'This question needs chronology or comparison that one source cannot establish; showing the checked reading.'});
   if(env.ALLOW_ANSWER_CALLS!=='true'||env.ANSWER_KILL_SWITCH!=='false'||!env.GROQ_API_KEY)return response(fallback);
