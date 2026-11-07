@@ -1,5 +1,7 @@
 # Groww first-year SIP: user research synthesis and problem decision
 
+> **Decision superseded later on 8 November 2026.** The [behavioral signal reassessment](PART3_4_BEHAVIORAL_SIGNAL_REASSESSMENT_2026-11-08.md) reopens the choice after distinguishing a payment failure from an investor's decision to change an SIP. Keep the source review and metric arithmetic below as an audit trail; do not use its payment-status selection as the final project problem.
+
 **8 November 2026 IST · Decision for a bounded project test, not a measured Groww opportunity ranking.** This memo resolves the immediate question of which problem to investigate and prototype. It supersedes the *choice* in the earlier adjustment and payment memos, while retaining their evidence and caveats. No real interview, observed transaction, or Groww cohort analysis is claimed.
 
 ## 1. The decision in plain language
