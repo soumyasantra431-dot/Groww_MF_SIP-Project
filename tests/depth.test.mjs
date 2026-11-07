@@ -103,7 +103,7 @@ test('Published snapshots exclude controls, raw data and exact-text fingerprint 
 test('Public viewer carries provisional directions separately from approved evidence',async()=>{
  const provisional_cards=[{id:'Q1',title:'Why start?',status:'fellow_endorsed_provisional',working_reading:{text:'One pre-start intention; outcome unknown.',url:'https://example.org/post'}}];
  const preliminary_comparison={status:'fellow_endorsed_provisional',candidates:[{id:'lead',name:'Research lead'}]};
- const snapshot={items:[],approved_answers:{},provisional_cards,preliminary_comparison,review_collection:null};
+ const snapshot={items:[],approved_answers:{},provisional_cards,preliminary_comparison,review_collection:null,local_readiness:{user_voice_records:31,distinct_user_voice_source_units:31,local_use_unresolved_records:69}};
  const env={ASSETS:{fetch:async()=>new Response(JSON.stringify(snapshot),{status:200})}};
  const response=await publicWorker.fetch(new Request('https://example.org/api/workspace'),env);
  assert.equal(response.status,200);
@@ -111,6 +111,7 @@ test('Public viewer carries provisional directions separately from approved evid
  assert.equal(body.question_cards[0].status,'fellow_endorsed_provisional');
  assert.equal(body.preliminary_comparison.candidates.length,1);
  assert.equal(body.rollup.total,0);
+ assert.equal(body.readiness.distinct_user_voice_source_units,31);
  assert.equal(body.question_cards[0].source_root_count,undefined);
 });
 test('Machine-input CSV preserves leading punctuation while deck exports neutralise spreadsheet formulas',()=>{
