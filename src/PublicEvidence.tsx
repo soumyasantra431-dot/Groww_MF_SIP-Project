@@ -1,8 +1,11 @@
 import React from 'react';
 
-export function PublicEvidence({cards}:{cards:any[]}){
- const byUrl=new Map<string,{source:any,questions:string[]}>();
- for(const card of cards){const source=card.working_reading;if(!source?.url)continue;const entry=byUrl.get(source.url);if(entry)entry.questions.push(card.id);else byUrl.set(source.url,{source,questions:[card.id]});}
- const rows=[...byUrl.values()];
- return <section className="public-evidence"><p className="eyebrow">THE ACCOUNTS BEHIND THE ANSWERS</p><h2>{rows.length} linked public accounts support the nine draft readings</h2><p>Open an original to check the writer’s action and what happened next. Some accounts come from another platform or do not state whether this is a first-year Groww SIP; they suggest questions to investigate rather than measure Groww investors.</p><div className="public-source-grid">{rows.map(({source,questions})=><article key={source.url}><span className="badge">{questions.join(' · ')}</span><h3>{source.source_family} account</h3><p>{source.text}</p><p className="small">{source.scope_lane==='adjacent'?'Another platform or investor group':source.scope_lane==='eligibility_unknown'?'Groww and first-year fit not stated':'Target fit stated'}</p><a href={source.url} target="_blank" rel="noreferrer">Read the original source ↗</a></article>)}</div><p className="small">These are short research paraphrases, not copied posts. The selected app reviews are still awaiting source checks and are not counted as evidence for these nine readings.</p></section>;
+export function PublicEvidence({briefs={},sources={}}:{briefs?:Record<string,any>,sources?:Record<string,any>}){
+ const used=new Map<string,string[]>();
+ for(const [id,brief] of Object.entries(briefs))for(const point of brief.points||[])for(const key of point.sources||[])used.set(key,[...new Set([...(used.get(key)||[]),id])]);
+ const rows=[...used].map(([key,questions])=>({key,questions,source:sources[key]})).filter(r=>r.source);
+ const investor=rows.filter(r=>r.source.family==='Public investor account').length;
+ return <section className="public-evidence"><p className="eyebrow">TRACE THE RESEARCH</p><h2>The sources behind the nine answers</h2><p><strong>{investor} public investor accounts</strong> and <strong>{rows.length-investor} context sources</strong> support the current desk readings. A linked account describes one writer’s experience. Official guidance shows a product capability; it is not proof that anyone used it successfully.</p>
+ <div className="public-source-grid">{rows.map(({key,source,questions})=><article key={key}><span className="badge">{questions.join(' · ')}</span><h3>{source.family}</h3><p>{source.fit}</p><p><b>What it cannot show:</b> {source.limit}</p><a href={source.url} target="_blank" rel="noreferrer">Open original source ↗</a></article>)}</div>
+ <p className="small">These desk sources are separate from the app-review collection funnel and model-coded corpus. One account may inform several questions but counts as one source. The app reviews selected for closer reading do not yet support these answers.</p></section>;
 }
