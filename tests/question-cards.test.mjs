@@ -41,9 +41,12 @@ test('Working readings require their named usable proposal and never become appr
  const first=row('I-4ee83186cfa8a499dfbe',{review_state:'proposal',tier_a:{...code,question_ids:['Q1','Q8'],paraphrase:'Planned SIP with emergency buffer.'}});
  const q1=questionCards([first]).find(x=>x.id==='Q1');
  assert.match(q1.working_reading.text,/emergency buffer/);
+ assert.match(q1.signal_breakdown.context,/age and Groww use are not/i);
+ assert.match(q1.signal_breakdown.possible_need,/personal goal/i);
  assert.equal(q1.direct_answer,null);
  assert.equal(q1.source_root_count,0);
  assert.equal(questionCards([{...first,local_use_status:'pending'}]).find(x=>x.id==='Q1').working_reading,null);
+ assert.equal(questionCards([{...first,local_use_status:'pending'}]).find(x=>x.id==='Q1').signal_breakdown,null);
  assert.equal(questionCards([first],{publicOnly:true}).find(x=>x.id==='Q1').working_reading,null);
 });
 test('A single adjacent checking account cannot become a Q4 frequency answer',()=>{

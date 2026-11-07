@@ -1,6 +1,6 @@
 {
   "schema": "sip-snapshot-v1-depth-addendum",
-  "created_at": "2026-11-07T14:18:05.791Z",
+  "created_at": "2026-11-07T14:38:46.656Z",
   "review_basis": "Fellow-endorsed provisional directions; zero source-level approval unless separately recorded",
   "items": [],
   "approved_answers": {},
@@ -19,6 +19,11 @@
         "scope_lane": "adjacent",
         "metric_node": "unknown",
         "exit_form": "unknown"
+      },
+      "signal_breakdown": {
+        "behavior": "Plans to start recurring contributions.",
+        "context": "A new job and a planned emergency buffer are stated; age and Groww use are not.",
+        "possible_need": "A way to connect a manageable recurring amount to a personal goal."
       },
       "source_root_count": 0,
       "reviewed_root_denominator": 0,
@@ -42,6 +47,11 @@
         "metric_node": "first_instalment",
         "exit_form": "unknown"
       },
+      "signal_breakdown": {
+        "behavior": "Made an initial buy, then cancelled that order while asking about the next date.",
+        "context": "First SIP is stated; first-ever mutual fund and Groww use are not established.",
+        "possible_need": "Know what the first payment sets up and when the next one is due."
+      },
       "source_root_count": 0,
       "reviewed_root_denominator": 0,
       "unreviewed_lead_roots": 3,
@@ -63,6 +73,11 @@
         "scope_lane": "adjacent",
         "metric_node": "unknown",
         "exit_form": "involuntary"
+      },
+      "signal_breakdown": {
+        "behavior": "Reports that two expected monthly mandate debits did not occur.",
+        "context": "This is a Coin account; the bank or platform cause is unverified.",
+        "possible_need": "Understand why an intended payment did not complete and what recovery is possible."
       },
       "source_root_count": 0,
       "reviewed_root_denominator": 0,
@@ -86,6 +101,11 @@
         "metric_node": "unknown",
         "exit_form": "involuntary"
       },
+      "signal_breakdown": {
+        "behavior": "Checked SIP status after noticing rejections and considered reviewing past transactions.",
+        "context": "An experienced Paytm Money account; a regular checking frequency is not stated.",
+        "possible_need": "A clear signal when a contribution needs attention, rather than frequent manual checking."
+      },
       "source_root_count": 0,
       "reviewed_root_denominator": 0,
       "unreviewed_lead_roots": 1,
@@ -107,6 +127,11 @@
         "scope_lane": "eligibility_unknown",
         "metric_node": "unknown",
         "exit_form": "unknown"
+      },
+      "signal_breakdown": {
+        "behavior": "Paused one SIP, then says it was accidentally deleted and asks about existing holdings.",
+        "context": "This is an adjacent platform; the later contribution is unknown.",
+        "possible_need": "Understand what a control changes for future payments versus past holdings."
       },
       "source_root_count": 0,
       "reviewed_root_denominator": 0,
@@ -130,6 +155,11 @@
         "metric_node": "recovery",
         "exit_form": "unknown"
       },
+      "signal_breakdown": {
+        "behavior": "Tried another UPI app and later reports that current payments work.",
+        "context": "The same Coin writer posted the follow-up; a next scheduled SIP success is not stated.",
+        "possible_need": "A usable recovery route when the chosen payment route fails."
+      },
       "source_root_count": 0,
       "reviewed_root_denominator": 0,
       "unreviewed_lead_roots": 4,
@@ -151,6 +181,11 @@
         "scope_lane": "eligibility_unknown",
         "metric_node": "unknown",
         "exit_form": "continuer"
+      },
+      "signal_breakdown": {
+        "behavior": "Reports about a year of SIP investing and considers increasing the amount.",
+        "context": "Platform, first-ever MF status and a comparable difficult month are unknown.",
+        "possible_need": "Unknown: the account does not say what enabled continuation."
       },
       "source_root_count": 0,
       "reviewed_root_denominator": 0,
@@ -174,6 +209,11 @@
         "metric_node": "unknown",
         "exit_form": "unknown"
       },
+      "signal_breakdown": {
+        "behavior": "Plans an investment routine while considering a buffer and personal support.",
+        "context": "New job is stated; age group, income stability, source of funds and later SIP outcome are not.",
+        "possible_need": "Unknown: one pre-start account cannot establish a segment difference."
+      },
       "source_root_count": 0,
       "reviewed_root_denominator": 0,
       "unreviewed_lead_roots": 3,
@@ -195,6 +235,11 @@
         "scope_lane": "adjacent",
         "metric_node": "unknown",
         "exit_form": "unknown"
+      },
+      "signal_breakdown": {
+        "behavior": "Asks for help after seeing a missing payment link, a date mismatch and no visible change control.",
+        "context": "This is a Coin account; the current product state and payment outcome are unknown.",
+        "possible_need": "Clear status or findable controls may matter, but this remains a hypothesis."
       },
       "source_root_count": 0,
       "reviewed_root_denominator": 0,

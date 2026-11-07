@@ -25,7 +25,7 @@ export function snapshot(store){
  // promoted to accepted, or approved answers. Publication still needs review.
  const provisional_cards=questionCards(all).filter(c=>c.working_reading).map(c=>({
   id:c.id,title:c.title,status:'fellow_endorsed_provisional',direct_answer:null,
-  working_reading:c.working_reading,source_root_count:0,reviewed_root_denominator:0,
+  working_reading:c.working_reading,signal_breakdown:c.signal_breakdown,source_root_count:0,reviewed_root_denominator:0,
   unreviewed_lead_roots:c.unreviewed_lead_roots,rival_to_check:c.rival_to_check,
   unknown:c.unknown,next_decision:c.next_decision
  }));
