@@ -1,0 +1,23 @@
+# Claude research critique: what changed and what did not
+
+**7 November 2026 IST · Method review, not investor evidence.** The Fellow asked us to use Claude in the native browser for selected research tasks. I sent Claude a compact, non-private summary of the project metric, four provisional engine leads, current evidence gaps, and proposed continuer/interrupter comparison. [Claude conversation](https://claude.ai/chat/a1317d6c-95a6-4263-a877-e2d5865c0b15). No survey response, personal financial information, credentials, source corpus, or unpublished file was sent. Claude explicitly said it had **not inspected the original source records or Groww documentation**; its response is an external AI *method proposal*, not a verified finding or an independent investor label.
+
+## Useful challenge accepted
+
+Our proposed interview emphasis on a “difficult payment month” could recruit and elicit only payment-event stories. That would bias the route to the problem. Start with a neutral **first SIP → today** chronology and ask what changed, including ordinary months and an informed stop. Then reconstruct a specific event if one occurred. Predefine broad event types before recruiting a comparison; do not decide after hearing stories that two episodes are “comparable.” Mark remembered timing and explanations as self-report because retrospective accounts can be reshaped by what happened later. These changes are incorporated into the [research plan](REMAINING_PROJECT_RESEARCH_PLAN.md) and [Part 2 decision artifact](PART2_METRIC_SYSTEM_AND_FIRST_RESEARCH_DECISION_2026-11-07.md).
+
+## Candidate hypotheses retained only as prompts
+
+Claude proposed (1) misunderstanding what the first payment sets up, (2) an interruption followed by no known route back, and (3) ambiguous payment state and trust. These are **possible mechanisms**, not three established segments. They overlap with the engine's existing four leads and add no new user facts. The second proposal mixes a chosen skip/pause with a failed payment; our event model keeps **intentional change**, **involuntary failure**, and **later recovery** separate. The third proposal needs a chronology that shows whether uncertainty preceded a changed contribution; otherwise it could be incidental.
+
+Claude proposed investigating initial-payment expectations first because a neutral question can be asked of every participant. **Accept as the opening probe, not as the top product opportunity.** Its assertion that other pathways require the investor to know the schedule is too strong: an unintended debit failure or confusing bank/app state can happen even if the person never formed a precise schedule expectation. Ask “After the first payment, what did you expect to happen next, and when?” inside the open chronology; let the answer update which pathway needs deeper probing.
+
+## Suggestions rejected or narrowed
+
+- Claude prescribed at least five strict target cases, three corroborating artefacts, three continuers and two recruitment channels before naming a segment. These are **arbitrary thresholds** for a brief requiring 5–6 interviews total. A small qualitative sample supports a provisional problem mechanism and its counterexamples, not saturation, prevalence or a universal numeric proof gate. Use evidence fit, consequence, rival, task test and an explicit reversal condition instead.
+- Claude suggested redacted bank SMS, app notifications and statements to anchor timing. The brief prohibits collecting account data and portfolio screenshots. We will **not request messages, statements or screenshots**. Ask people to describe approximate sequence and mark unverified dates/payment finality; use only safe, non-transactional observation where relevant.
+- Claude suggested waiting for a pathway to “recur” before comparing outcomes. Repetition in a convenience sample is not population importance. Retain at least one comparable continuer or informed adjuster where possible and preserve unusual or contradictory cases; the next research priority is the question that can change the product choice, not the most repeated story.
+
+## PM decision
+
+The revised method is **open chronology → episode reconstruction → pre-specified contrast → hypothesis update**. Separate the candidate problem to investigate from the eventual product opportunity. Claude's critique improved the sampling and interview sequence; it supplied **zero new user evidence, zero Groww outcome data, and no segment or feature decision**. The next research step remains original-source review and the four equally structured evidence cards, then the 5–6 eligible first-hand interviews if obtained.
