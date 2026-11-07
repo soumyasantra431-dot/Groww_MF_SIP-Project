@@ -11,7 +11,7 @@ test('bounded public answer keeps source and unknown; rejects invented numbers',
  try{
   globalThis.fetch=async()=>new Response(JSON.stringify({choices:[{finish_reason:'stop',message:{content:JSON.stringify({answer:'One person planned a SIP after starting work; the later Groww outcome is unknown.'})}}]}));
   let result=await (await ask()).json();
-  assert.equal(result.generated,true);assert.equal(result.source.url,card.working_reading.url);assert.equal(result.status,'provisional_research_direction');assert.equal(result.unknown,card.unknown);
+  assert.equal(result.generated,true);assert.match(result.answer,/One person planned/);assert.equal(result.source.url,card.working_reading.url);assert.equal(result.status,'provisional_research_direction');assert.equal(result.unknown,card.unknown);
   globalThis.fetch=async()=>new Response(JSON.stringify({choices:[{finish_reason:'stop',message:{content:JSON.stringify({answer:'This proves that 90 percent of investors remain active.'})}}]}));
   result=await (await ask()).json();assert.equal(result.generated,false);assert.equal(result.answer,card.working_reading.text);
  }finally{globalThis.fetch=previous;}
