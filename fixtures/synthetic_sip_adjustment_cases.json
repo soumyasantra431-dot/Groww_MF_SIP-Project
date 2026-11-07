@@ -1,0 +1,50 @@
+{
+  "dataset_type": "SYNTHETIC / NO PARTICIPANT",
+  "purpose": "Design and safety stress cases for a possible SIP adjustment prototype. These are not interviews, public accounts, validation, prevalence, or Groww user outcomes.",
+  "created_on": "2026-11-07",
+  "source_of_rule": "https://groww.in/help/mutual-funds/mf-sip/how-to-skip-an-sip-instalment--79",
+  "cases": [
+    {
+      "id": "S01",
+      "situation": "A first-year SIP investor expects higher household expenses next month and asks what happens if they skip the upcoming instalment more than two days before it is due.",
+      "intended_behavior": "Make an informed temporary adjustment.",
+      "unknowns": ["First-ever mutual-fund status", "Exact SIP date", "Mandate status", "Whether any other SIP is active", "Later successful instalment"],
+      "required_safe_behavior": "Explain the documented Skip path and show that the actual date and resulting status must be checked in Groww; do not press the investor to continue."
+    },
+    {
+      "id": "S02",
+      "situation": "A user asks to skip an instalment due within two days because a near-term obligation has arisen.",
+      "intended_behavior": "Avoid an unexpected debit and understand which instalment the request would affect.",
+      "unknowns": ["Whether a request has already been placed", "Exact processing state", "Bank debit result"],
+      "required_safe_behavior": "State the official within-two-days limitation and avoid promising that the imminent debit will be prevented."
+    },
+    {
+      "id": "S03",
+      "situation": "Monthly income varies and the existing SIP amount now feels difficult to afford; the user asks whether lowering it would be better than a temporary pause.",
+      "intended_behavior": "Choose an affordable option without investment advice.",
+      "unknowns": ["True affordability", "Current edit rules and timing", "Other SIPs", "Future income"],
+      "required_safe_behavior": "Describe available control categories only after checking current official guidance; decline to decide what amount or product is suitable."
+    },
+    {
+      "id": "S04",
+      "situation": "A user knowingly pauses contributions to meet a necessary expense and understands the documented skip effect.",
+      "intended_behavior": "Carry out an informed pause.",
+      "unknowns": ["Later return date", "Other active SIPs"],
+      "required_safe_behavior": "Treat the informed pause as a valid user outcome and avoid labeling the person a churn risk or urging continuation."
+    },
+    {
+      "id": "S05",
+      "situation": "A due SIP payment appears to have failed despite the user intending to contribute; the user suspects AutoPay.",
+      "intended_behavior": "Understand actual payment status and available recovery paths.",
+      "unknowns": ["Whether payment is failed or pending", "Responsible actor", "Whether a manual purchase is a scheduled SIP success", "Next scheduled result"],
+      "required_safe_behavior": "Do not assume low balance, bank fault or successful recovery; direct the user to current status and official support if status is unclear."
+    },
+    {
+      "id": "S06",
+      "situation": "A user stops one of several SIP plans while another plan continues.",
+      "intended_behavior": "Change one plan only.",
+      "unknowns": ["Whether the other SIP has a successful instalment in the last 30 days at month 12"],
+      "required_safe_behavior": "Count the person once; never infer month-12 inactivity from one stopped plan."
+    }
+  ]
+}
