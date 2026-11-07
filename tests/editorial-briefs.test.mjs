@@ -6,11 +6,13 @@ import {deskSources,editorialBriefs,validateEditorialBriefs} from '../engine/edi
 test('all nine desk readings have linked sources, rivals and explicit gaps',()=>{
  assert.equal(validateEditorialBriefs(),true);
  assert.equal(Object.keys(editorialBriefs).length,9);
+ const used=new Set();
  for(const [id,brief] of Object.entries(editorialBriefs)){
   assert.ok(brief.answer.length>80,id);
   assert.ok(brief.rival&&brief.unknown&&brief.next,id);
-  for(const point of brief.points)for(const key of point.sources)assert.match(deskSources[key].url,/^https:\/\//);
+  for(const point of brief.points)for(const key of point.sources){used.add(key);assert.match(deskSources[key].url,/^https:\/\//);}
  }
+ assert.deepEqual([...used].sort(),Object.keys(deskSources).sort());
  assert.match(editorialBriefs.Q4.unknown,/frequency/i);
  assert.match(editorialBriefs.Q7.unknown,/month-12/i);
 });
