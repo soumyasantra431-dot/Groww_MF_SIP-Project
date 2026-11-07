@@ -1,5 +1,7 @@
 # Remaining graduation project: decision-led research plan
 
+> **7 November progress update:** Part 2 metric arithmetic is documented. The current Part 4 **provisional** problem is an intended first-year Groww SIP payment that does not clearly complete; see the [dated problem decision](PART4_PROVISIONAL_PROBLEM_DEFINITION_2026-11-07.md). Earlier cash-flow-adjustment documents are retained as decision history and an informed-pause guardrail. No target-cohort interview, observed task, verified root cause, measured reach/lift, or deployed investor MVP is claimed. The plan below is the method; the dated decision records show how it changed with evidence.
+
 **Scope:** Parts 2–8 and the final deliverables. This plan follows the brief's North Star Metric and the current discovery engine. It does not claim a chosen problem, completed interviews, validated AI accuracy, or a deployed investor MVP.
 
 **Method:** Work backwards from an investor outcome and the brief's business outcome. For each proposed conclusion, ask: *What would I have to observe for this to be true? What else could produce the same observation? What would change my decision?* The sections below specify the work, rather than using a framework name as a substitute for reasoning.

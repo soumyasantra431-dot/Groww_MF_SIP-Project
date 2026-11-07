@@ -1,5 +1,7 @@
 # Current Groww flow versus a plain-language guide
 
+> **Scope note.** This is the static baseline for the earlier **intentional adjustment** candidate. The later [provisional problem definition](PART4_PROVISIONAL_PROBLEM_DEFINITION_2026-11-07.md) focuses on an **intended payment that did not clearly complete**. The guide remains a guardrail/contrast; it is not the baseline for the selected payment-state task.
+
 **7 November 2026 IST. Status: documented-flow review and six synthetic-case desk comparison; no logged-in SIP inspection, transaction, participant test, or AI evaluation.** This follows the [knowledge and product-outcome audit](PART3_4_KNOWLEDGE_AND_PRODUCT_OUTCOME_AUDIT_2026-11-07.md). The provisional behavior under study is a first-year Groww SIP investor deciding how to handle an upcoming instalment after a change in cash flow or obligations. An informed pause is a valid outcome.
 
 ## Purpose and decision rule

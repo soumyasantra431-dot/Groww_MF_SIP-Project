@@ -1,5 +1,7 @@
 # Behavioral segment decision for the Groww SIP case study
 
+> **Historical decision.** A later 7 November original-source comparison changed the working segment to investors with an **intended SIP payment that did not clearly complete**. See [current provisional problem definition](PART4_PROVISIONAL_PROBLEM_DEFINITION_2026-11-07.md). The six-way comparison below remains the audit trail, not the current final choice.
+
 **7 November 2026 IST. Status: provisional PM choice from public evidence and product rules. No interviews, participant test, cohort-size estimate, or validated root cause is claimed.** This decision uses the [nine-question discovery engine](https://sip-research-viewer.soumyasantra431.workers.dev/) as a source index, the [metric decomposition](PART2_METRIC_SYSTEM_AND_FIRST_RESEARCH_DECISION_2026-11-07.md), the [original-source audit](PART2_FOUR_LEAD_SOURCE_REVIEW_2026-11-07.md), the [behavior audit](PART2_ENGINE_SIGNAL_TO_BEHAVIOR_AUDIT_2026-11-07.md), and a bounded original-page check on 7 November. The engine's source-level acceptance and extraction quality gaps remain as recorded in those audits. Original public posts checked here are **not** silently added to the engine corpus or its counters.
 
 ## Decision and why it matters

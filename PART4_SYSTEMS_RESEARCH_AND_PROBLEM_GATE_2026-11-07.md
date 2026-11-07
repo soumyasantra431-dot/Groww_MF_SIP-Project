@@ -1,5 +1,7 @@
 # From the 12-month metric to a problem worth testing
 
+> **Historical checkpoint.** This cash-flow-adjustment problem gate was revised later on 7 November after stronger direct Groww accounts of intended-payment interruptions. See [current provisional problem definition](PART4_PROVISIONAL_PROBLEM_DEFINITION_2026-11-07.md). Its informed-pause counterexamples remain guardrails.
+
 **7 November 2026 IST. Status: bounded public-source research and PM decision, not a validated root cause, interview study, or projected retention lift.** Read with the [person-level metric decomposition](PART2_METRIC_SYSTEM_AND_FIRST_RESEARCH_DECISION_2026-11-07.md), [behavioral segment comparison](PART3_BEHAVIORAL_SEGMENT_DECISION_2026-11-07.md), and [current documented-flow/static-guide check](PART4_CURRENT_FLOW_AND_STATIC_BASELINE_2026-11-07.md). The discovery engine was used to locate starting questions; the newly inspected public accounts below were manually read from their original pages and **not** counted as engine-analysed rows. Only links and paraphrases are retained; no usernames, ages, amounts, screenshots, or account details.
 
 ## The outcome we are working backwards from

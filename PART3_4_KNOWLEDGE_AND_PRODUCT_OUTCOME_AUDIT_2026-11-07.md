@@ -1,5 +1,7 @@
 # What we know, what remains unknown, and the next product decision
 
+> **Historical checkpoint.** The cash-flow-adjustment focus below was superseded after additional direct Groww payment accounts were inspected later on 7 November. See [current provisional problem definition](PART4_PROVISIONAL_PROBLEM_DEFINITION_2026-11-07.md). Its metric arithmetic and source limits still apply.
+
 **7 November 2026 IST.** This is a bounded PM research audit for Parts 2–4. It builds on the [metric system](PART2_METRIC_SYSTEM_AND_FIRST_RESEARCH_DECISION_2026-11-07.md), [six-behavior comparison and provisional segment](PART3_BEHAVIORAL_SEGMENT_DECISION_2026-11-07.md), and the [nine-question discovery engine](https://sip-research-viewer.soumyasantra431.workers.dev/). New web checks below were manually read on 7 November. Public posts are **paraphrased research leads**, not engine-accepted records or a representative sample. No model extraction, new interview, or first-hand task was run for this audit.
 
 ## 1. Decision → unknown → method
