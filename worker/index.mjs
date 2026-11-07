@@ -32,6 +32,7 @@ export default {async fetch(request,env){
   const s=await raw.json(),card=s.provisional_cards?.find(c=>c.id===id);
   if(!card)return response({error:'Question unavailable'},404);
   const fallback={question_id:id,answer:card.working_reading?.text||'This question is not answered by the reviewed material yet.',source:card.working_reading?{url:card.working_reading.url,family:card.working_reading.source_family,scope:card.working_reading.scope_lane}:null,rival:card.rival_to_check,unknown:card.unknown,next_test:card.next_decision,status:'provisional_research_direction',generated:false};
+  if(!['Q1','Q3','Q5','Q6','Q9'].includes(id))return response({...fallback,note:'This question needs chronology or comparison that one source cannot establish; showing the checked reading.'});
   if(env.ALLOW_ANSWER_CALLS!=='true'||env.ANSWER_KILL_SWITCH!=='false'||!env.GROQ_API_KEY)return response(fallback);
   if(!allowedRequest(request))return response({...fallback,note:'Free-tier demo limit reached; showing the checked reading.'});
   const facts=[card.working_reading?.text,card.rival_to_check,card.unknown].filter(Boolean).join('\n');
