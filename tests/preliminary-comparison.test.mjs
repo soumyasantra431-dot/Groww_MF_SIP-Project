@@ -17,3 +17,12 @@ test('preliminary situations require every cited proposal and never count depend
  assert.equal(out.proposal_roots,1);
  assert.equal(preliminaryComparison([row(first.id,'1',{review_state:'accepted'})]).candidates.length,0);
 });
+
+test('a SIP modification question does not count as a trust or support pause',()=>{
+ const trust=row('I-0fdc1add96cfb39774ac','935',{url:'https://tradingqna.com/t/discontinuation-of-pooling-for-mutual-funds-and-how-it-affects-coin/120947/935'});
+ const modification=row('I-21f5cec36a90bef96234','1',{url:'https://tradingqna.com/t/coin-sip-vs-amc-sip/127618/1'});
+ const out=preliminaryComparison([trust,modification]);
+ const lead=out.candidates.find(x=>x.id==='trust_support');
+ assert.equal(lead.source_root_count,1);
+ assert.deepEqual(lead.sources.map(x=>x.id),[trust.id]);
+});

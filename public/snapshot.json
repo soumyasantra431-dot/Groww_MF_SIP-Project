@@ -1,6 +1,6 @@
 {
   "schema": "sip-snapshot-v1-depth-addendum",
-  "created_at": "2026-11-06T19:54:14.480Z",
+  "created_at": "2026-11-07T14:18:05.791Z",
   "review_basis": "Fellow-endorsed provisional directions; zero source-level approval unless separately recorded",
   "items": [],
   "approved_answers": {},
@@ -331,16 +331,16 @@
       {
         "id": "trust_support",
         "name": "What happens when payment trust weakens?",
-        "observed": "Adjacent-platform writers raised support or control questions; one reported pausing investments amid redemption and support concerns.",
+        "observed": "An adjacent-platform writer reported pausing investments amid redemption and support concerns.",
         "consequence": "A reported investment pause is not proof that a scheduled SIP stopped or that support caused it.",
         "pathway": "Unresolved status or support may change an investor’s next choice, but its link to a qualifying month-12 payment is unmeasured.",
         "rival": "The pause may reflect circumstances outside the app, and the support question may never have affected a payment.",
         "next_test": "Ask what the investor sought from support, what response arrived, what choice followed, and what happened to the next due payment.",
-        "source_root_count": 2,
+        "source_root_count": 1,
         "denominator_roots": 13,
-        "record_count": 2,
+        "record_count": 1,
         "target_records": 0,
-        "adjacent_records": 2,
+        "adjacent_records": 1,
         "eligibility_unknown_records": 0,
         "source_families": [
           "Investing forums"
@@ -354,12 +354,6 @@
             "url": "https://tradingqna.com/t/discontinuation-of-pooling-for-mutual-funds-and-how-it-affects-coin/120947/935",
             "locator": "post-935",
             "platform": "Coin"
-          },
-          {
-            "id": "I-21f5cec36a90bef96234",
-            "url": "https://tradingqna.com/t/coin-sip-vs-amc-sip/127618/1",
-            "locator": "post-1",
-            "platform": "Zerodha"
           }
         ]
       }
