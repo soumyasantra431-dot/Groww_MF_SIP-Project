@@ -38,7 +38,8 @@ def base(c, n, section, title, source):
     c.setFillColor(HexColor("#FFFFFF")); c.rect(0, 0, W, H, fill=1, stroke=0)
     c.setFillColor(GREEN); c.rect(0, H-9, W, 9, fill=1, stroke=0)
     para(c, section.upper(), 44, 505, 860, 11, GREEN, True)
-    para(c, title, 44, 475, 872, 28, INK, True, 34)
+    title_size = 23 if len(title) > 65 else 28
+    para(c, title, 44, 475, 872, title_size, INK, True, title_size * 1.22)
     line(c, 44, 416, 916, 416)
     para(c, source, 44, 35, 834, 9.3, MUTED)
     para(c, f"{n:02d} / 10", 862, 35, 55, 9.3, GREEN, True)
