@@ -112,6 +112,7 @@ box(40,304,880,94,'pale');text('After an initially working SIP routine fails, a 
 for i,(h,b) in enumerate([('Who / when','Provisional first-year automation-reliant restorer; after unwanted due failure, before next due.'),('What is observed','One writer reports months of manual repair, bank/Groww support and mandate replacement.'),('Underlying factors','Bank/rail, mandate linkage, order processing, status meaning and support hand-off are rival branches.'),('Workaround','Manual purchase, support contact, mandate change; none proves the next AutoPay is fixed.')]):
     x=40+(i%2)*446;y=212-(i//2)*96;card(x,y,432,92,h,b,'paper',10.8)
 bar('Why solve? Investor: less repair and safer next action. Business: only net additional eligible people with month-12 SIP success move the NSM.',40,63,880,'warm',11.4)
+line('Why now? The following due date creates a decision window; no evidence proves market urgency or that Groww owns the bank fault.',43,58,870,9.8,'muted')
 c.showPage()
 
 # 8: chronology and solution rationale
