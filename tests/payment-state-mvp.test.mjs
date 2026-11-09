@@ -18,6 +18,9 @@ test('source anchors and negation force unknown rather than invented status',()=
  assert.equal(validateProposal('My bank was debited but Groww says failed', {state:'failed_reported',anchor:'Groww says failed'}).state,'unknown');
  assert.equal(validateProposal('My bank was debited but Groww says failed', {state:'debited_processing',anchor:'bank was debited'}).state,'unknown');
  assert.equal(validateProposal('My bank was debited but Groww says pending payment', {state:'unpaid_unclear',anchor:'pending payment'}).state,'unknown');
+ assert.equal(validateProposal('Can I pause my SIP?', {state:'intentional_pause',anchor:'pause my SIP'}).state,'unknown');
+ assert.equal(validateProposal('I decided not to pause my SIP', {state:'intentional_pause',anchor:'pause my SIP'}).state,'unknown');
+ assert.equal(validateProposal('I chose to pause this SIP for now', {state:'intentional_pause',anchor:'chose to pause'}).state,'intentional_pause');
 });
 test('a reported bank debit never becomes verified completed investment',()=>{
  const r=responseFor('My bank was debited but the SIP order is processing',{state:'debited_processing',anchor:'bank was debited'});

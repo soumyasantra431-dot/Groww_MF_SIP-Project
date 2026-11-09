@@ -36,6 +36,7 @@ export function validateProposal(text,p){
  if(state==='debited_processing'&&(!/\b(debited|deducted|money taken|amount taken)\b/i.test(lower)||/\b(not|never|wasn't|didn't)\s+(?:get\s+)?(?:debited|deducted)\b/i.test(lower)))return {state:'unknown',reason:'debit_not_supported'};
  if(state==='completed_reported'&&!/\b(completed|successful|succeeded|units allotted|went through)\b/i.test(lower))return {state:'unknown',reason:'completion_not_stated'};
  if(state==='intentional_pause'&&!/\b(skip|pause|stop|cancel|reduce)\b/i.test(lower))return {state:'unknown',reason:'pause_not_stated'};
+ if(state==='intentional_pause'&&!/\bi\s+(?:(?:chose|decided|opted)\s+to\s+(?:pause|skip|stop|cancel|reduce)|(?:paused|skipped|stopped|cancelled|reduced)|(?:have|had)\s+(?:paused|skipped|stopped|cancelled|reduced)|am\s+pausing)\b/i.test(lower))return {state:'unknown',reason:'intent_not_stated'};
  return {state,reason:'source_anchored_proposal'};
 }
 function buildReceipt(state,reason,anchor,proposal){
