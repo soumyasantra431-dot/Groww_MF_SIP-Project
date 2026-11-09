@@ -23,6 +23,8 @@
     "REDDIT_RESEARCH_USE_APPROVED": "false",
     "YOUTUBE_DERIVED_USE_APPROVED": "false",
     "MODEL_BILLING_MODE": "free",
+    "MVP_KILL_SWITCH": "true",
+    "MVP_MODEL_ID": "openai/gpt-oss-20b",
     "GROQ_FREE_PLAN_CONFIRMED": "false",
     "MODEL_FREE_DAILY_TOKEN_CAP": "180000",
     "MODEL_FREE_MAX_CALLS": "10"
