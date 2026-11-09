@@ -23,10 +23,10 @@
   },
   {
     "source_family": "YouTube",
-    "status": "flagged — analytics amendment application/acceptance unverified; collector held",
-    "checked_on": "2026-11-05",
+    "status": "flagged — video-search API tested; comment-analysis amendment unverified; collector held",
+    "checked_on": "2026-11-09",
     "url": "https://developers.google.com/youtube/terms/derived-metrics-policy",
-    "issue": "Standard Developer Policies III.E.4 restrict derived data and metrics. Official additional derived-metrics policy, updated 2026-09-14, describes permitted content tagging and NLP analysis of API comments after acceptance of an analytics amendment. The linked YouTube API audit form says Google determines whether the submitted use case qualifies; this project's application and acceptance are unverified. Comment text still has a 30-day refresh/delete obligation, and derived metrics must be distinguished from YouTube API metrics. No request or model processing until the qualifying use decision is recorded. The supplied key is not copied into Git or a command."
+    "issue": "Standard Developer Policies III.E.4 restrict derived data and metrics. The additional derived-metrics policy describes comment NLP after acceptance of an analytics amendment, which is unverified for this project. On 9 November the locally saved key succeeded in one official video-search metadata request (three video IDs returned for Groww SIP pause installment); no comment text was requested, stored, tagged, or sent to a model. Comment text would need 30-day refresh/deletion and derived metrics must be distinguished from YouTube API metrics. The key was not copied into Git or command output."
   },
   {
     "source_family": "Play Store",
