@@ -76,7 +76,7 @@ c.showPage()
 # 3 · Discovery engine process
 base(c,3,"Part 1 · discovery engine","A source-linked question finder, not a churn calculator",
      "Source: live SIP Lens engine; AI_EVIDENCE_LOG_DRAFT_2026-11-06.md; research records as of 9 Nov 2026.")
-for x,num,lab in [(50,"932","review IDs retrieved"),(270,"100","user-voice rows stored"),(490,"15","assistant coding proposals"),(710,"0","accepted source records")]:
+for x,num,lab in [(50,"932","review IDs retrieved"),(270,"100","user-voice rows saved"),(490,"9","provisional question readings"),(710,"4","unscored opportunity leads")]:
     rect(c,x,280,200,110); para(c,num,x+18,371,160,30,GREEN,True); para(c,lab,x+18,322,165,13,MUTED)
 para(c,"Collect → screen SIP relevance and duplicates → propose event, action and outcome → check the original → answer nine research questions.",54,250,850,17,INK,True)
 para(c,"The engine exposes nine provisional readings and four unscored leads. Counts describe records at different stages, not unique Groww investors or problem prevalence.",54,180,850,15,MUTED)
