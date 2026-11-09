@@ -114,7 +114,8 @@ for x,num,lab in [(50,"9","survey submissions"),(282,"5 / 8","eligible responden
     rect(c,x,276,200 if x!=552 else 170,112)
     para(c,num,x+15,366,170,25,GREEN,True); para(c,lab,x+15,326,170,12,MUTED)
 para(c,"Needed contrast: a first-year Groww investor with an unwanted payment gap and a comparable continuer or informed chooser. Ask both what they intended, saw, did, and what happened at the next scheduled SIP.",54,246,850,16,INK,True)
-para(c,"No mock account is treated as an interview. Actual final payment status and strict cohort fit are not verified in the public stories.",54,145,850,14,MUTED)
+para(c,"One broad target-screen response mixed a long-term security goal with an early-profit expectation. That challenges a payment-only explanation, but does not measure how common either motive is.",54,164,850,13.5,MUTED)
+para(c,"No mock account is treated as an interview. Final payment status and strict cohort fit are unverified in public stories.",54,93,850,12.5,MUTED)
 c.showPage()
 
 # 7 · Problem definition
@@ -151,7 +152,7 @@ base(c,10,"Parts 7–8 · success and risk","Measure welfare-aligned continuatio
      "Source: assignment NSM; FINAL_PROBLEM_BOUNDARY_2026-11-09.md; mvp/CONTINUITY_MAP_EVAL.md.")
 card(c,48,258,410,131,"Business and leading outcomes","NSM = A/N unique eligible people. Leading: correct status understanding / tasks; correct official check / tasks; wanted next-SIP success / wanted failed dues.")
 card(c,476,258,436,131,"Investor and AI guardrails","Unexpected debit, duplicate-pay direction, false success, invented actor fault, advice-like output, affordability strain and wrongly discouraged pauses.")
-card(c,48,94,410,146,"Main risk","A clearer explanation cannot repair an upstream bank or mandate failure. Another successful SIP may mean no incremental NSM movement.",ORANGE)
+card(c,48,94,410,146,"Main risk and mitigation","Explanation cannot repair an upstream failure. Keep actor fault unknown, route to official checks, and separate other-SIP and next-cycle outcomes.",ORANGE)
 card(c,476,94,436,146,"Next evidence gate","Get strict-cohort contrasting incidents, independent real-item AI labels, and 3 target-user task tests. Keep or drop AI based on the same-task result.")
 c.showPage()
 c.save()
