@@ -14,11 +14,12 @@ function readable(data){const v=Object.fromEntries(data.rows.map(r=>[r.field,r.v
  if(v.next_scheduled==='completed')next='You reported that the following scheduled SIP completed. Check its order details for confirmation.';
  else if(v.next_scheduled==='failed')next='You reported that the following scheduled SIP failed too. Check its order and linked AutoPay status in Groww.';
  else if(v.next_scheduled==='not_due')next='The following SIP is not due yet. Its outcome remains unknown.';
- if(v.workaround==='manual_payment'&&v.next_scheduled!=='completed')next='You paid manually this cycle. That does not confirm the next scheduled AutoPay. '+next;
+ if(v.workaround==='manual_payment'&&v.next_scheduled==='unknown')next='You paid manually this cycle. The next scheduled AutoPay has not been checked; verify its linked mandate in Groww.';
+ if(v.workaround==='manual_payment'&&v.next_scheduled==='not_due')next='You paid manually this cycle. The following SIP is not due yet, so its outcome remains unknown.';
  if(v.other_sip==='completed')next+=' You also reported another completed SIP; this one plan does not describe all your SIPs.';
  return {current,next};}
 function render(data){
- const reading=readable(data);result.replaceChildren();result.append(node('span','YOUR SIP CHECK','badge'),node('h2','This payment and the next'));
+ const reading=readable(data);result.replaceChildren();result.append(node('span','YOUR SIP CHECK','badge'),node('h2','What we know so far'));
  const now=node('section',null,'story-card');now.append(node('span','THIS PAYMENT','story-kicker'),node('p',reading.current));result.append(now);
  const future=node('section',null,'story-card next');future.append(node('span','FOLLOWING SCHEDULED SIP','story-kicker'),node('p',reading.next));result.append(future);
  if(data.conflicts.length){const conflicts=node('section');for(const message of data.conflicts)conflicts.append(node('p',message,'warning'));result.append(conflicts);}
