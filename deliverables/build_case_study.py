@@ -47,8 +47,8 @@ def base(c, n, section, title, source):
 def card(c, x, y, w, h, heading, body, accent=GREEN):
     rect(c, x, y, w, h)
     c.setFillColor(accent); c.rect(x, y+h-5, w, 5, fill=1, stroke=0)
-    para(c, heading, x+18, y+h-23, w-36, 15, INK, True)
-    para(c, body, x+18, y+h-57, w-36, 13.5, MUTED, False, 18)
+    heading_bottom = para(c, heading, x+18, y+h-23, w-36, 15, INK, True)
+    para(c, body, x+18, min(y+h-57, heading_bottom-9), w-36, 13.5, MUTED, False, 18)
 
 c = canvas.Canvas(str(OUT), pagesize=(W, H), pageCompression=1)
 c.setTitle("Groww SIP continuation | evidence-led graduation case study")
