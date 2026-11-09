@@ -165,6 +165,8 @@ card(c,48,258,410,131,"Business and leading outcomes","NSM = A/N unique eligible
 card(c,476,258,436,131,"Investor and AI guardrails","Unexpected debit, duplicate-pay direction, false success, invented actor fault, advice-like output, affordability strain and wrongly discouraged pauses.")
 card(c,48,94,410,146,"Main risk and mitigation","Explanation cannot repair an upstream failure. Keep actor fault unknown, route to official checks, and separate other-SIP and next-cycle outcomes.",ORANGE)
 card(c,476,94,436,146,"Next evidence gate","Get strict-cohort contrasting incidents, independent real-item AI labels, and 3 target-user task tests. Keep or drop AI based on the same-task result.")
+para(c,"Read the AI Evidence Log",54,70,390,12.5,GREEN,True)
+c.linkURL("https://github.com/soumyasantra431-dot/Groww_MF_SIP-Project/blob/main/deliverables/AI_EVIDENCE_LOG_SUBMISSION.md",(54,49,390,78),relative=0)
 c.showPage()
 c.save()
 print(OUT)
