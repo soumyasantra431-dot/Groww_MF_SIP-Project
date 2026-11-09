@@ -94,17 +94,21 @@ c.showPage()
 # 5 · Segmentation and opportunity
 base(c,5,"Parts 3–4 · segment choice","Five situations, one reversible research bet",
      "Source: PARTS2_TO5_RESEARCH_CONCLUSION_2026-11-09.md; FINAL_PROBLEM_BOUNDARY_2026-11-09.md.")
-for i,(name,detail) in enumerate([
-  ("Automation-reliant repairer","Wanted routine breaks after working"),
-  ("Changed-obligation adjuster","Chooses an affordable new plan"),
-  ("Schedule interpreter","Needs to know what an edit changes"),
-  ("Early-return reassessor","Revisits original expectation"),
-  ("Externally guided starter","Reassesses another person's rationale")]):
-    y=354-i*52
+para(c,"BEHAVIORAL SITUATION",68,402,245,10,GREEN,True)
+para(c,"OBSERVED SIGNAL",334,402,260,10,GREEN,True)
+para(c,"BEST RIVAL",637,402,250,10,GREEN,True)
+for i,(name,signal,rival) in enumerate([
+  ("Automation-reliant repairer","Repeated manual repair","Bank or rail execution"),
+  ("Changed-obligation adjuster","Skip, then resume","Correct informed pause"),
+  ("Schedule interpreter","Asks what an edit changes","Current help suffices"),
+  ("Early-return reassessor","Concern, yet continues","No qualifying-payment gap"),
+  ("Externally guided starter","Friend shapes initial plan","Changed circumstance drove revision")]):
+    y=339-i*52
     rect(c,50,y,860,45,HexColor("#DEF2ED") if i==0 else PALE, radius=7)
-    para(c,name,68,y+33,270,14,INK,True)
-    para(c,detail,365,y+33,520,13,MUTED)
-para(c,"Selected as a testable hypothesis because repair burden is directly reported and Groww can influence understanding and hand-off. Reach, severity distribution and NSM lift are unknown.",54,93,846,13.5,INK,True)
+    para(c,name,68,y+33,255,13,INK,True)
+    para(c,signal,334,y+33,290,12.5,MUTED)
+    para(c,rival,637,y+33,257,12.5,MUTED)
+para(c,"Decision: test the repeated repair task because burden is reported and a hand-off is within Groww's influence. No evidence ranks its reach or month-12 lift above the alternatives.",54,93,846,13.5,INK,True)
 c.showPage()
 
 # 6 · Primary research boundary
