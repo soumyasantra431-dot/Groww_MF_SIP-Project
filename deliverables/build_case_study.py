@@ -68,6 +68,7 @@ base(c,2,"Part 2 · metric decomposition","The unit is a person, not a plan or a
 rect(c,48,280,864,115)
 para(c,"N = A + I + U",70,374,800,28,GREEN,True)
 para(c,"Eligible people at month 12 = confirmed active + confirmed inactive + unresolved.",70,330,800,15,INK)
+para(c,"Product path: intended SIP → scheduled due → confirmed success or informed change → next-cycle state → month-12 person outcome.",70,302,800,12.8,MUTED)
 card(c,48,98,270,164,"Qualifying event","At least one successful SIP instalment in the preceding 30 days, across any of that person's SIPs.")
 card(c,330,98,280,164,"Not the same event","Bank debit, pending order, one-time payment, failed retry or stopping one of several plans.")
 card(c,622,98,290,164,"Potential lift","If x net eligible people become active, change = 100 × x / N percentage points. x and N are unknown.")
@@ -75,12 +76,15 @@ c.showPage()
 
 # 3 · Discovery engine process
 base(c,3,"Part 1 · discovery engine","A source-linked question finder, not a churn calculator",
-     "Source: live SIP Lens engine; AI_EVIDENCE_LOG_DRAFT_2026-11-06.md; research records as of 9 Nov 2026.")
+     "Source: live SIP Lens engine; deliverables/AI_EVIDENCE_LOG_SUBMISSION.md; research records as of 9 Nov 2026.")
 for x,num,lab in [(50,"932","review IDs retrieved"),(270,"100","user-voice rows saved"),(490,"9","provisional question readings"),(710,"4","unscored opportunity leads")]:
     rect(c,x,280,200,110); para(c,num,x+18,371,160,30,GREEN,True); para(c,lab,x+18,322,165,13,MUTED)
 para(c,"Collect → screen SIP relevance and duplicates → propose event, action and outcome → check the original → answer nine research questions.",54,250,850,17,INK,True)
-para(c,"Proposed themes group a stated trigger, action and outcome by source root. Each question card keeps a rival explanation and a missing fact visible.",54,180,850,15,MUTED)
-para(c,"Quality boundary: original-source review and independent AI accuracy remain open. Retrieval counts are records, not investors or prevalence.",54,118,850,13.5,MUTED)
+para(c,"Signals include expectations, deliberate changes, unwanted failures, checking, outside help and continuation. Routine checking frequency and cohort differences remain weak.",54,184,850,14,MUTED)
+para(c,"Each question card links sources, a rival explanation and a missing fact; one source root is not counted as several investors.",54,139,850,13.5,MUTED)
+para(c,"Quality boundary: bulk corpus label review and independent AI accuracy remain open. Retrieved records are not investor prevalence.",54,96,760,12.8,MUTED)
+para(c,"Open the nine-question engine",54,69,420,12.5,GREEN,True)
+c.linkURL("https://sip-research-viewer.soumyasantra431.workers.dev/",(54,48,450,78),relative=0)
 c.showPage()
 
 # 4 · Episode contrasts
@@ -144,12 +148,14 @@ c.showPage()
 
 # 9 · MVP and tests
 base(c,9,"Parts 5–6 · prototype and evaluation","A working map, with a visible safety fallback",
-     "Prototype: sip-research-viewer.soumyasantra431.workers.dev/sip-map.html; build/test record, 9 Nov 2026.")
+     "Prototype: sip-research-viewer.soumyasantra431.workers.dev/sip-map; build/test record, 9 Nov 2026.")
 rect(c,48,266,864,121)
 para(c,"Intent  →  bank debit  →  Groww order  →  this-cycle workaround  →  next SIP  →  other SIP",68,357,823,17,INK,True)
 para(c,"Each row is anchored to supplied words or says unknown. Code checks conflicting states and produces fixed neutral questions. No account lookup or payment action.",68,313,823,13.5,MUTED)
 card(c,48,87,410,162,"Quality check","148 automated tests passed. One synthetic Groq Free call returned structured fields. These are engineering checks, not real-item accuracy.")
 card(c,476,87,436,162,"Release boundary","Independent ~20-item hand labels and 3 real target-user tasks are outstanding. Public AI stays off; the fixed map works.",ORANGE)
+para(c,"Try the public MVP",54,70,400,12.5,GREEN,True)
+c.linkURL("https://sip-research-viewer.soumyasantra431.workers.dev/sip-map",(54,49,400,78),relative=0)
 c.showPage()
 
 # 10 · Success, risks, next decision
